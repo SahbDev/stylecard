@@ -13,9 +13,7 @@
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
     
-    /* =========================================
-       TELA DE PERFIS (ESTILO NETFLIX)
-       ========================================= */
+    /* TELA DE PERFIS */
     #profileScreen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
       background: #141414; z-index: 9999;
@@ -25,25 +23,12 @@
       transition: opacity 0.6s ease;
       padding-top: 10vh; 
     }
-    
-    .profiles-main {
-      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;
-    }
-    
-    .profile-title {
-      font-size: 3vw; min-font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 2.5rem; letter-spacing: 2px; text-align: center;
-    }
+    .profiles-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+    .profile-title { font-size: 3vw; min-font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 2.5rem; letter-spacing: 2px; text-align: center; }
     .profiles-container { display: flex; gap: 3vw; justify-content: center; flex-wrap: wrap; }
-    .profile {
-      display: flex; flex-direction: column; align-items: center;
-      cursor: pointer; transition: transform 0.2s, opacity 0.4s; position: relative;
-    }
+    .profile { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s, opacity 0.4s; position: relative; }
     .profile:hover { transform: scale(1.05); }
-    .profile-img-wrap {
-      width: 10vw; height: 10vw; min-width: 110px; min-height: 110px; max-width: 160px; max-height: 160px;
-      border-radius: 50%; overflow: hidden; border: 3px solid transparent; transition: border-color 0.2s;
-      position: relative; background: #222;
-    }
+    .profile-img-wrap { width: 10vw; height: 10vw; min-width: 110px; min-height: 110px; max-width: 160px; max-height: 160px; border-radius: 50%; overflow: hidden; border: 3px solid transparent; transition: border-color 0.2s; position: relative; background: #222; }
     .profile:hover .profile-img-wrap { border-color: #fff; }
     .profile img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
     .profile-name-text { margin-top: 15px; font-size: 1.2vw; min-font-size: 14px; color: #808080; transition: color 0.2s; font-weight: 500; display: flex; align-items: center; gap: 5px; }
@@ -53,17 +38,8 @@
     .profile:hover .lock-icon { fill: #fff; }
     .profile.loading .profile-img-wrap { border-color: transparent; }
     .profile.loading img { opacity: 0.4; }
-    .profile.loading .profile-img-wrap::after {
-      content: ""; position: absolute; top: 50%; left: 50%;
-      width: 40px; height: 40px; margin-top: -20px; margin-left: -20px;
-      border: 4px solid rgba(255,255,255,0.2); border-top: 4px solid var(--mmc-green);
-      border-radius: 50%; animation: spin 1s linear infinite;
-    }
-    
-    /* MARCA D'ÁGUA TELA DE PERFIL */
-    .profiles-watermark {
-      text-align: center; padding: 20px 0 40px 0; font-size: 11px; color: #333; font-weight: 500; letter-spacing: 0.5px;
-    }
+    .profile.loading .profile-img-wrap::after { content: ""; position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; margin-top: -20px; margin-left: -20px; border: 4px solid rgba(255,255,255,0.2); border-top: 4px solid var(--mmc-green); border-radius: 50%; animation: spin 1s linear infinite; }
+    .profiles-watermark { text-align: center; padding: 20px 0 40px 0; font-size: 11px; color: #333; font-weight: 500; letter-spacing: 0.5px; }
 
     @media (max-width: 768px) {
       .profile-title { font-size: 24px; }
@@ -71,20 +47,13 @@
       .profiles-container { gap: 15px; }
     }
 
-    /* =========================================
-       SISTEMA PRINCIPAL
-       ========================================= */
-    #mainApp {
-      display: none; opacity: 0; transition: opacity 0.8s ease; flex: 1; flex-direction: column; width: 100%;
-    }
-    
+    /* SISTEMA PRINCIPAL */
+    #mainApp { display: none; opacity: 0; transition: opacity 0.8s ease; flex: 1; flex-direction: column; width: 100%; }
     .app-main { flex: 1; display: flex; flex-direction: column; padding: 40px; }
-
     .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 30px; }
     .brand-group { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
     .brand { font-size: 22px; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 10px; margin-right: 10px; }
     .brand::before { content: ''; width: 12px; height: 12px; background: var(--mmc-green); border-radius: 50%; box-shadow: 0 0 10px var(--mmc-green); }
-    
     .btn-header-pill { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); border-radius: 20px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; text-decoration: none; }
     .btn-header-pill:hover { background: #27272a; border-color: var(--mmc-green); color: #fff; }
     
@@ -124,7 +93,7 @@
     .preview-avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--border); margin-bottom: 15px; background: #222; overflow: hidden;}
     .preview-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* LAYOUT DOS CARDS DAS LOJAS RESTAURADO */
+    /* LAYOUT CARDS DAS LOJAS */
     .store-grid { width: 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px; }
     .store-card { background: #000; border: 1px solid var(--border); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
     .store-name-container { display: flex; flex-direction: column; align-items: flex-start; flex: 1; overflow: hidden; cursor: pointer; }
@@ -358,6 +327,7 @@
 
   <div class="modal-overlay" id="modalAlert">
     <div class="modal" style="width: 350px;">
+      <button class="close-btn" onclick="fecharModal('modalAlert')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
       <h3 style="color: #ff9800;" id="alertTitle">Aviso</h3>
       <p id="alertMsg" style="margin-bottom: 25px;"></p>
       <div class="modal-actions">
@@ -380,6 +350,7 @@
 
   <div class="modal-overlay" id="modalSuccess">
     <div class="modal" style="width: 350px;">
+      <button class="close-btn" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
       <h3 style="color: var(--mmc-green);" id="titleSuccess">Sucesso</h3>
       <p id="successMsg" style="margin-bottom: 25px;"></p>
       <div class="modal-actions">
@@ -391,12 +362,32 @@
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbxJ0DnrBEf0DYpTdVF5fJ2QXyjPxtvFpZGtCVTeNgAcRyF_p1BAmmC90R1_Np5WwP9WEA/exec"; 
 
-    // Configuração Default para evitar falha no carregamento
+    // CONFIGS INICIAIS
     let profileConfigs = {
       "P1": { name: "Saori", avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1", password: "" },
       "P2": { name: "Gabriel", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6", password: "" },
       "P3": { name: "Convidado", avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0", password: "" }
     };
+
+    // CACHE IMEDIATO PARA EVITAR O "PISCAR" (FLICKER)
+    const cachedProfiles = localStorage.getItem('mmc_profiles');
+    if (cachedProfiles) profileConfigs = JSON.parse(cachedProfiles);
+
+    function renderProfiles() {
+      ['P1', 'P2', 'P3'].forEach(id => {
+         if(profileConfigs[id]) {
+           const imgEl = document.getElementById('img-' + id);
+           const nameEl = document.getElementById('name-' + id);
+           const lockEl = document.getElementById('lock-' + id);
+           if(imgEl) imgEl.src = profileConfigs[id].avatar;
+           if(nameEl) nameEl.innerText = profileConfigs[id].name;
+           if(lockEl) lockEl.style.display = profileConfigs[id].password ? "inline-block" : "none";
+         }
+      });
+    }
+
+    // Aplica o cache instantaneamente enquanto o DOM carrega
+    renderProfiles();
 
     const availableAvatars = [
       "https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1",
@@ -430,13 +421,8 @@
       let dbConfigs = await callApi('getProfilesConfig');
       if(dbConfigs) {
         profileConfigs = dbConfigs;
-        ['P1', 'P2', 'P3'].forEach(id => {
-           if(profileConfigs[id]) {
-             document.getElementById('img-' + id).src = profileConfigs[id].avatar;
-             document.getElementById('name-' + id).innerText = profileConfigs[id].name;
-             document.getElementById('lock-' + id).style.display = profileConfigs[id].password ? "inline-block" : "none";
-           }
-        });
+        localStorage.setItem('mmc_profiles', JSON.stringify(profileConfigs)); // Atualiza o cache do navegador
+        renderProfiles(); // Aplica dados fresquinhos da API
       }
     }
 
@@ -530,9 +516,9 @@
       
       if(res === "SUCCESS") {
         profileConfigs[id] = { name: name, avatar: currentSelectedAvatarUrl, password: pass };
-        document.getElementById('img-' + id).src = currentSelectedAvatarUrl;
-        document.getElementById('name-' + id).innerText = name;
-        document.getElementById('lock-' + id).style.display = pass ? "inline-block" : "none";
+        localStorage.setItem('mmc_profiles', JSON.stringify(profileConfigs)); // Atualiza o cache do navegador
+        renderProfiles(); // Re-renderiza a tela principal
+
         fecharModal('modalAdminSettings');
         msg("Configuração Salva!");
       } else {
@@ -541,92 +527,156 @@
     }
 
     const i18n = {
-      pt: { guest: "Convidado", brandTitle: "MMC | Gerador de Stylecard", langBtn: "Language", modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", lblInput: "Entrada (Inventário)", phInput: "Cole a lista de itens aqui...", lblOutput: "Resultado (Notecard)", phOutput: "O resultado sairá aqui...", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT", titleDb: "Lojas Registradas", phSearch: "Buscar loja...", btnDelAll: "Apagar Tudo", btnBackup: "Backup", titleAdd: "Registrar Lojas", tagMixed: "Nenhuma Tag", btnSave: "Salvar", titleWarn: "Atenção", descWarn: "Detectei {n} itens indefinidos (?). Deseja baixar assim mesmo?", btnCancel: "Cancelar", btnForceDown: "Sim, Baixar", alertTitle: "Aviso", btnOk: "OK", titlePass: "Senha", btnConfirmDel: "Confirmar", titleSuccess: "Sucesso", statusGen: "PROCESSANDO...", errPass: "Senha Incorreta", errFormat: "Cole a loja direito", msgSaved: "Salvo com sucesso!", msgUpdated: "Atualizado!", msgDeleted: "Deletado com sucesso!", msgWiped: "Tudo apagado!", mixed: "Mista" },
-      en: { guest: "Guest", brandTitle: "MMC | Stylecard Generator", langBtn: "Idioma", modalLangTitle: "Change Language", btnDb: "Registered Stores", btnAdd: "+ Add Store", lblInput: "Input (Inventory)", phInput: "Paste your items here...", lblOutput: "Result (Notecard)", phOutput: "The result will appear here...", btnGen: "Generate Stylecard", btnUpdate: "Update Order", btnDown: "Download TXT", titleDb: "Registered Stores", phSearch: "Search store...", btnDelAll: "Delete All", btnBackup: "Backup", titleAdd: "Register Stores", tagMixed: "No Tag", btnSave: "Save", titleWarn: "Warning", descWarn: "Detected {n} undefined items (?). Download anyway?", btnCancel: "Cancel", btnForceDown: "Yes, Download", alertTitle: "Notice", btnOk: "OK", titlePass: "Password", btnConfirmDel: "Confirm", titleSuccess: "Success", statusGen: "PROCESSING...", errPass: "Incorrect Password", errFormat: "Paste format correctly", msgSaved: "Saved successfully!", msgUpdated: "Updated!", msgDeleted: "Deleted successfully!", msgWiped: "All wiped!", mixed: "Mixed" }
+      pt: { guest: "Convidado", brandTitle: "MMC | Gerador de Stylecard", langBtn: "Language", modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", lblInput: "Entrada (Inventário)", phInput: "Cole a lista de itens aqui...", lblOutput: "Resultado (Notecard)", phOutput: "O resultado sairá aqui...", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT", titleDb: "Lojas Registradas", phSearch: "Buscar loja...", btnDelAll: "Apagar Tudo", btnBackup: "Backup", titleAdd: "Registrar Lojas", formatAdd: "Formato Múltiplo: <b>LOJA = SLURL = TAG</b>", tagMixed: "Nenhuma Tag (Deixar Mista)", btnSave: "Salvar", titleEdit: "Editar Loja", phLink: "Link SLURL", phTag: "Tag", titleWarn: "Atenção", descWarn: "Detectei <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marcados como indefinidos (?). Sugiro que edite e atualize a lista antes de baixar.<br><br><b>DICA:</b> Substitua o \"<b>?</b>\" por <b>NO</b> e clique em <b>Atualizar Ordem</b> para deletá-los.<br><br>Deseja baixar mesmo assim?", btnCancel: "Cancelar", btnForceDown: "Sim, Baixar", alertTitle: "Aviso", btnOk: "OK", titlePass: "Zerar Banco de Dados", descPass: "Isso apagará todas as lojas. Digite a senha para confirmar.", phPass: "Senha de Segurança", btnConfirmDel: "Confirmar Exclusão", titleSuccess: "Sucesso", msgSaved: "{n} loja(s) processada(s) com sucesso!", msgUpdated: "Loja atualizada com sucesso!", msgDeleted: "Loja removida com sucesso!", msgWiped: "Banco de dados zerado com sucesso!", errEmptyInp: "Cole a lista do seu inventário primeiro.", errFormat: "Cole pelo menos uma loja válida para salvar.", errEmptyDb: "O banco de dados já está vazio.", errPass: "Senha incorreta!", errNoGen: "Gere o Stylecard primeiro.", errNoDown: "Não há nada para baixar.", errAskPass: "Digite a senha para prosseguir.", statusGen: "PROCESSANDO...", askDel: "Apagar a loja {n}?", mixed: "Mista" },
+      en: { guest: "Guest", brandTitle: "MMC | Stylecard Generator", langBtn: "Idioma", modalLangTitle: "Change Language", btnDb: "Registered Stores", btnAdd: "+ Add Store", lblInput: "Input (Inventory)", phInput: "Paste your item list here...", lblOutput: "Result (Notecard)", phOutput: "The result will appear here...", btnGen: "Generate Stylecard", btnUpdate: "Update Order", btnDown: "Download TXT", titleDb: "Registered Stores", phSearch: "Search store...", btnDelAll: "Delete All", btnBackup: "Backup", titleAdd: "Register Stores", formatAdd: "Multiple Format: <b>STORE = SLURL = TAG</b>", tagMixed: "No Tag (Leave Mixed)", btnSave: "Save", titleEdit: "Edit Store", phLink: "SLURL Link", phTag: "Tag", titleWarn: "Warning", descWarn: "Detected <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marked as undefined (?). It is highly recommended to edit and update the list before downloading.<br><br><b>TIP:</b> Replace \"<b>?</b>\" with <b>NO</b> and click <b>Update Order</b> to delete them.<br><br>Download anyway?", btnCancel: "Cancel", btnForceDown: "Yes, Download", alertTitle: "Notice", btnOk: "OK", titlePass: "Wipe Database", descPass: "This will delete all stores. Enter the password to confirm.", phPass: "Security Password", btnConfirmDel: "Confirm Deletion", titleSuccess: "Success", msgSaved: "{n} store(s) processed successfully!", msgUpdated: "Store updated successfully!", msgDeleted: "Store removed successfully!", msgWiped: "Database wiped successfully!", errEmptyInp: "Paste your inventory list first.", errFormat: "Paste at least one valid store to save.", errEmptyDb: "The database is already empty.", errPass: "Incorrect password!", errNoGen: "Generate the Stylecard first.", errNoDown: "There is nothing to download.", errAskPass: "Enter the password to proceed.", statusGen: "PROCESSING...", askDel: "Delete store {n}?", mixed: "Mixed" }
     };
 
     let currentLang = localStorage.getItem('mmc_lang') || 'pt';
     function setLanguage(lang) {
       currentLang = lang; localStorage.setItem('mmc_lang', lang);
       document.getElementById('card-pt').classList.remove('active'); document.getElementById('card-en').classList.remove('active'); document.getElementById('card-' + lang).classList.add('active');
-      document.getElementById('sysTitle').innerText = i18n[lang].brandTitle;
-      document.getElementById('langBtnText').innerText = i18n[lang].langBtn;
-      document.getElementById('btnDbText').innerText = i18n[lang].btnDb;
-      document.getElementById('btnAddText').innerText = i18n[lang].btnAdd;
-      document.getElementById('lblInputText').innerText = i18n[lang].lblInput;
-      document.getElementById('inputList').placeholder = i18n[lang].phInput;
-      document.getElementById('lblOutputText').innerText = i18n[lang].lblOutput;
-      document.getElementById('outputList').placeholder = i18n[lang].phOutput;
-      document.getElementById('genBtn').innerText = i18n[lang].btnGen;
-      document.getElementById('btnUpdateText').innerText = i18n[lang].btnUpdate;
-      document.getElementById('btnDownText').innerText = i18n[lang].btnDown;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang][key]) { if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = i18n[lang][key]; else el.innerHTML = i18n[lang][key]; }
+      });
       fecharModal('modalChangeLang');
     }
+    function t(key) { return i18n[currentLang][key] || key; }
 
+    function stringToColor(s){ if(!s) return '#555'; let h=0; for(let i=0;i<s.length;i++) h=s.charCodeAt(i)+((h<<5)-h); return `hsl(${Math.abs(h)%360},70%,80%)`; }
     function abrirModal(id){ document.getElementById(id).style.display='flex'; }
     function fecharModal(id){ document.getElementById(id).style.display='none'; }
-    function msg(m){ document.getElementById('successMsg').innerText=m; abrirModal('modalSuccess'); }
-    function alerta(m){ document.getElementById('alertMsg').innerText=m; abrirModal('modalAlert'); }
-
-    async function gerarNotecard(){ 
-      const entrada = document.getElementById('inputList').value; if(!entrada.trim()) return;
-      document.getElementById('genBtn').innerText = i18n[currentLang].statusGen;
-      let res = await callApi('processarLista', { textoBruto: entrada });
-      if(res) { document.getElementById('outputList').value = res.texto; }
-      document.getElementById('genBtn').innerText = i18n[currentLang].btnGen;
-    }
+    function msg(m){ document.getElementById('successMsg').innerHTML=m; abrirModal('modalSuccess'); }
+    function alerta(m){ document.getElementById('alertMsg').innerHTML=m; abrirModal('modalAlert'); }
 
     async function abrirModalAdd(){ 
-      abrirModal('modalAdd'); document.getElementById('tagSelect').innerHTML = `<option value="">...</option>`;
+      abrirModal('modalAdd'); 
+      document.getElementById('tagSelect').innerHTML = `<option value="">Carregando...</option>`;
       let lojas = await callApi('getLojas');
       if(lojas) {
-        let tags = [...new Set(lojas.map(i => i.tag).filter(t => t))].sort();
-        let html = `<option value="">${i18n[currentLang].tagMixed}</option>`;
-        tags.forEach(t => html += `<option value="${t}">${t}</option>`);
+        let tags = [...new Set(lojas.map(i => i.tag).filter(tag => tag))].sort();
+        let html = `<option value="">${t('tagMixed')}</option>`;
+        tags.forEach(tag => html += `<option value="${tag}">${tag}</option>`);
         document.getElementById('tagSelect').innerHTML = html;
       }
     }
-
+    
     async function salvarLoja(){
-      const val = document.getElementById('fastInput').value; if(!val.trim()) return;
-      document.getElementById('saveBtn').innerHTML = "<span class='loader'></span>";
-      await callApi('adicionarLoja', { texto: val, tag: document.getElementById('tagSelect').value });
-      document.getElementById('saveBtn').innerText = "Salvar"; fecharModal('modalAdd'); document.getElementById('fastInput').value = ''; msg("Salvo!");
+      const val = document.getElementById('fastInput').value;
+      const tag = document.getElementById('tagSelect').value;
+      if(!val.trim()) return alerta(t('errFormat'));
+      const btn = document.getElementById('saveBtn');
+      btn.innerHTML = "<span class='loader'></span>";
+      
+      let res = await callApi('adicionarLoja', { texto: val, tag: tag });
+      if(res !== null) {
+        msg(t('msgSaved').replace('{n}', res)); 
+        btn.innerText = t('btnSave'); 
+        fecharModal('modalAdd'); 
+        document.getElementById('fastInput').value = '';
+      }
     }
 
     async function abrirModalLojas(){
-      abrirModal('modalLojas'); document.getElementById('storeGrid').innerHTML = "<div style='text-align:center; width:100%; padding:20px;'><span class='loader'></span></div>";
+      abrirModal('modalLojas');
+      document.getElementById('storeGrid').innerHTML = "<div style='text-align:center; width:100%; padding: 20px;'><span class='loader'></span></div>";
+      
       let ls = await callApi('getLojas');
       if(ls) {
-        let h=""; ls.forEach(i => { 
-          let c = stringToColor(i.tag); 
-          h += `<div class="store-card" data-name="${i.loja}"><div class="store-name-container" onclick="abrirEdit('${i.loja}','${i.slurl}','${i.tag}')"><div class="store-name">${i.loja}</div><span class="mini-tag" style="background:${c}">${i.tag||i18n[currentLang].mixed}</span></div><svg class="store-delete" onclick="apagarLoja('${i.loja}')" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></div>`; 
+        let h=""; ls.forEach(i => {
+          let c = stringToColor(i.tag); let exTag = i.tag || t('mixed');
+          h += `<div class="store-card" data-name="${i.loja}"><div class="store-name-container" onclick="abrirEdit('${i.loja}','${i.slurl}','${i.tag}')"><div class="store-name">${i.loja}</div><span class="mini-tag" style="background:${c}">${exTag}</span></div><svg class="store-delete" onclick="apagarLoja('${i.loja}')" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></div>`;
         });
         document.getElementById('storeGrid').innerHTML=h;
       }
     }
 
-    function stringToColor(s){ if(!s) return '#555'; let h=0; for(let i=0;i<s.length;i++) h=s.charCodeAt(i)+((h<<5)-h); return `hsl(${Math.abs(h)%360},70%,80%)`; }
     function abrirEdit(n,s,tg){ editando=n; document.getElementById('editName').innerText=n; document.getElementById('editSlurl').value=s; document.getElementById('editTag').value=tg; abrirModal('modalEdit'); }
-    async function salvarEdicao(){ const btn=document.getElementById('saveEditBtn'); btn.innerHTML="<span class='loader'></span>"; let res=await callApi('atualizarLoja', { nomeLoja: editando, novaSlurl: document.getElementById('editSlurl').value, novaTag: document.getElementById('editTag').value }); if(res) { msg(i18n[currentLang].msgUpdated); btn.innerText = "Atualizar"; fecharModal('modalEdit'); abrirModalLojas(); } }
-    async function apagarLoja(n){ if(confirm("Deletar " + n + "?")) { await callApi('deletarLoja', { nomeLoja: n }); msg(i18n[currentLang].msgDeleted); abrirModalLojas(); } }
+    
+    async function salvarEdicao(){ 
+      const btn = document.getElementById('saveEditBtn'); btn.innerHTML = "<span class='loader'></span>";
+      let res = await callApi('atualizarLoja', { nomeLoja: editando, novaSlurl: document.getElementById('editSlurl').value, novaTag: document.getElementById('editTag').value });
+      if(res) { msg(t('msgUpdated')); btn.innerText = t('btnUpdate'); fecharModal('modalEdit'); abrirModalLojas(); }
+    }
+    
+    async function apagarLoja(n){ 
+      if(confirm(t('askDel').replace('{n}', n))) {
+        await callApi('deletarLoja', { nomeLoja: n });
+        msg(t('msgDeleted')); abrirModalLojas();
+      }
+    }
+    
     function abrirModalPassword(){ document.getElementById('passInp').value = ""; abrirModal('modalPass'); }
-    async function confirmarApagarTudo(){ let s = document.getElementById('passInp').value; if(!s) return; document.getElementById('confirmPassBtn').innerHTML="<span class='loader'></span>"; let r = await callApi('apagarTodasLojas', { senha: s }); document.getElementById('confirmPassBtn').innerText = "Confirmar"; if(r){ fecharModal('modalPass'); if(r==="WRONG_PASS") alerta(i18n[currentLang].errPass); else { msg(i18n[currentLang].msgWiped); abrirModalLojas(); } } }
-    function filtrarLojas() { let input = document.getElementById('searchInput').value.toUpperCase(); document.querySelectorAll('.store-card').forEach(c => c.style.display = c.getAttribute('data-name').includes(input) ? 'flex' : 'none'); }
-    function verificarDownload(){ let txt = document.getElementById('outputList').value; if(!txt) return; let indefinidos = (txt.match(/BUTTON NAME:\s*\?\r?\n/g) || []).length; if (indefinidos > 0) { document.getElementById('descWarn').innerHTML = i18n[currentLang].descWarn.replace('{n}', indefinidos); abrirModal('modalConfirm'); } else execDownload(); }
-    function execDownload(){ let blob = new Blob([document.getElementById('outputList').value], {type:'text/plain'}); let a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='STYLECARD.txt'; a.click(); fecharModal('modalConfirm'); }
+    
+    async function confirmarApagarTudo(){ 
+      let senha = document.getElementById('passInp').value;
+      if (!senha) return alerta(t('errAskPass'));
+      const btn = document.getElementById('confirmPassBtn'); btn.innerHTML = "<span class='loader'></span>";
+      
+      let r = await callApi('apagarTodasLojas', { senha: senha });
+      btn.innerText = t('btnConfirmDel');
+      if(r) {
+        fecharModal('modalPass');
+        if(r === "WRONG_PASS") alerta(t('errPass'));
+        else if (r === "EMPTY") alerta(t('errEmptyDb'));
+        else { msg(t('msgWiped')); abrirModalLojas(); }
+      }
+    }
+
+    async function gerarNotecard(){ 
+      const entrada = document.getElementById('inputList').value;
+      if(!entrada.trim()) return alerta(t('errEmptyInp'));
+      document.getElementById('genBtn').innerText = t('statusGen');
+      
+      let res = await callApi('processarLista', { textoBruto: entrada });
+      if(res) {
+        document.getElementById('outputList').value = res.texto; 
+        document.getElementById('genBtn').innerText = t('btnGen'); 
+      }
+    }
+
     function reorganizar(){
-      let txt = document.getElementById('outputList').value; if(!txt) return;
+      let txt = document.getElementById('outputList').value; if(!txt) return alerta(t('errNoGen'));
       let ordem = ["HEAD", "FACE SKIN", "BODY", "BODY SKIN", "FACE ADDON", "BEARD", "EYES", "LASHES", "HAIRBASE", "HAIR", "DEFORMS", "TATTOO", "BODY ADDON", "BODY HAIR", "MAKEUP", "NAILS", "SPANKER", "ACESSORIES", "CLOTHING", "?"];
       let blocos = txt.split('------------------------------------------------------------').filter(b => b.trim() !== "").map(b => {
         let m = b.match(/BUTTON NAME:\s*(.+)/);
         let btn = m ? m[1].trim() : "?";
         return { btn, texto: "------------------------------------------------------------\n" + b.trim() + "\n" };
-      });
+      }).filter(b => b.btn !== "NO");
       blocos.sort((a,b) => (ordem.indexOf(a.btn)===-1?998:ordem.indexOf(a.btn)) - (ordem.indexOf(b.btn)===-1?998:ordem.indexOf(b.btn)));
       document.getElementById('outputList').value = blocos.map(b => b.texto).join("");
     }
-    async function downloadDatabase(){ let ls = await callApi('getLojas'); if(ls) { let t = ls.map(i => `${i.loja} = ${i.slurl}${i.tag?' = '+i.tag:''}`).join('\n'); let b = new Blob([t], {type:'text/plain'}); let a = document.createElement('a'); a.href=URL.createObjectURL(b); a.download='BACKUP.txt'; a.click(); } }
+
+    function verificarDownload(){
+      let txt = document.getElementById('outputList').value; 
+      if(!txt) return alerta(t('errNoDown'));
+      let indefinidos = (txt.match(/BUTTON NAME:\s*\?\r?\n/g) || []).length;
+      if (indefinidos > 0) {
+        document.getElementById('descWarn').innerHTML = t('descWarn').replace('{n}', indefinidos);
+        abrirModal('modalConfirm');
+      } else { execDownload(); }
+    }
+    
+    function execDownload(){
+      let blob = new Blob([document.getElementById('outputList').value], {type:'text/plain'});
+      let a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='STYLECARD_HUD.txt'; a.click();
+      fecharModal('modalConfirm');
+    }
+    
+    async function downloadDatabase(){
+      let ls = await callApi('getLojas');
+      if(ls) {
+        let t = ls.map(i => `${i.loja} = ${i.slurl}${i.tag?' = '+i.tag:''}`).join('\n');
+        let b = new Blob([t], {type:'text/plain'});
+        let a = document.createElement('a'); a.href=URL.createObjectURL(b); a.download='BACKUP_LOJAS.txt'; a.click();
+      }
+    }
+
+    function filtrarLojas() {
+      let input = document.getElementById('searchInput').value.toUpperCase();
+      let cards = document.querySelectorAll('.store-card');
+      cards.forEach(c => c.style.display = c.getAttribute('data-name').includes(input) ? 'flex' : 'none');
+    }
   </script>
 </body>
 </html>
