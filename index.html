@@ -13,7 +13,9 @@
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
     
-    /* TELA DE PERFIS */
+    /* =========================================
+       TELA DE PERFIS (ESTILO NETFLIX)
+       ========================================= */
     #profileScreen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
       background: #141414; z-index: 9999;
@@ -23,12 +25,25 @@
       transition: opacity 0.6s ease;
       padding-top: 10vh; 
     }
-    .profiles-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
-    .profile-title { font-size: 3vw; min-font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 2.5rem; letter-spacing: 2px; text-align: center; }
+    
+    .profiles-main {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;
+    }
+    
+    .profile-title {
+      font-size: 3vw; min-font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 2.5rem; letter-spacing: 2px; text-align: center;
+    }
     .profiles-container { display: flex; gap: 3vw; justify-content: center; flex-wrap: wrap; }
-    .profile { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s, opacity 0.4s; position: relative; }
+    .profile {
+      display: flex; flex-direction: column; align-items: center;
+      cursor: pointer; transition: transform 0.2s, opacity 0.4s; position: relative;
+    }
     .profile:hover { transform: scale(1.05); }
-    .profile-img-wrap { width: 10vw; height: 10vw; min-width: 110px; min-height: 110px; max-width: 160px; max-height: 160px; border-radius: 50%; overflow: hidden; border: 3px solid transparent; transition: border-color 0.2s; position: relative; background: #222; }
+    .profile-img-wrap {
+      width: 10vw; height: 10vw; min-width: 110px; min-height: 110px; max-width: 160px; max-height: 160px;
+      border-radius: 50%; overflow: hidden; border: 3px solid transparent; transition: border-color 0.2s;
+      position: relative; background: #222;
+    }
     .profile:hover .profile-img-wrap { border-color: #fff; }
     .profile img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
     .profile-name-text { margin-top: 15px; font-size: 1.2vw; min-font-size: 14px; color: #808080; transition: color 0.2s; font-weight: 500; display: flex; align-items: center; gap: 5px; }
@@ -38,8 +53,16 @@
     .profile:hover .lock-icon { fill: #fff; }
     .profile.loading .profile-img-wrap { border-color: transparent; }
     .profile.loading img { opacity: 0.4; }
-    .profile.loading .profile-img-wrap::after { content: ""; position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; margin-top: -20px; margin-left: -20px; border: 4px solid rgba(255,255,255,0.2); border-top: 4px solid var(--mmc-green); border-radius: 50%; animation: spin 1s linear infinite; }
-    .profiles-watermark { text-align: center; padding: 20px 0 40px 0; font-size: 11px; color: #333; font-weight: 500; letter-spacing: 0.5px; }
+    .profile.loading .profile-img-wrap::after {
+      content: ""; position: absolute; top: 50%; left: 50%;
+      width: 40px; height: 40px; margin-top: -20px; margin-left: -20px;
+      border: 4px solid rgba(255,255,255,0.2); border-top: 4px solid var(--mmc-green);
+      border-radius: 50%; animation: spin 1s linear infinite;
+    }
+    
+    .profiles-watermark {
+      text-align: center; padding: 20px 0 40px 0; font-size: 11px; color: #333; font-weight: 500; letter-spacing: 0.5px;
+    }
 
     @media (max-width: 768px) {
       .profile-title { font-size: 24px; }
@@ -47,13 +70,18 @@
       .profiles-container { gap: 15px; }
     }
 
-    /* SISTEMA PRINCIPAL */
+    /* =========================================
+       SISTEMA PRINCIPAL
+       ========================================= */
     #mainApp { display: none; opacity: 0; transition: opacity 0.8s ease; flex: 1; flex-direction: column; width: 100%; }
     .app-main { flex: 1; display: flex; flex-direction: column; padding: 40px; }
+
     .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 30px; }
     .brand-group { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+    
     .brand { font-size: 22px; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 10px; margin-right: 10px; }
     .brand::before { content: ''; width: 12px; height: 12px; background: var(--mmc-green); border-radius: 50%; box-shadow: 0 0 10px var(--mmc-green); }
+    
     .btn-header-pill { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); border-radius: 20px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; text-decoration: none; }
     .btn-header-pill:hover { background: #27272a; border-color: var(--mmc-green); color: #fff; }
     
@@ -62,8 +90,8 @@
     .btn:hover { transform: translateY(-2px); }
     .btn-primary { background: #fff; color: #000; }
     .btn-secondary { background: #27272a; color: #fff; border-color: var(--border); }
-    .btn-success { background: rgba(126, 255, 126, 0.1); color: var(--mmc-green); border-color: rgba(126, 255, 126, 0.3); }
     .btn-danger { background: rgba(255, 71, 71, 0.1); color: var(--mmc-red); border-color: rgba(255, 71, 71, 0.3); }
+    .btn-success { background: rgba(126, 255, 126, 0.1); color: var(--mmc-green); border-color: rgba(126, 255, 126, 0.3); }
     
     .container { display: flex; gap: 30px; height: 60vh; }
     @media (max-width: 900px) { .container { flex-direction: column; height: auto; min-height: 80vh; } }
@@ -71,7 +99,25 @@
     label { font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; display: block; }
     textarea { flex: 1; background: var(--bg-dark); color: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 15px; font-family: 'Courier New', monospace; resize: none; line-height: 1.6; cursor: auto; }
     
+    /* =========================================
+       BOTÕES DE AÇÃO INFERIORES (PADRONIZADOS)
+       ========================================= */
     .action-bar { text-align: center; margin: 30px 0; gap: 15px; display: flex; justify-content: center; flex-wrap: wrap; }
+    
+    .btn-action {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 10px 18px; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
+      border-radius: 6px; transition: all 0.2s ease; position: relative; outline: none;
+      background: #27272a; color: #fff; border: 1px solid var(--border);
+    }
+    
+    .btn-action:hover { 
+      border-color: #fff; 
+      background: #3f3f46; 
+      transform: translateY(-2px);
+    }
+    
+    .btn-action svg { width: 16px; height: 16px; fill: currentColor; }
 
     /* MODAIS GERAIS */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 10000; align-items: center; justify-content: center; }
@@ -93,7 +139,7 @@
     .preview-avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--border); margin-bottom: 15px; background: #222; overflow: hidden;}
     .preview-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* LAYOUT CARDS DAS LOJAS */
+    /* LAYOUT DAS LOJAS */
     .store-grid { width: 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px; }
     .store-card { background: #000; border: 1px solid var(--border); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
     .store-name-container { display: flex; flex-direction: column; align-items: flex-start; flex: 1; overflow: hidden; cursor: pointer; }
@@ -117,6 +163,11 @@
 
     .loader { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid #fff; width: 16px; height: 16px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    /* Help / Tips Lists */
+    .help-list { color: var(--text-muted); font-size: 13px; line-height: 1.8; margin: 0; padding-left: 20px; }
+    .help-list li { margin-bottom: 8px; }
+    .help-list b { color: var(--text-main); }
   </style>
 </head>
 <body>
@@ -125,28 +176,24 @@
     <div class="profiles-main">
       <h1 class="profile-title">MMC - Stylecard System</h1>
       <div class="profiles-container">
-        
         <div class="profile" id="prof-P1" onclick="selectProfile('P1', this)">
           <div class="profile-img-wrap"><img id="img-P1" src="https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1" alt="Perfil 1"></div>
           <span class="profile-name-text">
             <span id="name-P1">Saori</span> <svg class="lock-icon" id="lock-P1" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
           </span>
         </div>
-
         <div class="profile" id="prof-P2" onclick="selectProfile('P2', this)">
           <div class="profile-img-wrap"><img id="img-P2" src="https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6" alt="Perfil 2"></div>
           <span class="profile-name-text">
             <span id="name-P2">Gabriel</span> <svg class="lock-icon" id="lock-P2" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
           </span>
         </div>
-
         <div class="profile" id="prof-P3" onclick="selectProfile('P3', this)">
           <div class="profile-img-wrap"><img id="img-P3" src="https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0" alt="Perfil 3"></div>
           <span class="profile-name-text">
             <span id="name-P3">Convidado</span> <svg class="lock-icon" id="lock-P3" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
           </span>
         </div>
-
       </div>
     </div>
     <div class="profiles-watermark">MMC - Stylecard generator website. Created by Saori Suki, a Second Life user.</div>
@@ -156,7 +203,8 @@
     <div class="app-main">
       <div class="header">
         <div class="brand-group">
-          <div class="brand" id="sysTitle">MMC | Gerador de Stylecard</div>
+          
+          <div class="brand" id="sysTitle" data-i18n="brandTitle">MMC | Gerador de Stylecard</div>
           
           <button class="btn-header-pill" onclick="abrirModal('modalChangeLang')">
             <div style="display:flex; gap: -4px;">
@@ -178,6 +226,16 @@
           <button class="btn-header-pill" onclick="abrirModal('modalAdminAuth')" title="Configurações de Perfil">
             ⚙️ Settings
           </button>
+          
+          <button class="btn-header-pill" onclick="abrirModal('modalHelp')" title="Instruções / Help">
+            <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg> 
+            <span id="helpBtnText">Ajuda</span>
+          </button>
+
+          <button class="btn-header-pill" onclick="abrirModal('modalTips')" title="Dicas / Tips">
+            <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg> 
+            <span id="tipsBtnText">Tips</span>
+          </button>
         </div>
         
         <div class="btn-group">
@@ -198,9 +256,58 @@
       </div>
 
       <div class="action-bar">
-        <button class="btn btn-primary" id="genBtn" onclick="gerarNotecard()">Gerar Stylecard</button>
-        <button class="btn btn-secondary" id="btnUpdateText" onclick="reorganizar()">Atualizar Ordem</button>
-        <button class="btn btn-success" id="btnDownText" onclick="verificarDownload()">Baixar TXT</button>
+        <button class="btn-action" onclick="gerarNotecard()">
+          <svg viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
+          <span id="genBtnText" data-i18n="btnGen">Gerar Stylecard</span>
+        </button>
+        
+        <button class="btn-action" onclick="reorganizar()">
+          <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+          <span data-i18n="btnUpdate">Atualizar Ordem</span>
+        </button>
+
+        <button class="btn-action" onclick="verificarDownload()">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          <span data-i18n="btnDown">Baixar TXT</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalHelp">
+    <div class="modal" style="width: 450px;">
+      <button class="close-btn" onclick="fecharModal('modalHelp')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+      <h3 data-i18n="helpTitle">Como obter sua lista</h3>
+      
+      <div style="background: #000; padding: 20px; border-radius: 8px; border: 1px solid var(--border); width: 100%;">
+        <ol class="help-list" data-i18n="helpInst">
+          <li>Vá em <b>Avatar</b> -> <b>Outfit</b></li>
+          <li>Clique na aba <b>Wearing</b></li>
+          <li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li>
+          <li>Selecione <b>Copy to clipboard</b></li>
+        </ol>
+      </div>
+
+      <div class="modal-actions" style="margin-top: 20px;">
+        <button class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalHelp')" data-i18n="helpOk">Entendi</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalTips">
+    <div class="modal" style="width: 450px;">
+      <button class="close-btn" onclick="fecharModal('modalTips')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+      <h3 data-i18n="tipsTitle">Dicas Úteis</h3>
+      
+      <div style="background: #000; padding: 20px; border-radius: 8px; border: 1px solid var(--border); width: 100%;">
+        <ul class="help-list" data-i18n="tipsInst" style="list-style-type: none; padding-left: 0;">
+          <li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em "Atualizar Ordem", essa linha será removida automaticamente.</li>
+        </ul>
+      </div>
+
+      <div class="modal-actions" style="margin-top: 20px;">
+        <button class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalTips')" data-i18n="tipsOk">Entendi</button>
       </div>
     </div>
   </div>
@@ -208,11 +315,11 @@
   <div class="modal-overlay" id="modalAdminAuth">
     <div class="modal" style="width: 350px;">
       <button class="close-btn" onclick="fecharModal('modalAdminAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: var(--mmc-red);">Área Admin</h3>
-      <p>Acesso restrito para configurações de perfis.</p>
-      <input type="password" id="adminPassInput" placeholder="Senha Mestre">
+      <h3 style="color: var(--text-main);" data-i18n="titleAdmin">Área Admin</h3>
+      <p data-i18n="descAdmin">Acesso restrito</p>
+      <input type="password" id="adminPassInput" data-i18n="phPassAdmin" placeholder="Senha Mestre">
       <div class="modal-actions">
-        <button class="btn btn-danger" style="width:100%" onclick="verificarSenhaAdmin()">Autenticar</button>
+        <button class="btn btn-secondary" style="width:100%" onclick="verificarSenhaAdmin()" data-i18n="btnAuthAdmin">Autenticar</button>
       </div>
     </div>
   </div>
@@ -220,27 +327,27 @@
   <div class="modal-overlay" id="modalAdminSettings">
     <div class="modal" style="width: 450px;">
       <button class="close-btn" onclick="fecharModal('modalAdminSettings')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3>Configurar Perfis</h3>
+      <h3 data-i18n="titleAdminSettings">Configurar Perfis</h3>
       
       <select id="configProfileSelect" onchange="carregarConfigPerfil()">
-        <option value="P1">Slot 1 (Esquerda)</option>
-        <option value="P2">Slot 2 (Meio)</option>
-        <option value="P3">Slot 3 (Direita)</option>
+        <option value="P1" data-i18n="optP1">Slot 1 (Esquerda)</option>
+        <option value="P2" data-i18n="optP2">Slot 2 (Meio)</option>
+        <option value="P3" data-i18n="optP3">Slot 3 (Direita)</option>
       </select>
 
       <div class="preview-avatar"><img id="configAvatarPreview" src=""></div>
       
-      <label style="align-self: flex-start; margin-bottom: 5px;">Selecione um Avatar:</label>
+      <label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblSelAvatar">Selecione um Avatar:</label>
       <div class="avatar-grid" id="avatarGridList"></div>
 
-      <label style="align-self: flex-start; margin-bottom: 5px;">Nome do Perfil:</label>
-      <input type="text" id="configProfileName" placeholder="Ex: Saori Suki">
+      <label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblNamePerfil">Nome do Perfil:</label>
+      <input type="text" id="configProfileName" data-i18n="phNamePerfil" placeholder="Ex: Saori Suki">
 
-      <label style="align-self: flex-start; margin-bottom: 5px;">Trava de Segurança:</label>
-      <input type="password" id="configProfilePass" placeholder="Digite uma senha (vazio = desativado)">
+      <label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblTrava">Trava de Segurança:</label>
+      <input type="password" id="configProfilePass" data-i18n="phPass" placeholder="Digite uma senha (vazio = desativado)">
 
       <div class="modal-actions">
-        <button class="btn btn-primary" id="btnSaveConfig" style="width:100%" onclick="salvarConfigPerfil()">Salvar Configuração</button>
+        <button class="btn btn-secondary" id="btnSaveConfig" style="width:100%" onclick="salvarConfigPerfil()" data-i18n="btnSaveConfig">Salvar Configuração</button>
       </div>
     </div>
   </div>
@@ -248,11 +355,11 @@
   <div class="modal-overlay" id="modalProfileAuth">
     <div class="modal" style="width: 350px;">
       <button class="close-btn" onclick="fecharModal('modalProfileAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: var(--text-main);" id="authTitle">Acesso Restrito</h3>
-      <p>Digite a senha para acessar este perfil.</p>
-      <input type="password" id="profilePassInput" placeholder="Senha do Perfil">
+      <h3 style="color: var(--text-main);" id="authTitle" data-i18n="titleAuthPerfil">Acesso Restrito</h3>
+      <p data-i18n="descAuthPerfil">Digite a senha para acessar este perfil.</p>
+      <input type="password" id="profilePassInput" data-i18n="phPassPerfil" placeholder="Senha do Perfil">
       <div class="modal-actions">
-        <button class="btn btn-primary" style="width:100%" onclick="verificarSenhaPerfil()">Entrar</button>
+        <button class="btn btn-secondary" style="width:100%" onclick="verificarSenhaPerfil()" data-i18n="btnEnterAuth">Entrar</button>
       </div>
     </div>
   </div>
@@ -260,7 +367,7 @@
   <div class="modal-overlay" id="modalChangeLang">
     <div class="modal" style="width: 450px;">
       <button class="close-btn" onclick="fecharModal('modalChangeLang')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 id="modalLangTitle">Alterar Idioma</h3>
+      <h3 id="modalLangTitle" data-i18n="modalLangTitle">Alterar Idioma</h3>
       <div class="lang-grid">
         <div class="lang-card" id="card-pt" onclick="setLanguage('pt')">
           <div class="flag-icon round"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Brazilian_flag_icon_round.svg" alt="BR"></div>
@@ -277,12 +384,12 @@
   <div class="modal-overlay" id="modalLojas">
     <div class="modal" style="width: 800px;">
       <button class="close-btn" onclick="fecharModal('modalLojas')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 id="titleDb">Lojas Registradas</h3>
-      <input type="text" id="searchInput" placeholder="Buscar loja..." onkeyup="filtrarLojas()">
+      <h3 id="titleDb" data-i18n="titleDb">Lojas Registradas</h3>
+      <input type="text" id="searchInput" data-i18n="phSearchStore" placeholder="Buscar loja..." onkeyup="filtrarLojas()">
       <div class="store-grid" id="storeGrid"></div>
       <div class="modal-actions">
-        <button class="btn btn-danger" onclick="abrirModalPassword()" id="btnDelAll">Apagar Tudo</button>
-        <button class="btn btn-secondary" onclick="downloadDatabase()" id="btnBackup">Backup</button>
+        <button class="btn btn-danger" onclick="abrirModalPassword()" id="btnDelAll" data-i18n="btnDelAll">Apagar Tudo</button>
+        <button class="btn btn-secondary" onclick="downloadDatabase()" id="btnBackup" data-i18n="btnBackup">Backup</button>
       </div>
     </div>
   </div>
@@ -290,12 +397,12 @@
   <div class="modal-overlay" id="modalAdd">
     <div class="modal">
       <button class="close-btn" onclick="fecharModal('modalAdd')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 id="titleAdd">Registrar Lojas</h3>
-      <p style="margin-bottom: 15px;" id="formatAdd">Formato Múltiplo: <b>LOJA = SLURL = TAG</b></p>
+      <h3 id="titleAdd" data-i18n="titleAdd">Registrar Lojas</h3>
+      <p style="margin-bottom: 15px;" id="formatAdd" data-i18n="formatAdd">Formato Múltiplo: <b>LOJA = SLURL = TAG</b></p>
       <textarea id="fastInput"></textarea>
       <select id="tagSelect"><option value="">...</option></select>
       <div class="modal-actions">
-        <button class="btn btn-primary" id="saveBtn" onclick="salvarLoja()">Salvar</button>
+        <button class="btn btn-secondary" id="saveBtn" onclick="salvarLoja()" data-i18n="btnSave">Salvar</button>
       </div>
     </div>
   </div>
@@ -303,12 +410,12 @@
   <div class="modal-overlay" id="modalEdit">
     <div class="modal" style="width: 400px; min-height: auto;">
       <button class="close-btn" onclick="fecharModal('modalEdit')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 id="titleEdit">Editar Loja</h3>
-      <p id="editName" style="color:var(--mmc-green); font-weight: bold; font-size: 14px; margin-bottom: 15px;"></p>
-      <input type="text" id="editSlurl" placeholder="Link SLURL">
-      <input type="text" id="editTag" placeholder="Tag">
+      <h3 id="titleEdit" data-i18n="titleEdit">Editar Loja</h3>
+      <p id="editName" style="color:var(--text-main); font-weight: bold; font-size: 14px; margin-bottom: 15px;"></p>
+      <input type="text" id="editSlurl" data-i18n="phLink" placeholder="Link SLURL">
+      <input type="text" id="editTag" data-i18n="phTag" placeholder="Tag">
       <div class="modal-actions">
-        <button class="btn btn-primary" id="saveEditBtn" onclick="salvarEdicao()">Atualizar</button>
+        <button class="btn btn-secondary" id="saveEditBtn" onclick="salvarEdicao()" data-i18n="btnUpdateEdit">Atualizar</button>
       </div>
     </div>
   </div>
@@ -316,11 +423,11 @@
   <div class="modal-overlay" id="modalConfirm">
     <div class="modal">
       <button class="close-btn" onclick="fecharModal('modalConfirm')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: #ff9800;" id="titleWarn">Atenção</h3>
+      <h3 style="color: #ff9800;" id="titleWarn" data-i18n="titleWarn">Atenção</h3>
       <p id="descWarn"></p>
       <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="fecharModal('modalConfirm')" id="btnCancel">Cancelar</button>
-        <button class="btn btn-primary" onclick="execDownload()" id="btnForceDown">Sim, Baixar</button>
+        <button class="btn btn-secondary" onclick="fecharModal('modalConfirm')" data-i18n="btnCancel">Cancelar</button>
+        <button class="btn btn-secondary" onclick="execDownload()" id="btnForceDown" style="color: var(--text-main); border-color: var(--text-main);" data-i18n="btnForceDown">Sim, Baixar</button>
       </div>
     </div>
   </div>
@@ -328,10 +435,10 @@
   <div class="modal-overlay" id="modalAlert">
     <div class="modal" style="width: 350px;">
       <button class="close-btn" onclick="fecharModal('modalAlert')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: #ff9800;" id="alertTitle">Aviso</h3>
+      <h3 style="color: #ff9800;" id="alertTitle" data-i18n="alertTitle">Aviso</h3>
       <p id="alertMsg" style="margin-bottom: 25px;"></p>
       <div class="modal-actions">
-        <button class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalAlert')" id="btnOk">OK</button>
+        <button class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalAlert')" data-i18n="btnOk">OK</button>
       </div>
     </div>
   </div>
@@ -339,11 +446,11 @@
   <div class="modal-overlay" id="modalPass">
     <div class="modal" style="width: 400px;">
       <button class="close-btn" onclick="fecharModal('modalPass')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: var(--mmc-red);" id="titlePass">Zerar Banco de Dados</h3>
-      <p>Isso apagará todas as lojas. Digite a senha para confirmar.</p>
+      <h3 style="color: var(--text-main);" id="titlePass" data-i18n="titlePassWipe">Zerar Banco de Dados</h3>
+      <p data-i18n="descPassWipe">Isso apagará todas as lojas. Digite a senha para confirmar.</p>
       <input type="password" id="passInp">
       <div class="modal-actions">
-        <button class="btn btn-danger" id="confirmPassBtn" onclick="confirmarApagarTudo()">Confirmar</button>
+        <button class="btn btn-danger" id="confirmPassBtn" onclick="confirmarApagarTudo()" data-i18n="btnConfirmDel">Confirmar</button>
       </div>
     </div>
   </div>
@@ -351,10 +458,10 @@
   <div class="modal-overlay" id="modalSuccess">
     <div class="modal" style="width: 350px;">
       <button class="close-btn" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: var(--mmc-green);" id="titleSuccess">Sucesso</h3>
+      <h3 style="color: var(--mmc-green);" id="titleSuccess" data-i18n="titleSuccess">Sucesso</h3>
       <p id="successMsg" style="margin-bottom: 25px;"></p>
       <div class="modal-actions">
-        <button class="btn btn-success" style="width: 100%;" onclick="fecharModal('modalSuccess')" id="btnOk2">OK</button>
+        <button class="btn btn-secondary" style="width: 100%; color: var(--text-main); border-color: var(--text-main);" onclick="fecharModal('modalSuccess')" data-i18n="btnOkSuccess">OK</button>
       </div>
     </div>
   </div>
@@ -369,7 +476,7 @@
       "P3": { name: "Convidado", avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0", password: "" }
     };
 
-    // CACHE IMEDIATO PARA EVITAR O "PISCAR" (FLICKER)
+    // CACHE IMEDIATO PARA EVITAR O "PISCAR"
     const cachedProfiles = localStorage.getItem('mmc_profiles');
     if (cachedProfiles) profileConfigs = JSON.parse(cachedProfiles);
 
@@ -386,7 +493,6 @@
       });
     }
 
-    // Aplica o cache instantaneamente enquanto o DOM carrega
     renderProfiles();
 
     const availableAvatars = [
@@ -421,8 +527,8 @@
       let dbConfigs = await callApi('getProfilesConfig');
       if(dbConfigs) {
         profileConfigs = dbConfigs;
-        localStorage.setItem('mmc_profiles', JSON.stringify(profileConfigs)); // Atualiza o cache do navegador
-        renderProfiles(); // Aplica dados fresquinhos da API
+        localStorage.setItem('mmc_profiles', JSON.stringify(profileConfigs)); 
+        renderProfiles(); 
       }
     }
 
@@ -442,7 +548,7 @@
         fecharModal('modalProfileAuth');
         executarAnimacaoNetflix();
       } else {
-        alerta("Senha Incorreta");
+        alerta(i18n[currentLang].errPass);
       }
     }
 
@@ -466,7 +572,7 @@
         document.getElementById('adminPassInput').value = "";
         abrirPainelSettings();
       } else {
-        alerta("Senha Incorreta");
+        alerta(i18n[currentLang].errPass);
       }
     }
 
@@ -516,8 +622,8 @@
       
       if(res === "SUCCESS") {
         profileConfigs[id] = { name: name, avatar: currentSelectedAvatarUrl, password: pass };
-        localStorage.setItem('mmc_profiles', JSON.stringify(profileConfigs)); // Atualiza o cache do navegador
-        renderProfiles(); // Re-renderiza a tela principal
+        localStorage.setItem('mmc_profiles', JSON.stringify(profileConfigs)); 
+        renderProfiles(); 
 
         fecharModal('modalAdminSettings');
         msg("Configuração Salva!");
@@ -527,8 +633,18 @@
     }
 
     const i18n = {
-      pt: { guest: "Convidado", brandTitle: "MMC | Gerador de Stylecard", langBtn: "Language", modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", lblInput: "Entrada (Inventário)", phInput: "Cole a lista de itens aqui...", lblOutput: "Resultado (Notecard)", phOutput: "O resultado sairá aqui...", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT", titleDb: "Lojas Registradas", phSearch: "Buscar loja...", btnDelAll: "Apagar Tudo", btnBackup: "Backup", titleAdd: "Registrar Lojas", formatAdd: "Formato Múltiplo: <b>LOJA = SLURL = TAG</b>", tagMixed: "Nenhuma Tag (Deixar Mista)", btnSave: "Salvar", titleEdit: "Editar Loja", phLink: "Link SLURL", phTag: "Tag", titleWarn: "Atenção", descWarn: "Detectei <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marcados como indefinidos (?). Sugiro que edite e atualize a lista antes de baixar.<br><br><b>DICA:</b> Substitua o \"<b>?</b>\" por <b>NO</b> e clique em <b>Atualizar Ordem</b> para deletá-los.<br><br>Deseja baixar mesmo assim?", btnCancel: "Cancelar", btnForceDown: "Sim, Baixar", alertTitle: "Aviso", btnOk: "OK", titlePass: "Zerar Banco de Dados", descPass: "Isso apagará todas as lojas. Digite a senha para confirmar.", phPass: "Senha de Segurança", btnConfirmDel: "Confirmar Exclusão", titleSuccess: "Sucesso", msgSaved: "{n} loja(s) processada(s) com sucesso!", msgUpdated: "Loja atualizada com sucesso!", msgDeleted: "Loja removida com sucesso!", msgWiped: "Banco de dados zerado com sucesso!", errEmptyInp: "Cole a lista do seu inventário primeiro.", errFormat: "Cole pelo menos uma loja válida para salvar.", errEmptyDb: "O banco de dados já está vazio.", errPass: "Senha incorreta!", errNoGen: "Gere o Stylecard primeiro.", errNoDown: "Não há nada para baixar.", errAskPass: "Digite a senha para prosseguir.", statusGen: "PROCESSANDO...", askDel: "Apagar a loja {n}?", mixed: "Mista" },
-      en: { guest: "Guest", brandTitle: "MMC | Stylecard Generator", langBtn: "Idioma", modalLangTitle: "Change Language", btnDb: "Registered Stores", btnAdd: "+ Add Store", lblInput: "Input (Inventory)", phInput: "Paste your item list here...", lblOutput: "Result (Notecard)", phOutput: "The result will appear here...", btnGen: "Generate Stylecard", btnUpdate: "Update Order", btnDown: "Download TXT", titleDb: "Registered Stores", phSearch: "Search store...", btnDelAll: "Delete All", btnBackup: "Backup", titleAdd: "Register Stores", formatAdd: "Multiple Format: <b>STORE = SLURL = TAG</b>", tagMixed: "No Tag (Leave Mixed)", btnSave: "Save", titleEdit: "Edit Store", phLink: "SLURL Link", phTag: "Tag", titleWarn: "Warning", descWarn: "Detected <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marked as undefined (?). It is highly recommended to edit and update the list before downloading.<br><br><b>TIP:</b> Replace \"<b>?</b>\" with <b>NO</b> and click <b>Update Order</b> to delete them.<br><br>Download anyway?", btnCancel: "Cancel", btnForceDown: "Yes, Download", alertTitle: "Notice", btnOk: "OK", titlePass: "Wipe Database", descPass: "This will delete all stores. Enter the password to confirm.", phPass: "Security Password", btnConfirmDel: "Confirm Deletion", titleSuccess: "Success", msgSaved: "{n} store(s) processed successfully!", msgUpdated: "Store updated successfully!", msgDeleted: "Store removed successfully!", msgWiped: "Database wiped successfully!", errEmptyInp: "Paste your inventory list first.", errFormat: "Paste at least one valid store to save.", errEmptyDb: "The database is already empty.", errPass: "Incorrect password!", errNoGen: "Generate the Stylecard first.", errNoDown: "There is nothing to download.", errAskPass: "Enter the password to proceed.", statusGen: "PROCESSING...", askDel: "Delete store {n}?", mixed: "Mixed" }
+      pt: { 
+        brandTitle: "MMC | Gerador de Stylecard", guest: "Convidado", langBtn: "Language", 
+        helpBtn: "Ajuda", helpTitle: "Como obter sua lista", helpInst: "<li>Vá em <b>Avatar</b> -> <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li>", helpOk: "Entendi", 
+        tipsBtn: "Tips", tipsTitle: "Dicas Úteis", tipsInst: "<li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em \"Atualizar Ordem\", essa linha será removida automaticamente.</li>", tipsOk: "Entendi",
+        modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", lblInput: "Entrada (Inventário)", phInput: "Cole a lista de itens aqui...", lblOutput: "Resultado (Notecard)", phOutput: "O resultado sairá aqui...", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT", titleDb: "Lojas Registradas", phSearchStore: "Buscar loja...", btnDelAll: "Apagar Tudo", btnBackup: "Backup", titleAdd: "Registrar Lojas", formatAdd: "Formato Múltiplo: <b>LOJA = SLURL = TAG</b>", tagMixed: "Nenhuma Tag (Deixar Mista)", btnSave: "Salvar", titleEdit: "Editar Loja", phLink: "Link SLURL", phTag: "Tag", titleWarn: "Atenção", descWarn: "Detectei <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marcados como indefinidos (?). Sugiro que edite e atualize a lista antes de baixar.<br><br><b>DICA:</b> Substitua o \"<b>?</b>\" por <b>NO</b> e clique em <b>Atualizar Ordem</b> para deletá-los.<br><br>Deseja baixar mesmo assim?", btnCancel: "Cancelar", btnForceDown: "Sim, Baixar", alertTitle: "Aviso", btnOk: "OK", titlePassWipe: "Zerar Banco de Dados", descPassWipe: "Isso apagará todas as lojas. Digite a senha para confirmar.", phPassAdmin: "Senha de Segurança", btnConfirmDel: "Confirmar Exclusão", titleSuccess: "Sucesso", btnOkSuccess: "OK", titleAdmin: "Área Admin", descAdmin: "Acesso restrito", btnAuthAdmin: "Autenticar", titleAdminSettings: "Configurar Perfis", optP1: "Slot 1 (Esquerda)", optP2: "Slot 2 (Meio)", optP3: "Slot 3 (Direita)", lblSelAvatar: "Selecione um Avatar:", lblNamePerfil: "Nome do Perfil:", phNamePerfil: "Ex: Saori Suki", lblTrava: "Trava de Segurança:", phPass: "Digite uma senha (vazio = desativado)", btnSaveConfig: "Salvar Configuração", titleAuthPerfil: "Acesso Restrito", descAuthPerfil: "Digite a senha para acessar este perfil.", phPassPerfil: "Senha do Perfil", btnEnterAuth: "Entrar", msgSaved: "{n} loja(s) processada(s) com sucesso!", msgUpdated: "Loja atualizada com sucesso!", msgDeleted: "Loja removida com sucesso!", msgWiped: "Banco de dados zerado com sucesso!", errEmptyInp: "Cole a lista do seu inventário primeiro.", errFormat: "Cole pelo menos uma loja válida para salvar.", errEmptyDb: "O banco de dados já está vazio.", errPass: "Senha incorreta!", errNoGen: "Gere o Stylecard primeiro.", errNoDown: "Não há nada para baixar.", errAskPass: "Digite a senha para prosseguir.", statusGen: "PROCESSANDO...", askDel: "Apagar a loja {n}?", mixed: "Mista", btnUpdateEdit: "Atualizar"
+      },
+      en: { 
+        brandTitle: "MMC | Stylecard Generator", guest: "Guest", langBtn: "Idioma", 
+        helpBtn: "Help", helpTitle: "How to get your list", helpInst: "<li>Go to <b>Avatar</b> -> <b>Outfit</b></li><li>Click on the <b>Wearing</b> tab</li><li>Click on <b>Show additional information</b> (gear icon at the bottom of the list)</li><li>Select <b>Copy to clipboard</b></li>", helpOk: "Got it", 
+        tipsBtn: "Tips", tipsTitle: "Useful Tips", tipsInst: "<li>When generating the Stylecard, if there is an item you do not want to include in the final result, simply change the button name to <b>NO</b>. When you click \"Update Order\", that line will be removed automatically.</li>", tipsOk: "Got it",
+        modalLangTitle: "Change Language", btnDb: "Registered Stores", btnAdd: "+ Add Store", lblInput: "Input (Inventory)", phInput: "Paste your item list here...", lblOutput: "Result (Notecard)", phOutput: "The result will appear here...", btnGen: "Generate Stylecard", btnUpdate: "Update Order", btnDown: "Download TXT", titleDb: "Registered Stores", phSearchStore: "Search store...", btnDelAll: "Delete All", btnBackup: "Backup", titleAdd: "Register Stores", formatAdd: "Multiple Format: <b>STORE = SLURL = TAG</b>", tagMixed: "No Tag (Leave Mixed)", btnSave: "Save", titleEdit: "Edit Store", phLink: "SLURL Link", phTag: "Tag", titleWarn: "Warning", descWarn: "Detected <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marked as undefined (?). It is highly recommended to edit and update the list before downloading.<br><br><b>TIP:</b> Replace \"<b>?</b>\" with <b>NO</b> and click <b>Update Order</b> to delete them.<br><br>Download anyway?", btnCancel: "Cancel", btnForceDown: "Yes, Download", alertTitle: "Notice", btnOk: "OK", titlePassWipe: "Wipe Database", descPassWipe: "This will delete all stores. Enter the password to confirm.", phPassAdmin: "Security Password", btnConfirmDel: "Confirm Deletion", titleSuccess: "Success", btnOkSuccess: "OK", titleAdmin: "Admin Area", descAdmin: "Restricted Access", btnAuthAdmin: "Authenticate", titleAdminSettings: "Configure Profiles", optP1: "Slot 1 (Left)", optP2: "Slot 2 (Middle)", optP3: "Slot 3 (Right)", lblSelAvatar: "Select an Avatar:", lblNamePerfil: "Profile Name:", phNamePerfil: "e.g., Saori Suki", lblTrava: "Security Lock:", phPass: "Enter a password (empty = disabled)", btnSaveConfig: "Save Configuration", titleAuthPerfil: "Restricted Access", descAuthPerfil: "Enter the password to access this profile.", phPassPerfil: "Profile Password", btnEnterAuth: "Enter", msgSaved: "{n} store(s) processed successfully!", msgUpdated: "Store updated successfully!", msgDeleted: "Store removed successfully!", msgWiped: "Database wiped successfully!", errEmptyInp: "Paste your inventory list first.", errFormat: "Paste at least one valid store to save.", errEmptyDb: "The database is already empty.", errPass: "Incorrect password!", errNoGen: "Generate the Stylecard first.", errNoDown: "There is nothing to download.", errAskPass: "Enter the password to proceed.", statusGen: "PROCESSING...", askDel: "Delete store {n}?", mixed: "Mixed", btnUpdateEdit: "Update"
+      }
     };
 
     let currentLang = localStorage.getItem('mmc_lang') || 'pt';
@@ -539,6 +655,7 @@
         const key = el.getAttribute('data-i18n');
         if (i18n[lang][key]) { if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = i18n[lang][key]; else el.innerHTML = i18n[lang][key]; }
       });
+      document.getElementById('genBtnText').innerText = i18n[lang].btnGen;
       fecharModal('modalChangeLang');
     }
     function t(key) { return i18n[currentLang][key] || key; }
@@ -596,7 +713,7 @@
     async function salvarEdicao(){ 
       const btn = document.getElementById('saveEditBtn'); btn.innerHTML = "<span class='loader'></span>";
       let res = await callApi('atualizarLoja', { nomeLoja: editando, novaSlurl: document.getElementById('editSlurl').value, novaTag: document.getElementById('editTag').value });
-      if(res) { msg(t('msgUpdated')); btn.innerText = t('btnUpdate'); fecharModal('modalEdit'); abrirModalLojas(); }
+      if(res) { msg(t('msgUpdated')); btn.innerText = t('btnUpdateEdit'); fecharModal('modalEdit'); abrirModalLojas(); }
     }
     
     async function apagarLoja(n){ 
@@ -626,12 +743,12 @@
     async function gerarNotecard(){ 
       const entrada = document.getElementById('inputList').value;
       if(!entrada.trim()) return alerta(t('errEmptyInp'));
-      document.getElementById('genBtn').innerText = t('statusGen');
+      document.getElementById('genBtnText').innerText = t('statusGen');
       
       let res = await callApi('processarLista', { textoBruto: entrada });
       if(res) {
         document.getElementById('outputList').value = res.texto; 
-        document.getElementById('genBtn').innerText = t('btnGen'); 
+        document.getElementById('genBtnText').innerText = t('btnGen'); 
       }
     }
 
