@@ -13,9 +13,6 @@
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
     
-    /* =========================================
-       TELA DE PERFIS
-       ========================================= */
     #profileScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #141414; z-index: 9999; display: flex; flex-direction: column; justify-content: space-between; align-items: center; transition: opacity 0.6s ease; padding-top: 10vh; }
     .profiles-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
     .profile-title { font-size: 3vw; min-font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 2.5rem; letter-spacing: 2px; text-align: center; }
@@ -25,19 +22,12 @@
     .profile-img-wrap { width: 10vw; height: 10vw; min-width: 110px; min-height: 110px; max-width: 160px; max-height: 160px; border-radius: 50%; overflow: hidden; border: 3px solid transparent; transition: border-color 0.2s; position: relative; background: #222; }
     .profile:hover .profile-img-wrap { border-color: #fff; }
     .profile img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
-    .profile-name { margin-top: 15px; font-size: 1.2vw; min-font-size: 14px; color: #808080; transition: color 0.2s; font-weight: 500; display: flex; align-items: center; gap: 5px; }
-    .profile:hover .profile-name { color: #fff; }
-    
-    .lock-icon { width: 12px; height: 12px; fill: #808080; transition: fill 0.2s; }
-    .profile:hover .lock-icon { fill: #fff; }
-    .profile.loading .profile-img-wrap { border-color: transparent; }
-    .profile.loading img { opacity: 0.4; }
+    .profile-name-text { margin-top: 15px; font-size: 1.2vw; min-font-size: 14px; color: #808080; transition: color 0.2s; font-weight: 500; display: flex; align-items: center; gap: 5px; }
+    .profile:hover .profile-name-text { color: #fff; }
+    .lock-icon { width: 12px; height: 12px; fill: #808080; }
     .profile.loading .profile-img-wrap::after { content: ""; position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; margin-top: -20px; margin-left: -20px; border: 4px solid rgba(255,255,255,0.2); border-top: 4px solid var(--mmc-green); border-radius: 50%; animation: spin 1s linear infinite; }
     .profiles-watermark { text-align: center; padding: 20px 0 40px 0; font-size: 11px; color: #333; font-weight: 500; letter-spacing: 0.5px; }
 
-    /* =========================================
-       SISTEMA PRINCIPAL
-       ========================================= */
     #mainApp { display: none; opacity: 0; transition: opacity 0.8s ease; flex: 1; flex-direction: column; width: 100%; }
     .app-main { flex: 1; display: flex; flex-direction: column; padding: 40px; }
     .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 30px; }
@@ -45,67 +35,35 @@
     .brand { font-size: 22px; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 10px; margin-right: 10px; }
     .brand::before { content: ''; width: 12px; height: 12px; background: var(--mmc-green); border-radius: 50%; box-shadow: 0 0 10px var(--mmc-green); }
     .btn-header-pill { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); border-radius: 20px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; text-decoration: none; }
-    .btn-header-pill:hover { background: #27272a; border-color: var(--mmc-green); color: #fff; }
+    .btn-header-pill:hover { border-color: var(--mmc-green); background: #27272a; }
     
-    .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-group { display: flex; gap: 10px; }
     .btn { padding: 12px 20px; font-size: 13px; font-weight: 600; cursor: pointer; text-transform: uppercase; border-radius: 6px; transition: 0.2s; border: 1px solid transparent; }
-    .btn:hover { transform: translateY(-2px); }
     .btn-primary { background: #fff; color: #000; }
     .btn-secondary { background: #27272a; color: #fff; border-color: var(--border); }
     .btn-success { background: rgba(126, 255, 126, 0.1); color: var(--mmc-green); border-color: rgba(126, 255, 126, 0.3); }
-    .btn-danger { background: rgba(255, 71, 71, 0.1); color: var(--mmc-red); border-color: rgba(255, 71, 71, 0.3); }
     
     .container { display: flex; gap: 30px; height: 60vh; }
-    @media (max-width: 900px) { .container { flex-direction: column; height: auto; min-height: 80vh; } }
     .box { flex: 1; display: flex; flex-direction: column; background: var(--surface); border-radius: 12px; padding: 20px; border: 1px solid var(--border); }
-    label { font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; display: block; }
     textarea { flex: 1; background: var(--bg-dark); color: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 15px; font-family: 'Courier New', monospace; resize: none; line-height: 1.6; cursor: auto; }
-    
-    /* CORREÇÃO DO ACTION BAR */
-    .action-bar { text-align: center; margin: 30px 0; gap: 15px; display: flex; justify-content: center; flex-wrap: wrap; }
+    .action-bar { text-align: center; margin: 30px 0; gap: 15px; display: flex; justify-content: center; }
 
-    /* MODAIS GERAIS */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 10000; align-items: center; justify-content: center; }
     .modal { position: relative; background: var(--surface); border: 1px solid var(--border); padding: 40px 30px 30px 30px; width: 500px; max-width: 95%; border-radius: 16px; max-height: 90vh; display: flex; flex-direction: column; align-items: center; overflow-y: auto;}
-    .modal h3 { margin-top: 0; text-transform: uppercase; font-size: 18px; text-align: center; width: 100%; margin-bottom: 20px; }
-    .close-btn { position: absolute; top: 15px; right: 15px; background: transparent; border: none; cursor: pointer; padding: 5px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-    .close-btn svg { width: 24px; height: 24px; fill: var(--text-muted); }
-    .close-btn:hover svg { fill: var(--mmc-red); transform: scale(1.1); }
-    .modal input, .modal select, .modal textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 8px; font-family: 'Inter', sans-serif; cursor: auto; }
-    .modal textarea { height: 100px; font-family: 'Courier New', monospace; }
-    .modal-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; width: 100%; margin-top: 10px; }
+    .close-btn { position: absolute; top: 15px; right: 15px; background: transparent; border: none; cursor: pointer; }
+    .modal input, .modal select { width: 100%; padding: 12px; margin-bottom: 15px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 8px; }
     
-    /* Config Modal Specific */
     .avatar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; width: 100%; }
-    .avatar-option { border: 2px solid transparent; border-radius: 50%; cursor: pointer; transition: 0.2s; overflow: hidden; background: #222; }
-    .avatar-option:hover { border-color: var(--text-muted); }
-    .avatar-option.selected { border-color: var(--mmc-green); box-shadow: 0 0 10px rgba(126,255,126,0.3); }
+    .avatar-option { border: 2px solid transparent; border-radius: 50%; cursor: pointer; overflow: hidden; background: #222; }
+    .avatar-option.selected { border-color: var(--mmc-green); }
     .avatar-option img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .preview-avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--border); margin-bottom: 15px; background: #222; overflow: hidden;}
+    .preview-avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--border); margin-bottom: 15px; overflow: hidden;}
     .preview-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* CORREÇÃO DO LAYOUT DOS CARDS DAS LOJAS */
-    .store-grid { width: 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px; }
+    .store-grid { width: 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; overflow-y: auto; margin-bottom: 20px; }
     .store-card { background: #000; border: 1px solid var(--border); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-    .store-name-container { display: flex; flex-direction: column; align-items: flex-start; flex: 1; overflow: hidden; cursor: pointer; }
-    .store-name { font-size: 11px; font-weight: 700; color: var(--text-main); text-transform: uppercase; }
-    .mini-tag { font-size: 8px; padding: 2px 6px; border-radius: 4px; margin-top: 5px; display: block; font-weight: 800; color: #000; text-transform: uppercase; }
-    .store-delete { cursor: pointer; fill: var(--text-muted); width: 16px; margin-left: 10px; flex-shrink: 0; }
-    .store-delete:hover { fill: var(--mmc-red); }
-
-    .flag-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .flag-icon.round { border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.1); }
-    .flag-icon.round img { width: 100%; height: 100%; object-fit: cover; }
-    .btn-header-pill .flag-icon.round { width: 20px; height: 20px; }
-    .lang-card .flag-icon.round { width: 55px; height: 55px; margin-bottom: 12px; }
-
-    .lang-grid { display: flex; gap: 15px; width: 100%; margin-bottom: 10px; }
-    .lang-card { flex: 1; background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 25px 15px; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: 0.2s; }
-    .lang-card:hover { border-color: var(--mmc-green); background: #111; }
-    .lang-card.active { border-color: var(--mmc-green); box-shadow: 0 0 15px rgba(126,255,126,0.15); }
-    .lang-title { font-size: 13px; font-weight: 700; color: #fff; }
-
-    .loader { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid #fff; width: 16px; height: 16px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; }
+    .mini-tag { font-size: 8px; padding: 2px 6px; border-radius: 4px; color: #000; font-weight: 800; }
+    .loader { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid #fff; width: 16px; height: 16px; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
@@ -114,26 +72,26 @@
   <div id="profileScreen">
     <div class="profiles-main">
       <h1 class="profile-title">MMC - Stylecard System</h1>
-      <div class="profiles-container">
+      <div class="profiles-container" id="profilesContainerUI">
         
-        <div class="profile" id="prof-Saori" onclick="selectProfile('Saori', this)">
-          <div class="profile-img-wrap"><img id="img-Saori" src="https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1" alt="Saori"></div>
-          <span class="profile-name">
-            Saori <svg class="lock-icon" id="lock-Saori" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+        <div class="profile" id="prof-P1" onclick="selectProfile('P1', this)">
+          <div class="profile-img-wrap"><img id="img-P1" src=""></div>
+          <span class="profile-name-text">
+            <span id="name-P1">...</span> <svg class="lock-icon" id="lock-P1" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
           </span>
         </div>
 
-        <div class="profile" id="prof-Gabriel" onclick="selectProfile('Gabriel', this)">
-          <div class="profile-img-wrap"><img id="img-Gabriel" src="https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0" alt="Gabriel"></div>
-          <span class="profile-name">
-            Gabriel <svg class="lock-icon" id="lock-Gabriel" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+        <div class="profile" id="prof-P2" onclick="selectProfile('P2', this)">
+          <div class="profile-img-wrap"><img id="img-P2" src=""></div>
+          <span class="profile-name-text">
+            <span id="name-P2">...</span> <svg class="lock-icon" id="lock-P2" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
           </span>
         </div>
 
-        <div class="profile" id="prof-Convidado" onclick="selectProfile('Convidado', this)">
-          <div class="profile-img-wrap"><img id="img-Convidado" src="https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6" alt="Convidado"></div>
-          <span class="profile-name" id="name-Convidado">
-            Convidado <svg class="lock-icon" id="lock-Convidado" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+        <div class="profile" id="prof-P3" onclick="selectProfile('P3', this)">
+          <div class="profile-img-wrap"><img id="img-P3" src=""></div>
+          <span class="profile-name-text">
+            <span id="name-P3">...</span> <svg class="lock-icon" id="lock-P3" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
           </span>
         </div>
 
@@ -147,36 +105,19 @@
       <div class="header">
         <div class="brand-group">
           <div class="brand" id="sysTitle">MMC | Gerador de Stylecard</div>
-          
-          <button class="btn-header-pill" onclick="abrirModal('modalChangeLang')">
-            <div style="display:flex; gap: -4px;">
-              <div class="flag-icon round" style="z-index: 2; margin-right: -8px; width:20px; height:20px"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Brazilian_flag_icon_round.svg"></div>
-              <div class="flag-icon round" style="z-index: 1; width:20px; height:20px"><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg"></div>
-            </div>
-            <span id="langBtnText">Language</span>
-          </button>
-          
-          <a href="https://shapemerge.allomancy.com/" target="_blank" class="btn-header-pill" title="Acessar Shape Merge">
-            <img src="https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://shapemerge.allomancy.com&size=32" style="width:18px; border-radius:4px">
-            Shape Merge
-          </a>
-
-          <button class="btn-header-pill" onclick="abrirModal('modalAdminAuth')" title="Configurações de Perfil">
-            ⚙️ Settings
-          </button>
-
+          <button class="btn-header-pill" onclick="abrirModal('modalChangeLang')">🌐 <span id="langBtnText">Language</span></button>
+          <a href="https://shapemerge.allomancy.com/" target="_blank" class="btn-header-pill">🌀 Shape Merge</a>
+          <button class="btn-header-pill" onclick="abrirModal('modalAdminAuth')">⚙️ Settings</button>
         </div>
         <div class="btn-group">
           <button class="btn btn-secondary" onclick="abrirModalLojas()" id="btnDbText">Lojas Registradas</button>
           <button class="btn btn-primary" onclick="abrirModalAdd()" id="btnAddText">+ Adicionar Loja</button>
         </div>
       </div>
-
       <div class="container">
-        <div class="box"><label id="lblInputText">Entrada (Inventário)</label><textarea id="inputList" placeholder="Cole a lista de itens aqui..."></textarea></div>
-        <div class="box"><label id="lblOutputText">Resultado (Notecard)</label><textarea id="outputList" placeholder="O resultado sairá aqui..."></textarea></div>
+        <div class="box"><label id="lblInputText">Entrada</label><textarea id="inputList"></textarea></div>
+        <div class="box"><label id="lblOutputText">Resultado</label><textarea id="outputList"></textarea></div>
       </div>
-
       <div class="action-bar">
         <button class="btn btn-primary" id="genBtn" onclick="gerarNotecard()">Gerar Stylecard</button>
         <button class="btn btn-secondary" id="btnUpdateText" onclick="reorganizar()">Atualizar Ordem</button>
@@ -185,140 +126,78 @@
     </div>
   </div>
 
-  <div class="modal-overlay" id="modalProfileAuth">
-    <div class="modal" style="width: 350px;">
-      <button class="close-btn" onclick="fecharModal('modalProfileAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: var(--text-main);" id="authTitle">Acesso Restrito</h3>
-      <p>Digite a senha para acessar este perfil.</p>
-      <input type="password" id="profilePassInput" placeholder="Senha do Perfil">
-      <div class="modal-actions"><button class="btn btn-primary" style="width:100%" onclick="verificarSenhaPerfil()">Entrar</button></div>
-    </div>
-  </div>
-
   <div class="modal-overlay" id="modalAdminAuth">
     <div class="modal" style="width: 350px;">
-      <button class="close-btn" onclick="fecharModal('modalAdminAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
       <h3 style="color: var(--mmc-red);">Área Admin</h3>
-      <p>Acesso restrito para configurações de perfis.</p>
       <input type="password" id="adminPassInput" placeholder="Senha Mestre">
-      <div class="modal-actions"><button class="btn btn-danger" style="width:100%" onclick="verificarSenhaAdmin()">Autenticar</button></div>
+      <button class="btn btn-danger" style="width:100%" onclick="verificarSenhaAdmin()">Autenticar</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="modalAdminSettings">
     <div class="modal" style="width: 450px;">
-      <button class="close-btn" onclick="fecharModal('modalAdminSettings')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+      <button class="close-btn" onclick="fecharModal('modalAdminSettings')">❌</button>
       <h3>Configurar Perfis</h3>
-      
       <select id="configProfileSelect" onchange="carregarConfigPerfil()">
-        <option value="Saori">Perfil: Saori</option>
-        <option value="Gabriel">Perfil: Gabriel</option>
-        <option value="Convidado">Perfil: Convidado</option>
+        <option value="P1">Slot 1</option>
+        <option value="P2">Slot 2</option>
+        <option value="P3">Slot 3</option>
       </select>
-
       <div class="preview-avatar"><img id="configAvatarPreview" src=""></div>
-      
-      <label style="align-self: flex-start; margin-bottom: 5px;">Selecione um Avatar:</label>
-      <div class="avatar-grid" id="avatarGridList">
-        </div>
+      <div class="avatar-grid" id="avatarGridList"></div>
+      <label>Nome do Perfil:</label>
+      <input type="text" id="configProfileName" placeholder="Ex: Saori Suki">
+      <label>Senha de Acesso (vazio = livre):</label>
+      <input type="password" id="configProfilePass" placeholder="Senha">
+      <button class="btn btn-primary" id="btnSaveConfig" style="width:100%" onclick="salvarConfigPerfil()">Salvar</button>
+    </div>
+  </div>
 
-      <label style="align-self: flex-start; margin-bottom: 5px;">Trava de Segurança:</label>
-      <input type="password" id="configProfilePass" placeholder="Digite uma senha (vazio = desativado)">
-
-      <div class="modal-actions">
-        <button class="btn btn-primary" id="btnSaveConfig" style="width:100%" onclick="salvarConfigPerfil()">Salvar Configuração</button>
-      </div>
+  <div class="modal-overlay" id="modalProfileAuth">
+    <div class="modal" style="width: 350px;">
+      <h3 id="authTitle">Acesso Restrito</h3>
+      <input type="password" id="profilePassInput" placeholder="Senha do Perfil">
+      <button class="btn btn-primary" style="width:100%" onclick="verificarSenhaPerfil()">Entrar</button>
     </div>
   </div>
 
   <div class="modal-overlay" id="modalChangeLang">
-    <div class="modal" style="width: 450px;">
-      <button class="close-btn" onclick="fecharModal('modalChangeLang')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 id="modalLangTitle">Alterar Idioma</h3>
-      <div class="lang-grid">
-        <div class="lang-card" id="card-pt" onclick="setLanguage('pt')"><div class="flag-icon round" style="width:50px; height:50px;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Brazilian_flag_icon_round.svg"></div><div class="lang-title">Português</div></div>
-        <div class="lang-card" id="card-en" onclick="setLanguage('en')"><div class="flag-icon round" style="width:50px; height:50px;"><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg"></div><div class="lang-title">English</div></div>
+    <div class="modal" style="width: 400px;">
+      <h3>Idioma / Language</h3>
+      <div style="display:flex; gap:10px; width:100%">
+        <button class="btn btn-secondary" style="flex:1" onclick="setLanguage('pt')">Português</button>
+        <button class="btn btn-secondary" style="flex:1" onclick="setLanguage('en')">English</button>
       </div>
     </div>
   </div>
 
   <div class="modal-overlay" id="modalLojas">
     <div class="modal" style="width: 800px;">
-      <button class="close-btn" onclick="fecharModal('modalLojas')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+      <button class="close-btn" onclick="fecharModal('modalLojas')">❌</button>
       <h3 id="titleDb">Lojas Registradas</h3>
-      <input type="text" id="searchInput" placeholder="Buscar loja..." onkeyup="filtrarLojas()">
+      <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="filtrarLojas()">
       <div class="store-grid" id="storeGrid"></div>
-      <div class="modal-actions"><button class="btn btn-danger" onclick="abrirModalPassword()" id="btnDelAll">Apagar Tudo</button><button class="btn btn-secondary" onclick="downloadDatabase()" id="btnBackup">Backup</button></div>
+      <div style="display:flex; gap:10px"><button class="btn btn-danger" onclick="abrirModalPassword()">Apagar Tudo</button><button class="btn btn-secondary" onclick="downloadDatabase()">Backup</button></div>
     </div>
   </div>
 
   <div class="modal-overlay" id="modalAdd">
     <div class="modal">
-      <button class="close-btn" onclick="fecharModal('modalAdd')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 id="titleAdd">Registrar Lojas</h3>
-      <p style="margin-bottom: 15px;" id="formatAdd">Formato Múltiplo: <b>LOJA = SLURL = TAG</b></p>
-      <textarea id="fastInput"></textarea>
-      <select id="tagSelect"><option value="">...</option></select>
-      <div class="modal-actions"><button class="btn btn-primary" id="saveBtn" onclick="salvarLoja()">Salvar</button></div>
+      <button class="close-btn" onclick="fecharModal('modalAdd')">❌</button>
+      <h3>Registrar Lojas</h3>
+      <textarea id="fastInput" placeholder="LOJA = LINK = TAG"></textarea>
+      <select id="tagSelect"></select>
+      <button class="btn btn-primary" id="saveBtn" onclick="salvarLoja()">Salvar</button>
     </div>
   </div>
 
-  <div class="modal-overlay" id="modalEdit">
-    <div class="modal" style="width: 400px;">
-      <button class="close-btn" onclick="fecharModal('modalEdit')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 id="titleEdit">Editar Loja</h3>
-      <p id="editName" style="color:var(--mmc-green); font-weight: bold; font-size: 14px; margin-bottom: 15px;"></p>
-      <input type="text" id="editSlurl" placeholder="Link SLURL">
-      <input type="text" id="editTag" placeholder="Tag">
-      <div class="modal-actions"><button class="btn btn-primary" id="saveEditBtn" onclick="salvarEdicao()">Atualizar</button></div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modalConfirm">
-    <div class="modal">
-      <button class="close-btn" onclick="fecharModal('modalConfirm')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: #ff9800;" id="titleWarn">Atenção</h3>
-      <p id="descWarn"></p>
-      <div class="modal-actions"><button class="btn btn-secondary" onclick="fecharModal('modalConfirm')" id="btnCancel">Cancelar</button><button class="btn btn-primary" onclick="execDownload()" id="btnForceDown">Sim, Baixar</button></div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modalAlert">
-    <div class="modal" style="width: 350px;">
-      <button class="close-btn" onclick="fecharModal('modalAlert')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: #ff9800;" id="alertTitle">Aviso</h3>
-      <p id="alertMsg" style="margin-bottom: 25px;"></p>
-      <div class="modal-actions"><button class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalAlert')" id="btnOk">OK</button></div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modalPass">
-    <div class="modal" style="width: 400px;">
-      <button class="close-btn" onclick="fecharModal('modalPass')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: var(--mmc-red);" id="titlePass">Senha</h3>
-      <input type="password" id="passInp">
-      <div class="modal-actions"><button class="btn btn-danger" id="confirmPassBtn" onclick="confirmarApagarTudo()">Confirmar</button></div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modalSuccess">
-    <div class="modal" style="width: 350px;">
-      <button class="close-btn" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-      <h3 style="color: var(--mmc-green);" id="titleSuccess">Sucesso</h3>
-      <p id="successMsg" style="margin-bottom: 25px;"></p>
-      <div class="modal-actions"><button class="btn btn-success" style="width: 100%;" onclick="fecharModal('modalSuccess')" id="btnOk2">OK</button></div>
-    </div>
-  </div>
+  <div class="modal-overlay" id="modalAlert"><div class="modal"><h3 style="color:#ff9800">Aviso</h3><p id="alertMsg"></p><button class="btn btn-secondary" onclick="fecharModal('modalAlert')">OK</button></div></div>
+  <div class="modal-overlay" id="modalSuccess"><div class="modal"><h3 style="color:#7eff7e">Sucesso</h3><p id="successMsg"></p><button class="btn btn-success" onclick="fecharModal('modalSuccess')">OK</button></div></div>
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbxJ0DnrBEf0DYpTdVF5fJ2QXyjPxtvFpZGtCVTeNgAcRyF_p1BAmmC90R1_Np5WwP9WEA/exec"; 
 
-    let profileConfigs = {
-      "Saori": { avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1", password: "" },
-      "Gabriel": { avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0", password: "" },
-      "Convidado": { avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6", password: "" }
-    };
-
+    let profileConfigs = {};
     const availableAvatars = [
       "https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1",
       "https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0",
@@ -331,19 +210,15 @@
     ];
 
     let currentSelectedAvatarUrl = "";
-    let activeProfileAttempt = null;
+    let activeProfileID = null;
     let activeProfileElement = null;
 
     async function callApi(action, data = {}) {
       try {
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          body: JSON.stringify({ action: action, ...data }),
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-        });
+        const response = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action, ...data }), headers: { 'Content-Type': 'text/plain;charset=utf-8' } });
         const result = await response.json();
         return result.status === 'success' ? result.data : null;
-      } catch (error) { return null; }
+      } catch (e) { return null; }
     }
 
     window.onload = async () => { 
@@ -351,209 +226,158 @@
       let dbConfigs = await callApi('getProfilesConfig');
       if(dbConfigs) {
         profileConfigs = dbConfigs;
-        ['Saori', 'Gabriel', 'Convidado'].forEach(nome => {
-           if(profileConfigs[nome]) {
-             document.getElementById('img-' + nome).src = profileConfigs[nome].avatar;
-             if(profileConfigs[nome].password !== "") {
-               document.getElementById('lock-' + nome).style.display = "inline-block";
-             } else {
-               document.getElementById('lock-' + nome).style.display = "none";
-             }
+        ['P1', 'P2', 'P3'].forEach(id => {
+           if(profileConfigs[id]) {
+             document.getElementById('img-' + id).src = profileConfigs[id].avatar;
+             document.getElementById('name-' + id).innerText = profileConfigs[id].name;
+             document.getElementById('lock-' + id).style.display = profileConfigs[id].password ? "inline-block" : "none";
            }
         });
       }
     }
 
-    function selectProfile(name, element) {
-      activeProfileAttempt = name;
+    function selectProfile(id, element) {
+      activeProfileID = id;
       activeProfileElement = element;
-      
-      if(profileConfigs[name].password !== "") {
+      if(profileConfigs[id].password) {
         document.getElementById('profilePassInput').value = "";
         abrirModal('modalProfileAuth');
-      } else {
-        executarAnimacaoNetflix();
-      }
+      } else { executarAnimacaoNetflix(); }
     }
 
     function verificarSenhaPerfil() {
-      const inputPass = document.getElementById('profilePassInput').value;
-      if (inputPass === profileConfigs[activeProfileAttempt].password) {
-        fecharModal('modalProfileAuth');
-        executarAnimacaoNetflix();
-      } else {
-        alerta(i18n[currentLang].errPass);
-      }
+      if (document.getElementById('profilePassInput').value === profileConfigs[activeProfileID].password) {
+        fecharModal('modalProfileAuth'); executarAnimacaoNetflix();
+      } else { alerta("Senha Incorreta"); }
     }
 
     function executarAnimacaoNetflix() {
-      document.querySelectorAll('.profile').forEach(p => p.style.pointerEvents = 'none');
-      document.querySelectorAll('.profile').forEach(p => { if(p !== activeProfileElement) p.style.opacity = '0.3'; });
+      document.querySelectorAll('.profile').forEach(p => { p.style.pointerEvents = 'none'; if(p !== activeProfileElement) p.style.opacity = '0.3'; });
       activeProfileElement.classList.add('loading');
       setTimeout(() => {
         document.getElementById('profileScreen').style.opacity = '0';
         setTimeout(() => {
           document.getElementById('profileScreen').style.display = 'none';
-          const mainApp = document.getElementById('mainApp');
-          mainApp.style.display = 'flex';
-          setTimeout(() => { mainApp.style.opacity = '1'; }, 50);
+          document.getElementById('mainApp').style.display = 'flex';
+          setTimeout(() => { document.getElementById('mainApp').style.opacity = '1'; }, 50);
         }, 600); 
       }, 1200); 
     }
 
     function verificarSenhaAdmin() {
       if(document.getElementById('adminPassInput').value === "MMC1995") {
-        fecharModal('modalAdminAuth');
-        document.getElementById('adminPassInput').value = "";
-        abrirPainelSettings();
-      } else {
-        alerta(i18n[currentLang].errPass);
-      }
+        fecharModal('modalAdminAuth'); document.getElementById('adminPassInput').value = ""; abrirPainelSettings();
+      } else { alerta("Senha Incorreta"); }
     }
 
     function abrirPainelSettings() {
       abrirModal('modalAdminSettings');
-      gerarGridDeAvatares();
+      let grid = document.getElementById('avatarGridList'); grid.innerHTML = "";
+      availableAvatars.forEach(url => {
+        let div = document.createElement('div'); div.className = "avatar-option"; div.innerHTML = `<img src="${url}">`;
+        div.onclick = () => { document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('selected')); div.classList.add('selected'); document.getElementById('configAvatarPreview').src = url; currentSelectedAvatarUrl = url; };
+        grid.appendChild(div);
+      });
       carregarConfigPerfil();
     }
 
-    function gerarGridDeAvatares() {
-      let grid = document.getElementById('avatarGridList');
-      grid.innerHTML = "";
-      availableAvatars.forEach(url => {
-        let div = document.createElement('div');
-        div.className = "avatar-option";
-        div.innerHTML = `<img src="${url}">`;
-        div.onclick = () => {
-          document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('selected'));
-          div.classList.add('selected');
-          document.getElementById('configAvatarPreview').src = url;
-          currentSelectedAvatarUrl = url;
-        };
-        grid.appendChild(div);
-      });
-    }
-
     function carregarConfigPerfil() {
-      const selecionado = document.getElementById('configProfileSelect').value;
-      const config = profileConfigs[selecionado];
-      
+      const id = document.getElementById('configProfileSelect').value;
+      const config = profileConfigs[id];
+      document.getElementById('configProfileName').value = config.name;
       document.getElementById('configProfilePass').value = config.password;
       currentSelectedAvatarUrl = config.avatar;
       document.getElementById('configAvatarPreview').src = currentSelectedAvatarUrl;
-
-      document.querySelectorAll('.avatar-option').forEach(el => {
-        el.classList.remove('selected');
-        if(el.querySelector('img').src === currentSelectedAvatarUrl) el.classList.add('selected');
-      });
+      document.querySelectorAll('.avatar-option').forEach(el => { el.classList.remove('selected'); if(el.querySelector('img').src === currentSelectedAvatarUrl) el.classList.add('selected'); });
     }
 
     async function salvarConfigPerfil() {
-      const selecionado = document.getElementById('configProfileSelect').value;
+      const id = document.getElementById('configProfileSelect').value;
+      const name = document.getElementById('configProfileName').value;
       const pass = document.getElementById('configProfilePass').value;
-      const btn = document.getElementById('btnSaveConfig');
-      btn.innerHTML = "<span class='loader'></span>";
-
-      let res = await callApi('updateProfileConfig', { profile: selecionado, avatar: currentSelectedAvatarUrl, password: pass });
-      
-      btn.innerText = "Salvar Configuração";
-      
+      document.getElementById('btnSaveConfig').innerHTML = "<span class='loader'></span>";
+      let res = await callApi('updateProfileConfig', { id, name, avatar: currentSelectedAvatarUrl, password: pass });
+      document.getElementById('btnSaveConfig').innerText = "Salvar";
       if(res === "SUCCESS") {
-        profileConfigs[selecionado].avatar = currentSelectedAvatarUrl;
-        profileConfigs[selecionado].password = pass;
-        
-        document.getElementById('img-' + selecionado).src = currentSelectedAvatarUrl;
-        if(pass !== "") document.getElementById('lock-' + selecionado).style.display = "inline-block";
-        else document.getElementById('lock-' + selecionado).style.display = "none";
-
-        fecharModal('modalAdminSettings');
-        msg("Configuração atualizada!");
-      } else {
-        alerta("Erro ao salvar configuração.");
+        profileConfigs[id] = { name, avatar: currentSelectedAvatarUrl, password: pass };
+        document.getElementById('img-' + id).src = currentSelectedAvatarUrl;
+        document.getElementById('name-' + id).innerText = name;
+        document.getElementById('lock-' + id).style.display = pass ? "inline-block" : "none";
+        fecharModal('modalAdminSettings'); msg("Configuração Salva!");
       }
     }
 
+    // FUNÇÕES ORIGINAIS DE LOJAS E IDIOMA...
     const i18n = {
-      pt: { guest: "Convidado", brandTitle: "MMC | Gerador de Stylecard", langBtn: "Language", modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", lblInput: "Entrada (Inventário)", phInput: "Cole a lista de itens aqui...", lblOutput: "Resultado (Notecard)", phOutput: "O resultado sairá aqui...", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT", titleDb: "Lojas Registradas", phSearch: "Buscar loja...", btnDelAll: "Apagar Tudo", btnBackup: "Backup", titleAdd: "Registrar Lojas", tagMixed: "Nenhuma Tag", btnSave: "Salvar", titleWarn: "Atenção", descWarn: "Detectei {n} itens indefinidos (?). Deseja baixar assim mesmo?", btnCancel: "Cancelar", btnForceDown: "Sim, Baixar", alertTitle: "Aviso", btnOk: "OK", titlePass: "Senha", btnConfirmDel: "Confirmar", titleSuccess: "Sucesso", statusGen: "PROCESSANDO...", errPass: "Senha Incorreta", errFormat: "Cole a loja direito", msgSaved: "Salvo com sucesso!", msgUpdated: "Atualizado!", msgDeleted: "Deletado com sucesso!", msgWiped: "Tudo apagado!", mixed: "Mista" },
-      en: { guest: "Guest", brandTitle: "MMC | Stylecard Generator", langBtn: "Idioma", modalLangTitle: "Change Language", btnDb: "Registered Stores", btnAdd: "+ Add Store", lblInput: "Input (Inventory)", phInput: "Paste your items here...", lblOutput: "Result (Notecard)", phOutput: "The result will appear here...", btnGen: "Generate Stylecard", btnUpdate: "Update Order", btnDown: "Download TXT", titleDb: "Registered Stores", phSearch: "Search store...", btnDelAll: "Delete All", btnBackup: "Backup", titleAdd: "Register Stores", tagMixed: "No Tag", btnSave: "Save", titleWarn: "Warning", descWarn: "Detected {n} undefined items (?). Download anyway?", btnCancel: "Cancel", btnForceDown: "Yes, Download", alertTitle: "Notice", btnOk: "OK", titlePass: "Password", btnConfirmDel: "Confirm", titleSuccess: "Success", statusGen: "PROCESSING...", errPass: "Incorrect Password", errFormat: "Paste format correctly", msgSaved: "Saved successfully!", msgUpdated: "Updated!", msgDeleted: "Deleted successfully!", msgWiped: "All wiped!", mixed: "Mixed" }
+      pt: { brandTitle: "MMC | Gerador de Stylecard", langBtn: "Language", modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT" },
+      en: { brandTitle: "MMC | Stylecard Generator", langBtn: "Idioma", modalLangTitle: "Change Language", btnDb: "Registered Stores", btnAdd: "+ Add Store", btnGen: "Generate Stylecard", btnUpdate: "Update Order", btnDown: "Download TXT" }
     };
 
     let currentLang = localStorage.getItem('mmc_lang') || 'pt';
     function setLanguage(lang) {
       currentLang = lang; localStorage.setItem('mmc_lang', lang);
-      document.getElementById('card-pt').classList.remove('active'); document.getElementById('card-en').classList.remove('active'); document.getElementById('card-' + lang).classList.add('active');
-      document.getElementById('sysTitle').innerHTML = i18n[lang].brandTitle;
-      document.getElementById('langBtnText').innerHTML = i18n[lang].langBtn;
-      document.getElementById('btnDbText').innerHTML = i18n[lang].btnDb;
-      document.getElementById('btnAddText').innerHTML = i18n[lang].btnAdd;
-      document.getElementById('lblInputText').innerHTML = i18n[lang].lblInput;
-      document.getElementById('inputList').placeholder = i18n[lang].phInput;
-      document.getElementById('lblOutputText').innerHTML = i18n[lang].lblOutput;
-      document.getElementById('outputList').placeholder = i18n[lang].phOutput;
-      document.getElementById('genBtn').innerHTML = i18n[lang].btnGen;
-      document.getElementById('btnUpdateText').innerHTML = i18n[lang].btnUpdate;
-      document.getElementById('btnDownText').innerHTML = i18n[lang].btnDown;
-      document.getElementById('name-Convidado').innerHTML = `${i18n[lang].guest} <svg class="lock-icon" id="lock-Convidado" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>`;
-      if (profileConfigs['Convidado'].password !== "") document.getElementById('lock-Convidado').style.display = "inline-block";
+      document.getElementById('sysTitle').innerText = i18n[lang].brandTitle;
+      document.getElementById('langBtnText').innerText = i18n[lang].langBtn;
+      document.getElementById('btnDbText').innerText = i18n[lang].btnDb;
+      document.getElementById('btnAddText').innerText = i18n[lang].btnAdd;
+      document.getElementById('genBtn').innerText = i18n[lang].btnGen;
+      document.getElementById('btnUpdateText').innerText = i18n[lang].btnUpdate;
+      document.getElementById('btnDownText').innerText = i18n[lang].btnDown;
       fecharModal('modalChangeLang');
     }
 
     function abrirModal(id){ document.getElementById(id).style.display='flex'; }
     function fecharModal(id){ document.getElementById(id).style.display='none'; }
-    function msg(m){ document.getElementById('successMsg').innerHTML=m; abrirModal('modalSuccess'); }
-    function alerta(m){ document.getElementById('alertMsg').innerHTML=m; abrirModal('modalAlert'); }
+    function msg(m){ document.getElementById('successMsg').innerText=m; abrirModal('modalSuccess'); }
+    function alerta(m){ document.getElementById('alertMsg').innerText=m; abrirModal('modalAlert'); }
 
     async function gerarNotecard(){ 
       const entrada = document.getElementById('inputList').value; if(!entrada.trim()) return;
-      document.getElementById('genBtn').innerText = i18n[currentLang].statusGen;
+      document.getElementById('genBtn').innerText = "...";
       let res = await callApi('processarLista', { textoBruto: entrada });
-      if(res) { document.getElementById('outputList').value = res.texto; }
+      if(res) document.getElementById('outputList').value = res.texto;
       document.getElementById('genBtn').innerText = i18n[currentLang].btnGen;
     }
 
     async function abrirModalAdd(){ 
-      abrirModal('modalAdd'); document.getElementById('tagSelect').innerHTML = `<option value="">...</option>`;
+      abrirModal('modalAdd'); 
       let lojas = await callApi('getLojas');
       if(lojas) {
         let tags = [...new Set(lojas.map(i => i.tag).filter(t => t))].sort();
-        let html = `<option value="">${i18n[currentLang].tagMixed}</option>`;
+        let html = '<option value="">Mista</option>';
         tags.forEach(t => html += `<option value="${t}">${t}</option>`);
         document.getElementById('tagSelect').innerHTML = html;
       }
     }
-
     async function salvarLoja(){
       const val = document.getElementById('fastInput').value; if(!val.trim()) return;
       document.getElementById('saveBtn').innerHTML = "<span class='loader'></span>";
-      let res = await callApi('adicionarLoja', { texto: val, tag: document.getElementById('tagSelect').value });
-      document.getElementById('saveBtn').innerText = i18n[currentLang].btnSave;
-      fecharModal('modalAdd'); document.getElementById('fastInput').value = ''; msg(i18n[currentLang].msgSaved);
+      await callApi('adicionarLoja', { texto: val, tag: document.getElementById('tagSelect').value });
+      document.getElementById('saveBtn').innerText = "Salvar"; fecharModal('modalAdd'); document.getElementById('fastInput').value = ''; msg("Salvo!");
     }
-
-    /* CARDS DAS LOJAS RESTAURADOS AO FORMATO ORIGINAL */
     async function abrirModalLojas(){
-      abrirModal('modalLojas'); document.getElementById('storeGrid').innerHTML = "<div style='text-align:center; width:100%; padding:20px;'><span class='loader'></span></div>";
+      abrirModal('modalLojas'); document.getElementById('storeGrid').innerHTML = "<span class='loader'></span>";
       let ls = await callApi('getLojas');
       if(ls) {
-        let h=""; ls.forEach(i => { 
-          let c = stringToColor(i.tag); 
-          h += `<div class="store-card" data-name="${i.loja}"><div class="store-name-container" onclick="abrirEdit('${i.loja}','${i.slurl}','${i.tag}')"><div class="store-name">${i.loja}</div><span class="mini-tag" style="background:${c}">${i.tag||i18n[currentLang].mixed}</span></div><svg class="store-delete" onclick="apagarLoja('${i.loja}')" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></div>`; 
-        });
+        let h=""; ls.forEach(i => { h += `<div class="store-card" data-name="${i.loja}"><div style="cursor:pointer; flex:1" onclick="alerta('${i.loja}')"><div>${i.loja}</div><span class="mini-tag" style="background:#7eff7e">${i.tag||'Mista'}</span></div><div style="cursor:pointer" onclick="apagarLoja('${i.loja}')">🗑️</div></div>`; });
         document.getElementById('storeGrid').innerHTML=h;
       }
     }
-
-    function stringToColor(s){ if(!s) return '#555'; let h=0; for(let i=0;i<s.length;i++) h=s.charCodeAt(i)+((h<<5)-h); return `hsl(${Math.abs(h)%360},70%,80%)`; }
-    function abrirEdit(n,s,tg){ editando=n; document.getElementById('editName').innerText=n; document.getElementById('editSlurl').value=s; document.getElementById('editTag').value=tg; abrirModal('modalEdit'); }
-    async function salvarEdicao(){ const btn=document.getElementById('saveEditBtn'); btn.innerHTML="<span class='loader'></span>"; let res=await callApi('atualizarLoja', { nomeLoja: editando, novaSlurl: document.getElementById('editSlurl').value, novaTag: document.getElementById('editTag').value }); if(res) { msg(i18n[currentLang].msgUpdated); btn.innerText = "Atualizar"; fecharModal('modalEdit'); abrirModalLojas(); } }
-    async function apagarLoja(n){ if(confirm("Deletar " + n + "?")) { await callApi('deletarLoja', { nomeLoja: n }); msg(i18n[currentLang].msgDeleted); abrirModalLojas(); } }
-    function abrirModalPassword(){ document.getElementById('passInp').value = ""; abrirModal('modalPass'); }
-    async function confirmarApagarTudo(){ let s = document.getElementById('passInp').value; if(!s) return; document.getElementById('confirmPassBtn').innerHTML="<span class='loader'></span>"; let r = await callApi('apagarTodasLojas', { senha: s }); document.getElementById('confirmPassBtn').innerText = i18n[currentLang].btnConfirmDel; if(r){ fecharModal('modalPass'); if(r==="WRONG_PASS") alerta(i18n[currentLang].errPass); else { msg(i18n[currentLang].msgWiped); abrirModalLojas(); } } }
     function filtrarLojas() { let input = document.getElementById('searchInput').value.toUpperCase(); document.querySelectorAll('.store-card').forEach(c => c.style.display = c.getAttribute('data-name').includes(input) ? 'flex' : 'none'); }
-    function verificarDownload(){ let txt = document.getElementById('outputList').value; if(!txt) return; let indefinidos = (txt.match(/BUTTON NAME:\s*\?\r?\n/g) || []).length; if (indefinidos > 0) { document.getElementById('descWarn').innerHTML = i18n[currentLang].descWarn.replace('{n}', indefinidos); abrirModal('modalConfirm'); } else execDownload(); }
-    function execDownload(){ let blob = new Blob([document.getElementById('outputList').value], {type:'text/plain'}); let a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='STYLECARD.txt'; a.click(); fecharModal('modalConfirm'); }
-    function reorganizar(){ let txt = document.getElementById('outputList').value; if(!txt) return; let ordem = ["HEAD", "FACE SKIN", "BODY", "BODY SKIN", "FACE ADDON", "BEARD", "EYES", "LASHES", "HAIRBASE", "HAIR", "DEFORMS", "TATTOO", "BODY ADDON", "BODY HAIR", "MAKEUP", "NAILS", "SPANKER", "ACESSORIES", "CLOTHING", "?"]; let blocos = txt.split('------------------------------------------------------------').filter(b => b.trim() !== "").map(b => { let m = b.match(/BUTTON NAME:\s*(.+)/); let btn = m ? m[1].trim() : "?"; return { btn, texto: "------------------------------------------------------------\n" + b.trim() + "\n" }; }); blocos.sort((a,b) => (ordem.indexOf(a.btn)===-1?998:ordem.indexOf(a.btn)) - (ordem.indexOf(b.btn)===-1?998:ordem.indexOf(b.btn))); document.getElementById('outputList').value = blocos.map(b => b.texto).join(""); }
-    async function downloadDatabase(){ let ls = await callApi('getLojas'); if(ls) { let t = ls.map(i => `${i.loja} = ${i.slurl}${i.tag?' = '+i.tag:''}`).join('\n'); let b = new Blob([t], {type:'text/plain'}); let a = document.createElement('a'); a.href=URL.createObjectURL(b); a.download='BACKUP_LOJAS.txt'; a.click(); } }
+    function verificarDownload(){ let txt = document.getElementById('outputList').value; if(!txt) return; execDownload(); }
+    function execDownload(){ let blob = new Blob([document.getElementById('outputList').value], {type:'text/plain'}); let a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='STYLECARD.txt'; a.click(); }
+    function reorganizar(){
+      let txt = document.getElementById('outputList').value; if(!txt) return;
+      let ordem = ["HEAD", "FACE SKIN", "BODY", "BODY SKIN", "FACE ADDON", "BEARD", "EYES", "LASHES", "HAIRBASE", "HAIR", "DEFORMS", "TATTOO", "BODY ADDON", "BODY HAIR", "MAKEUP", "NAILS", "SPANKER", "ACESSORIES", "CLOTHING", "?"];
+      let blocos = txt.split('------------------------------------------------------------').filter(b => b.trim() !== "").map(b => {
+        let m = b.match(/BUTTON NAME:\s*(.+)/);
+        let btn = m ? m[1].trim() : "?";
+        return { btn, texto: "------------------------------------------------------------\n" + b.trim() + "\n" };
+      });
+      blocos.sort((a,b) => (ordem.indexOf(a.btn)===-1?998:ordem.indexOf(a.btn)) - (ordem.indexOf(b.btn)===-1?998:ordem.indexOf(b.btn)));
+      document.getElementById('outputList').value = blocos.map(b => b.texto).join("");
+    }
+    async function downloadDatabase(){ let ls = await callApi('getLojas'); if(ls) { let t = ls.map(i => `${i.loja} = ${i.slurl}${i.tag?' = '+i.tag:''}`).join('\n'); let b = new Blob([t], {type:'text/plain'}); let a = document.createElement('a'); a.href=URL.createObjectURL(b); a.download='BACKUP.txt'; a.click(); } }
   </script>
 </body>
 </html>
