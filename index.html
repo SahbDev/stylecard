@@ -216,7 +216,7 @@
   <div class="modal-overlay" id="modalSuccess"><div class="modal" style="width:350px;"><button class="close-btn" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--mmc-green);" id="titleSuccess" data-i18n="titleSuccess">Sucesso</h3><p id="successMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button class="btn btn-secondary" style="width: 100%; color: var(--text-main); border-color: var(--text-main);" onclick="fecharModal('modalSuccess')" data-i18n="btnOkSuccess">OK</button></div></div></div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbzhlUsSIUzLOpbxIRXH-hRYAPTYazPlSPJsD8m3jYgC90LzxjwjsJJ5YFpgCoghlHe4/exec"; 
+    const API_URL = "https://script.google.com/macros/s/AKfycbzhlUsSIUzLOpbxIRXH-hRYAPTYazPlSPJsD8m3jYgC90LzxjwjsJJ5YFpgCoghlHe4/exec";
 
     let profileConfigs = {
       "P1": { name: "Saori", avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1", password: "" },
@@ -256,7 +256,7 @@
         return result.status === 'success' ? result.data : null;
       } catch (error) { 
         console.error("ERRO DE FETCH:", error);
-        return { texto: "ERRO DE CONEXÃO!\n\nSeu site não conseguiu se conectar com o Google Sheets." }; 
+        return { texto: "ERRO DE CONEXÃO!\n\nSeu site não conseguiu se conectar com o Google Sheets. O Google está bloqueando o acesso.\n\nVá em Nova Implantação e marque 'Quem pode acessar' como 'Qualquer pessoa'." }; 
       }
     }
 
@@ -357,7 +357,7 @@
       if(res && res.texto) {
         document.getElementById('outputList').value = res.texto; 
       } else {
-        document.getElementById('outputList').value = "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR."; 
+        document.getElementById('outputList').value = res && res.texto ? res.texto : "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR A RESPOSTA."; 
       }
       btn.innerText = t('btnGen'); 
     }
