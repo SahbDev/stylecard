@@ -243,6 +243,7 @@
     let currentSelectedAvatarUrl = "";
     let activeProfileID = null;
     let activeProfileElement = null;
+    let profileOpening = false;
     let adminPasswordMemory = "";
     let editando = "";
 
@@ -286,16 +287,13 @@
     }
 
     async function selectProfile(id, element) {
+      if (profileOpening) return;
       activeProfileID = id; activeProfileElement = element;
       if(profileConfigs[id].hasPassword) {
         document.getElementById('profilePassInput').value = "";
         abrirModal('modalProfileAuth');
       } else {
-        try {
-          await iniciarSessaoPerfil("");
-        } catch (error) {
-          alerta(traduzirErroApi(error));
-        }
+        executarAnimacaoNetflix();
       }
     }
 
@@ -311,6 +309,8 @@
     }
 
     function executarAnimacaoNetflix() {
+      if (profileOpening || !activeProfileElement) return;
+      profileOpening = true;
       document.querySelectorAll('.profile').forEach(p => { p.style.pointerEvents = 'none'; if(p !== activeProfileElement) p.style.opacity = '0.3'; });
       activeProfileElement.classList.add('loading');
       setTimeout(() => { document.getElementById('profileScreen').style.opacity = '0'; setTimeout(() => { document.getElementById('profileScreen').style.display = 'none'; const mainApp = document.getElementById('mainApp'); mainApp.style.display = 'flex'; setTimeout(() => { mainApp.style.opacity = '1'; }, 50); }, 600); }, 1200); 
