@@ -865,10 +865,13 @@ textarea:focus-visible {
   transform: translateY(1px);
 }
 
-.sheet-header-actions {
+.sheet-header > .sheet-header-actions {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 8px;
+  flex: 0 0 auto;
 }
 
 .discord-send-btn {
