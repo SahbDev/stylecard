@@ -216,7 +216,7 @@
   <div class="modal-overlay" id="modalSuccess"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--mmc-green);" id="titleSuccess" data-i18n="titleSuccess">Sucesso</h3><p id="successMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%; color: var(--text-main); border-color: var(--text-main);" onclick="fecharModal('modalSuccess')" data-i18n="btnOkSuccess">OK</button></div></div></div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyUIW7B0o9Qagi2S1BebRQfmQfMmmszni1ZkbJBArrzn0tyvg9cAnHOE5kA0edy64hc/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz7puKpktpv0e2ubhyq4mlbSXQcUKl0OL84gGeBk-JW1b4vaQEqSw3diOfyZAbYv0za/exec";
 
     let profileConfigs = {
       "P1": { name: "Saori", avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1", hasPassword: false },
@@ -243,15 +243,12 @@
     let currentSelectedAvatarUrl = "";
     let activeProfileID = null;
     let activeProfileElement = null;
-    let activeSessionToken = sessionStorage.getItem('mmc_session') || "";
-    let adminSessionToken = "";
+    let adminPasswordMemory = "";
     let editando = "";
 
-    async function callApi(action, data = {}, tokenOverride) {
+    async function callApi(action, data = {}) {
       try {
-        const token = tokenOverride === undefined ? activeSessionToken : tokenOverride;
         const payload = { action: action, ...data };
-        if (token) payload.sessionToken = token;
 
         const response = await fetch(API_URL, {
           method: 'POST',
@@ -264,10 +261,6 @@
         return result.data;
       } catch (error) {
         console.error("ERRO DE FETCH:", error);
-        if (["AUTH_REQUIRED", "INVALID_SESSION", "SESSION_EXPIRED"].includes(error.message)) {
-          activeSessionToken = "";
-          sessionStorage.removeItem('mmc_session');
-        }
         throw error;
       }
     }
@@ -285,12 +278,10 @@
     }
 
     async function iniciarSessaoPerfil(password) {
-      const result = await callApi('loginProfile', {
+      await callApi('loginProfile', {
         id: activeProfileID,
         password: password || ""
-      }, null);
-      activeSessionToken = result.token;
-      sessionStorage.setItem('mmc_session', activeSessionToken);
+      });
       executarAnimacaoNetflix();
     }
 
@@ -328,8 +319,9 @@
     async function verificarSenhaAdmin() {
       const input = document.getElementById('adminPassInput');
       try {
-        const result = await callApi('loginAdmin', { password: input.value }, null);
-        adminSessionToken = result.token;
+        const senhaDigitada = input.value;
+        await callApi('loginAdmin', { password: senhaDigitada });
+        adminPasswordMemory = senhaDigitada;
         fecharModal('modalAdminAuth');
         input.value = "";
         abrirPainelSettings();
@@ -360,8 +352,9 @@
           id: id,
           name: name,
           avatar: currentSelectedAvatarUrl,
-          password: pass
-        }, adminSessionToken);
+          password: pass,
+          adminPassword: adminPasswordMemory
+        });
         if(res !== "SUCCESS") throw new Error(res || "SAVE_ERROR");
         profileConfigs[id] = {
           name: name,
@@ -392,11 +385,6 @@
     function traduzirErroApi(error) {
       const code = error && error.message ? error.message : "";
       if (["INVALID_CREDENTIALS", "ADMIN_REQUIRED"].includes(code)) return t('errPass');
-      if (["AUTH_REQUIRED", "INVALID_SESSION", "SESSION_EXPIRED"].includes(code)) {
-        return currentLang === "en"
-          ? "Your session has expired. Reload the page and select your profile again."
-          : "Sua sessão expirou. Recarregue a página e selecione o perfil novamente.";
-      }
       return currentLang === "en"
         ? "Could not connect to the database. Check the Google Apps Script deployment."
         : "Não foi possível conectar ao banco de dados. Verifique a implantação do Google Apps Script.";
@@ -550,9 +538,7 @@
       const btn = document.getElementById('confirmPassBtn');
       btn.innerHTML = "<span class='loader'></span>";
       try {
-        const login = await callApi('loginAdmin', { password: senha }, null);
-        adminSessionToken = login.token;
-        const result = await callApi('apagarTodasLojas', {}, adminSessionToken);
+        const result = await callApi('apagarTodasLojas', { senha: senha });
         fecharModal('modalPass');
         if (result === "EMPTY") {
           alerta(t('errEmptyDb'));
