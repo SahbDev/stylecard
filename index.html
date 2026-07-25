@@ -131,44 +131,44 @@
       <div class="header">
         <div class="brand-group">
           <div class="brand" id="sysTitle" data-i18n="brandTitle">MMC | Gerador de Stylecard</div>
-          <button class="btn-header-pill" onclick="abrirModal('modalChangeLang')">
-            <div style="display:flex; gap: -4px;"><div class="flag-icon round" style="z-index: 2; margin-right: -8px;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Brazilian_flag_icon_round.svg" alt="BR"></div><div class="flag-icon round" style="z-index: 1;"><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg" alt="US"></div></div>
-            <span id="langBtnText">Language</span>
+          <button type="button" class="btn-header-pill" onclick="abrirModal('modalChangeLang')">
+            <span style="display:flex; gap: -4px;"><span class="flag-icon round" style="z-index: 2; margin-right: -8px;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Brazilian_flag_icon_round.svg" alt="BR"></span><span class="flag-icon round" style="z-index: 1;"><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg" alt="US"></span></span>
+            <span id="langBtnText" data-i18n="langBtn">Language</span>
           </button>
           <a href="https://shapemerge.allomancy.com/" target="_blank" class="btn-header-pill" title="Acessar Shape Merge"><img src="https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://shapemerge.allomancy.com&size=32" style="width:18px; border-radius:4px" alt="SM"> Shape Merge</a>
-          <button class="btn-header-pill" onclick="abrirModal('modalAdminAuth')" title="Configurações de Perfil">⚙️ Settings</button>
-          <button class="btn-header-pill" onclick="abrirModal('modalHelp')" title="Instruções / Help"><svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg> <span id="helpBtnText">Ajuda</span></button>
-          <button class="btn-header-pill" onclick="abrirModal('modalTips')" title="Dicas / Tips"><svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg> <span id="tipsBtnText">Tips</span></button>
+          <button type="button" class="btn-header-pill" onclick="abrirModal('modalAdminAuth')" title="Configurações de Perfil">⚙️ Settings</button>
+          <button type="button" class="btn-header-pill" onclick="abrirModal('modalHelp')" title="Instruções / Help"><svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg> <span id="helpBtnText" data-i18n="helpBtn">Ajuda</span></button>
+          <button type="button" class="btn-header-pill" onclick="abrirModal('modalTips')" title="Dicas / Tips"><svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: currentColor;"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg> <span id="tipsBtnText" data-i18n="tipsBtn">Tips</span></button>
         </div>
         
         <div class="btn-group">
-          <button class="btn btn-success" onclick="abrirModal('modalTeach')" id="btnTeachText">🧠 Ensinar Padrão</button>
-          <button class="btn btn-secondary" onclick="abrirModalLojas()" id="btnDbText">Lojas Registradas</button>
-          <button class="btn btn-primary" onclick="abrirModalAdd()" id="btnAddText">+ Adicionar Loja</button>
+          <button type="button" class="btn btn-success" onclick="abrirModal('modalTeach')" id="btnTeachText" data-i18n="teachBtn">🧠 Ensinar Padrão</button>
+          <button type="button" class="btn btn-secondary" onclick="abrirModalLojas()" id="btnDbText" data-i18n="btnDb">Lojas Registradas</button>
+          <button type="button" class="btn btn-primary" onclick="abrirModalAdd()" id="btnAddText" data-i18n="btnAdd">+ Adicionar Loja</button>
         </div>
       </div>
 
       <div class="container">
         <div class="box">
-          <label id="lblInputText">Entrada (Inventário)</label>
-          <textarea id="inputList" placeholder="Cole a lista de itens aqui..."></textarea>
+          <label id="lblInputText" data-i18n="lblInput">Entrada (Inventário)</label>
+          <textarea id="inputList" data-i18n="phInput" placeholder="Cole a lista de itens aqui..."></textarea>
         </div>
         <div class="box">
-          <label id="lblOutputText">Resultado (Notecard)</label>
-          <textarea id="outputList" placeholder="O resultado sairá aqui..."></textarea>
+          <label id="lblOutputText" data-i18n="lblOutput">Resultado (Notecard)</label>
+          <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..."></textarea>
         </div>
       </div>
 
       <div class="action-bar">
-        <button class="btn-action" onclick="gerarNotecard()">
+        <button type="button" class="btn-action" onclick="gerarNotecard()">
           <svg viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
           <span id="genBtnText" data-i18n="btnGen">Gerar Stylecard</span>
         </button>
-        <button class="btn-action" onclick="reorganizar()">
+        <button type="button" class="btn-action" onclick="reorganizar()">
           <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
           <span data-i18n="btnUpdate">Atualizar Ordem</span>
         </button>
-        <button class="btn-action" onclick="verificarDownload()">
+        <button type="button" class="btn-action" onclick="verificarDownload()">
           <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
           <span data-i18n="btnDown">Baixar TXT</span>
         </button>
@@ -178,7 +178,7 @@
 
   <div class="modal-overlay" id="modalTeach">
     <div class="modal" style="width: 450px;">
-      <button class="close-btn" onclick="fecharModal('modalTeach')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+      <button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalTeach')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
       <h3 id="teachTitle" data-i18n="teachTitle">Ensinar Padrão (IA Local)</h3>
       <p style="margin-bottom: 20px; font-size:13px; color:var(--text-muted);" data-i18n="teachDesc">O sistema errou? Cole o pedaço do texto que identifica o item e associe ao nome correto da loja e botão.</p>
       <label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="teachLblGatilho">Gatilho (Ex: T1S - NEW FACE)</label>
@@ -196,35 +196,34 @@
         <option value="CLOTHING">CLOTHING</option><option value="NO">NO (Ignorar Item)</option>
       </select>
       <div class="modal-actions" style="margin-top: 15px;">
-        <button class="btn btn-secondary" id="saveTeachBtn" style="width:100%" onclick="salvarEnsinamento()" data-i18n="btnSaveTeach">Salvar Padrão</button>
+        <button type="button" class="btn btn-secondary" id="saveTeachBtn" style="width:100%" onclick="salvarEnsinamento()" data-i18n="btnSaveTeach">Salvar Padrão</button>
       </div>
     </div>
   </div>
 
-  <div class="modal-overlay" id="modalHelp"><div class="modal" style="width:450px;"><button class="close-btn" onclick="fecharModal('modalHelp')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="helpTitle">Como obter sua lista</h3><div style="background: #000; padding: 20px; border-radius: 8px; border: 1px solid var(--border); width: 100%;"><ol class="help-list" data-i18n="helpInst"><li>Vá em <b>Avatar</b> -> <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li></ol></div><div class="modal-actions" style="margin-top: 20px;"><button class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalHelp')" data-i18n="helpOk">Entendi</button></div></div></div>
-  <div class="modal-overlay" id="modalTips"><div class="modal" style="width:450px;"><button class="close-btn" onclick="fecharModal('modalTips')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="tipsTitle">Dicas Úteis</h3><div style="background: #000; padding: 20px; border-radius: 8px; border: 1px solid var(--border); width: 100%;"><ul class="help-list" data-i18n="tipsInst" style="list-style-type: none; padding-left: 0;"><li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em "Atualizar Ordem", essa linha será removida automaticamente.</li></ul></div><div class="modal-actions" style="margin-top: 20px;"><button class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalTips')" data-i18n="tipsOk">Entendi</button></div></div></div>
-  <div class="modal-overlay" id="modalAdminAuth"><div class="modal" style="width:350px;"><button class="close-btn" onclick="fecharModal('modalAdminAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" data-i18n="titleAdmin">Área Admin</h3><p data-i18n="descAdmin">Acesso restrito</p><input type="password" id="adminPassInput" data-i18n="phPassAdmin" placeholder="Senha Mestre"><div class="modal-actions"><button class="btn btn-secondary" style="width:100%" onclick="verificarSenhaAdmin()" data-i18n="btnAuthAdmin">Autenticar</button></div></div></div>
-  <div class="modal-overlay" id="modalAdminSettings"><div class="modal" style="width:450px;"><button class="close-btn" onclick="fecharModal('modalAdminSettings')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="titleAdminSettings">Configurar Perfis</h3><select id="configProfileSelect" onchange="carregarConfigPerfil()"><option value="P1" data-i18n="optP1">Slot 1</option><option value="P2" data-i18n="optP2">Slot 2</option><option value="P3" data-i18n="optP3">Slot 3</option></select><div class="preview-avatar"><img id="configAvatarPreview" src=""></div><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblSelAvatar">Avatar:</label><div class="avatar-grid" id="avatarGridList"></div><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblNamePerfil">Nome:</label><input type="text" id="configProfileName" data-i18n="phNamePerfil" placeholder="Ex: Saori Suki"><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblTrava">Senha:</label><input type="password" id="configProfilePass" data-i18n="phPass" placeholder="Vazio = desativado"><div class="modal-actions"><button class="btn btn-secondary" id="btnSaveConfig" style="width:100%" onclick="salvarConfigPerfil()" data-i18n="btnSaveConfig">Salvar Configuração</button></div></div></div>
-  <div class="modal-overlay" id="modalProfileAuth"><div class="modal" style="width:350px;"><button class="close-btn" onclick="fecharModal('modalProfileAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" id="authTitle" data-i18n="titleAuthPerfil">Acesso Restrito</h3><p data-i18n="descAuthPerfil">Digite a senha.</p><input type="password" id="profilePassInput" data-i18n="phPassPerfil" placeholder="Senha do Perfil"><div class="modal-actions"><button class="btn btn-secondary" style="width:100%" onclick="verificarSenhaPerfil()" data-i18n="btnEnterAuth">Entrar</button></div></div></div>
-  <div class="modal-overlay" id="modalChangeLang"><div class="modal" style="width:450px;"><button class="close-btn" onclick="fecharModal('modalChangeLang')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="modalLangTitle" data-i18n="modalLangTitle">Alterar Idioma</h3><div class="lang-grid"><div class="lang-card" id="card-pt" onclick="setLanguage('pt')"><div class="flag-icon round"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Brazilian_flag_icon_round.svg"></div><div class="lang-title">Português</div></div><div class="lang-card" id="card-en" onclick="setLanguage('en')"><div class="flag-icon round"><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg"></div><div class="lang-title">English</div></div></div></div></div>
-  <div class="modal-overlay" id="modalLojas"><div class="modal" style="width:800px;"><button class="close-btn" onclick="fecharModal('modalLojas')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="titleDb" data-i18n="titleDb">Lojas Registradas</h3><input type="text" id="searchInput" data-i18n="phSearchStore" placeholder="Buscar loja..." onkeyup="filtrarLojas()"><div class="store-grid" id="storeGrid"></div><div class="modal-actions"><button class="btn btn-danger" onclick="abrirModalPassword()" id="btnDelAll" data-i18n="btnDelAll">Apagar Tudo</button><button class="btn btn-secondary" onclick="downloadDatabase()" id="btnBackup" data-i18n="btnBackup">Backup</button></div></div></div>
-  <div class="modal-overlay" id="modalAdd"><div class="modal"><button class="close-btn" onclick="fecharModal('modalAdd')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="titleAdd" data-i18n="titleAdd">Registrar Lojas</h3><p style="margin-bottom: 15px;" id="formatAdd" data-i18n="formatAdd">Formato Múltiplo: <b>LOJA = SLURL = TAG</b></p><textarea id="fastInput"></textarea><select id="tagSelect"><option value="">...</option></select><div class="modal-actions"><button class="btn btn-secondary" id="saveBtn" onclick="salvarLoja()" data-i18n="btnSave">Salvar</button></div></div></div>
-  <div class="modal-overlay" id="modalEdit"><div class="modal" style="width:400px; min-height:auto;"><button class="close-btn" onclick="fecharModal('modalEdit')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="titleEdit" data-i18n="titleEdit">Editar Loja</h3><p id="editName" style="color:var(--text-main); font-weight: bold; font-size: 14px; margin-bottom: 15px;"></p><input type="text" id="editSlurl" data-i18n="phLink" placeholder="Link SLURL"><input type="text" id="editTag" data-i18n="phTag" placeholder="Tag"><div class="modal-actions"><button class="btn btn-secondary" id="saveEditBtn" onclick="salvarEdicao()" data-i18n="btnUpdateEdit">Atualizar</button></div></div></div>
-  <div class="modal-overlay" id="modalConfirm"><div class="modal"><button class="close-btn" onclick="fecharModal('modalConfirm')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: #ff9800;" id="titleWarn" data-i18n="titleWarn">Atenção</h3><p id="descWarn"></p><div class="modal-actions"><button class="btn btn-secondary" onclick="fecharModal('modalConfirm')" data-i18n="btnCancel">Cancelar</button><button class="btn btn-secondary" onclick="execDownload()" id="btnForceDown" style="color: var(--text-main); border-color: var(--text-main);" data-i18n="btnForceDown">Sim, Baixar</button></div></div></div>
-  <div class="modal-overlay" id="modalAlert"><div class="modal" style="width:350px;"><button class="close-btn" onclick="fecharModal('modalAlert')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: #ff9800;" id="alertTitle" data-i18n="alertTitle">Aviso</h3><p id="alertMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalAlert')" data-i18n="btnOk">OK</button></div></div></div>
-  <div class="modal-overlay" id="modalPass"><div class="modal" style="width:400px;"><button class="close-btn" onclick="fecharModal('modalPass')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" id="titlePass" data-i18n="titlePassWipe">Zerar Banco de Dados</h3><p data-i18n="descPassWipe">Isso apagará todas as lojas. Digite a senha para confirmar.</p><input type="password" id="passInp"><div class="modal-actions"><button class="btn btn-danger" id="confirmPassBtn" onclick="confirmarApagarTudo()" data-i18n="btnConfirmDel">Confirmar</button></div></div></div>
-  <div class="modal-overlay" id="modalSuccess"><div class="modal" style="width:350px;"><button class="close-btn" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--mmc-green);" id="titleSuccess" data-i18n="titleSuccess">Sucesso</h3><p id="successMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button class="btn btn-secondary" style="width: 100%; color: var(--text-main); border-color: var(--text-main);" onclick="fecharModal('modalSuccess')" data-i18n="btnOkSuccess">OK</button></div></div></div>
+  <div class="modal-overlay" id="modalHelp"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalHelp')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="helpTitle">Como obter sua lista</h3><div style="background: #000; padding: 20px; border-radius: 8px; border: 1px solid var(--border); width: 100%;"><ol class="help-list" data-i18n="helpInst"><li>Vá em <b>Avatar</b> -> <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li></ol></div><div class="modal-actions" style="margin-top: 20px;"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalHelp')" data-i18n="helpOk">Entendi</button></div></div></div>
+  <div class="modal-overlay" id="modalTips"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalTips')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="tipsTitle">Dicas Úteis</h3><div style="background: #000; padding: 20px; border-radius: 8px; border: 1px solid var(--border); width: 100%;"><ul class="help-list" data-i18n="tipsInst" style="list-style-type: none; padding-left: 0;"><li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em "Atualizar Ordem", essa linha será removida automaticamente.</li></ul></div><div class="modal-actions" style="margin-top: 20px;"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalTips')" data-i18n="tipsOk">Entendi</button></div></div></div>
+  <div class="modal-overlay" id="modalAdminAuth"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAdminAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" data-i18n="titleAdmin">Área Admin</h3><p data-i18n="descAdmin">Acesso restrito</p><input type="password" autocomplete="current-password" id="adminPassInput" data-i18n="phPassAdmin" placeholder="Senha Mestre"><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width:100%" onclick="verificarSenhaAdmin()" data-i18n="btnAuthAdmin">Autenticar</button></div></div></div>
+  <div class="modal-overlay" id="modalAdminSettings"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAdminSettings')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="titleAdminSettings">Configurar Perfis</h3><select id="configProfileSelect" onchange="carregarConfigPerfil()"><option value="P1" data-i18n="optP1">Slot 1</option><option value="P2" data-i18n="optP2">Slot 2</option><option value="P3" data-i18n="optP3">Slot 3</option></select><div class="preview-avatar"><img id="configAvatarPreview" src="https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&amp;backgroundColor=ffb6c1" alt="Avatar selecionado"></div><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblSelAvatar">Avatar:</label><div class="avatar-grid" id="avatarGridList"></div><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblNamePerfil">Nome:</label><input type="text" id="configProfileName" data-i18n="phNamePerfil" placeholder="Ex: Saori Suki"><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblTrava">Senha:</label><input type="password" id="configProfilePass" autocomplete="new-password" data-i18n="phPass" placeholder="Vazio = desativado"><div class="modal-actions"><button type="button" class="btn btn-secondary" id="btnSaveConfig" style="width:100%" onclick="salvarConfigPerfil()" data-i18n="btnSaveConfig">Salvar Configuração</button></div></div></div>
+  <div class="modal-overlay" id="modalProfileAuth"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalProfileAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" id="authTitle" data-i18n="titleAuthPerfil">Acesso Restrito</h3><p data-i18n="descAuthPerfil">Digite a senha.</p><input type="password" autocomplete="current-password" id="profilePassInput" data-i18n="phPassPerfil" placeholder="Senha do Perfil"><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width:100%" onclick="verificarSenhaPerfil()" data-i18n="btnEnterAuth">Entrar</button></div></div></div>
+  <div class="modal-overlay" id="modalChangeLang"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalChangeLang')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="modalLangTitle" data-i18n="modalLangTitle">Alterar Idioma</h3><div class="lang-grid"><div class="lang-card" id="card-pt" onclick="setLanguage('pt')"><div class="flag-icon round"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Brazilian_flag_icon_round.svg" alt="Português"></div><div class="lang-title">Português</div></div><div class="lang-card" id="card-en" onclick="setLanguage('en')"><div class="flag-icon round"><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg" alt="English"></div><div class="lang-title">English</div></div></div></div></div>
+  <div class="modal-overlay" id="modalLojas"><div class="modal" style="width:800px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalLojas')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="titleDb" data-i18n="titleDb">Lojas Registradas</h3><input type="text" id="searchInput" data-i18n="phSearchStore" placeholder="Buscar loja..." onkeyup="filtrarLojas()"><div class="store-grid" id="storeGrid"></div><div class="modal-actions"><button type="button" class="btn btn-danger" onclick="abrirModalPassword()" id="btnDelAll" data-i18n="btnDelAll">Apagar Tudo</button><button type="button" class="btn btn-secondary" onclick="downloadDatabase()" id="btnBackup" data-i18n="btnBackup">Backup</button></div></div></div>
+  <div class="modal-overlay" id="modalAdd"><div class="modal"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAdd')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="titleAdd" data-i18n="titleAdd">Registrar Lojas</h3><p style="margin-bottom: 15px;" id="formatAdd" data-i18n="formatAdd">Formato Múltiplo: <b>LOJA = SLURL = TAG</b></p><textarea id="fastInput"></textarea><select id="tagSelect"><option value="">...</option></select><div class="modal-actions"><button type="button" class="btn btn-secondary" id="saveBtn" onclick="salvarLoja()" data-i18n="btnSave">Salvar</button></div></div></div>
+  <div class="modal-overlay" id="modalEdit"><div class="modal" style="width:400px; min-height:auto;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalEdit')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="titleEdit" data-i18n="titleEdit">Editar Loja</h3><p id="editName" style="color:var(--text-main); font-weight: bold; font-size: 14px; margin-bottom: 15px;"></p><input type="text" id="editSlurl" data-i18n="phLink" placeholder="Link SLURL"><input type="text" id="editTag" data-i18n="phTag" placeholder="Tag"><div class="modal-actions"><button type="button" class="btn btn-secondary" id="saveEditBtn" onclick="salvarEdicao()" data-i18n="btnUpdateEdit">Atualizar</button></div></div></div>
+  <div class="modal-overlay" id="modalConfirm"><div class="modal"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalConfirm')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: #ff9800;" id="titleWarn" data-i18n="titleWarn">Atenção</h3><p id="descWarn"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="fecharModal('modalConfirm')" data-i18n="btnCancel">Cancelar</button><button type="button" class="btn btn-secondary" onclick="execDownload()" id="btnForceDown" style="color: var(--text-main); border-color: var(--text-main);" data-i18n="btnForceDown">Sim, Baixar</button></div></div></div>
+  <div class="modal-overlay" id="modalAlert"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAlert')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: #ff9800;" id="alertTitle" data-i18n="alertTitle">Aviso</h3><p id="alertMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalAlert')" data-i18n="btnOk">OK</button></div></div></div>
+  <div class="modal-overlay" id="modalPass"><div class="modal" style="width:400px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalPass')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" id="titlePass" data-i18n="titlePassWipe">Zerar Banco de Dados</h3><p data-i18n="descPassWipe">Isso apagará todas as lojas. Digite a senha para confirmar.</p><input type="password" autocomplete="current-password" id="passInp"><div class="modal-actions"><button type="button" class="btn btn-danger" id="confirmPassBtn" onclick="confirmarApagarTudo()" data-i18n="btnConfirmDel">Confirmar</button></div></div></div>
+  <div class="modal-overlay" id="modalSuccess"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--mmc-green);" id="titleSuccess" data-i18n="titleSuccess">Sucesso</h3><p id="successMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%; color: var(--text-main); border-color: var(--text-main);" onclick="fecharModal('modalSuccess')" data-i18n="btnOkSuccess">OK</button></div></div></div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbzhlUsSIUzLOpbxIRXH-hRYAPTYazPlSPJsD8m3jYgC90LzxjwjsJJ5YFpgCoghlHe4/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbyUIW7B0o9Qagi2S1BebRQfmQfMmmszni1ZkbJBArrzn0tyvg9cAnHOE5kA0edy64hc/exec";
 
     let profileConfigs = {
-      "P1": { name: "Saori", avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1", password: "" },
-      "P2": { name: "Gabriel", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6", password: "" },
-      "P3": { name: "Convidado", avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0", password: "" }
+      "P1": { name: "Saori", avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1", hasPassword: false },
+      "P2": { name: "Gabriel", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6", hasPassword: false },
+      "P3": { name: "Convidado", avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0", hasPassword: false }
     };
-    const cachedProfiles = localStorage.getItem('mmc_profiles');
-    if (cachedProfiles) profileConfigs = JSON.parse(cachedProfiles);
+    localStorage.removeItem('mmc_profiles');
 
     function renderProfiles() {
       ['P1', 'P2', 'P3'].forEach(id => {
@@ -234,7 +233,7 @@
            const lockEl = document.getElementById('lock-' + id);
            if(imgEl) imgEl.src = profileConfigs[id].avatar;
            if(nameEl) nameEl.innerText = profileConfigs[id].name;
-           if(lockEl) lockEl.style.display = profileConfigs[id].password ? "inline-block" : "none";
+           if(lockEl) lockEl.style.display = profileConfigs[id].hasPassword ? "inline-block" : "none";
          }
       });
     }
@@ -244,49 +243,99 @@
     let currentSelectedAvatarUrl = "";
     let activeProfileID = null;
     let activeProfileElement = null;
+    let activeSessionToken = sessionStorage.getItem('mmc_session') || "";
+    let adminSessionToken = "";
+    let editando = "";
 
-    async function callApi(action, data = {}) {
+    async function callApi(action, data = {}, tokenOverride) {
       try {
+        const token = tokenOverride === undefined ? activeSessionToken : tokenOverride;
+        const payload = { action: action, ...data };
+        if (token) payload.sessionToken = token;
+
         const response = await fetch(API_URL, {
           method: 'POST',
-          body: JSON.stringify({ action: action, ...data }),
+          body: JSON.stringify(payload),
           headers: { 'Content-Type': 'text/plain;charset=utf-8' }
         });
+        if (!response.ok) throw new Error("HTTP_" + response.status);
         const result = await response.json();
-        return result.status === 'success' ? result.data : null;
-      } catch (error) { 
+        if (result.status !== 'success') throw new Error(result.error || "API_ERROR");
+        return result.data;
+      } catch (error) {
         console.error("ERRO DE FETCH:", error);
-        return { texto: "ERRO DE CONEXÃO!\n\nSeu site não conseguiu se conectar com o Google Sheets. O Google está bloqueando o acesso.\n\nVá em Nova Implantação e marque 'Quem pode acessar' como 'Qualquer pessoa'." }; 
+        if (["AUTH_REQUIRED", "INVALID_SESSION", "SESSION_EXPIRED"].includes(error.message)) {
+          activeSessionToken = "";
+          sessionStorage.removeItem('mmc_session');
+        }
+        throw error;
       }
     }
 
     window.onload = async () => { 
-      setLanguage(currentLang); 
-      let dbConfigs = await callApi('getProfilesConfig');
-      if(dbConfigs && !dbConfigs.texto) { 
+      if (!i18n[currentLang]) currentLang = 'pt';
+      setLanguage(currentLang);
+      try {
+        const dbConfigs = await callApi('getProfilesConfig', {}, null);
         profileConfigs = dbConfigs;
-        localStorage.setItem('mmc_profiles', JSON.stringify(profileConfigs)); 
-        renderProfiles(); 
+        renderProfiles();
+      } catch (error) {
+        alerta("Não foi possível carregar os perfis. Confirme se a implantação do Google Apps Script está ativa para qualquer pessoa.");
       }
     }
 
-    function selectProfile(id, element) {
+    async function iniciarSessaoPerfil(password) {
+      const result = await callApi('loginProfile', {
+        id: activeProfileID,
+        password: password || ""
+      }, null);
+      activeSessionToken = result.token;
+      sessionStorage.setItem('mmc_session', activeSessionToken);
+      executarAnimacaoNetflix();
+    }
+
+    async function selectProfile(id, element) {
       activeProfileID = id; activeProfileElement = element;
-      if(profileConfigs[id].password) { document.getElementById('profilePassInput').value = ""; abrirModal('modalProfileAuth'); } 
-      else { executarAnimacaoNetflix(); }
+      if(profileConfigs[id].hasPassword) {
+        document.getElementById('profilePassInput').value = "";
+        abrirModal('modalProfileAuth');
+      } else {
+        try {
+          await iniciarSessaoPerfil("");
+        } catch (error) {
+          alerta(traduzirErroApi(error));
+        }
+      }
     }
-    function verificarSenhaPerfil() {
-      if (document.getElementById('profilePassInput').value === profileConfigs[activeProfileID].password) { fecharModal('modalProfileAuth'); executarAnimacaoNetflix(); } 
-      else { alerta(i18n[currentLang].errPass); }
+
+    async function verificarSenhaPerfil() {
+      const input = document.getElementById('profilePassInput');
+      try {
+        await iniciarSessaoPerfil(input.value);
+        fecharModal('modalProfileAuth');
+        input.value = "";
+      } catch (error) {
+        alerta(traduzirErroApi(error));
+      }
     }
+
     function executarAnimacaoNetflix() {
       document.querySelectorAll('.profile').forEach(p => { p.style.pointerEvents = 'none'; if(p !== activeProfileElement) p.style.opacity = '0.3'; });
       activeProfileElement.classList.add('loading');
       setTimeout(() => { document.getElementById('profileScreen').style.opacity = '0'; setTimeout(() => { document.getElementById('profileScreen').style.display = 'none'; const mainApp = document.getElementById('mainApp'); mainApp.style.display = 'flex'; setTimeout(() => { mainApp.style.opacity = '1'; }, 50); }, 600); }, 1200); 
     }
-    function verificarSenhaAdmin() {
-      if(document.getElementById('adminPassInput').value === "MMC1995") { fecharModal('modalAdminAuth'); document.getElementById('adminPassInput').value = ""; abrirPainelSettings(); } 
-      else { alerta(i18n[currentLang].errPass); }
+
+    async function verificarSenhaAdmin() {
+      const input = document.getElementById('adminPassInput');
+      try {
+        const result = await callApi('loginAdmin', { password: input.value }, null);
+        adminSessionToken = result.token;
+        fecharModal('modalAdminAuth');
+        input.value = "";
+        abrirPainelSettings();
+      } catch (error) {
+        alerta(traduzirErroApi(error));
+      }
     }
     function abrirPainelSettings() {
       abrirModal('modalAdminSettings'); let grid = document.getElementById('avatarGridList'); grid.innerHTML = "";
@@ -299,23 +348,38 @@
     }
     function carregarConfigPerfil() {
       const id = document.getElementById('configProfileSelect').value; const config = profileConfigs[id];
-      document.getElementById('configProfileName').value = config.name; document.getElementById('configProfilePass').value = config.password;
+      document.getElementById('configProfileName').value = config.name; document.getElementById('configProfilePass').value = "";
       currentSelectedAvatarUrl = config.avatar; document.getElementById('configAvatarPreview').src = currentSelectedAvatarUrl;
       document.querySelectorAll('.avatar-option').forEach(el => { el.classList.remove('selected'); if(el.querySelector('img').src === currentSelectedAvatarUrl) el.classList.add('selected'); });
     }
     async function salvarConfigPerfil() {
       const id = document.getElementById('configProfileSelect').value; const name = document.getElementById('configProfileName').value; const pass = document.getElementById('configProfilePass').value;
       const btn = document.getElementById('btnSaveConfig'); btn.innerHTML = "<span class='loader'></span>";
-      let res = await callApi('updateProfileConfig', { id: id, name: name, avatar: currentSelectedAvatarUrl, password: pass });
-      btn.innerText = "Salvar Configuração";
-      if(res === "SUCCESS") {
-        profileConfigs[id] = { name: name, avatar: currentSelectedAvatarUrl, password: pass };
-        localStorage.setItem('mmc_profiles', JSON.stringify(profileConfigs)); renderProfiles(); fecharModal('modalAdminSettings'); msg("Configuração Salva!");
-      } else { alerta("Erro ao salvar configuração."); }
+      try {
+        let res = await callApi('updateProfileConfig', {
+          id: id,
+          name: name,
+          avatar: currentSelectedAvatarUrl,
+          password: pass
+        }, adminSessionToken);
+        if(res !== "SUCCESS") throw new Error(res || "SAVE_ERROR");
+        profileConfigs[id] = {
+          name: name,
+          avatar: currentSelectedAvatarUrl,
+          hasPassword: pass.trim() !== ""
+        };
+        renderProfiles();
+        fecharModal('modalAdminSettings');
+        msg("Configuração Salva!");
+      } catch (error) {
+        alerta(traduzirErroApi(error));
+      } finally {
+        btn.innerText = t('btnSaveConfig');
+      }
     }
 
     const i18n = {
-      pt: { brandTitle: "MMC | Gerador de Stylecard", guest: "Convidado", langBtn: "Language", teachBtn: "🧠 Ensinar Padrão", teachTitle: "Ensinar Padrão (IA Local)", teachDesc: "O sistema errou? Cole o pedaço do texto que identifica o item e associe ao nome correto da loja e botão.", teachLblGatilho: "Gatilho (Ex: T1S - NEW FACE)", teachLblLoja: "Nome Correto da Loja", teachLblCat: "Categoria Correta (Botão)", btnSaveTeach: "Salvar Padrão", helpBtn: "Ajuda", helpTitle: "Como obter sua lista", helpInst: "<li>Vá em <b>Avatar</b> -> <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li>", helpOk: "Entendi", tipsBtn: "Tips", tipsTitle: "Dicas Úteis", tipsInst: "<li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em \"Atualizar Ordem\", essa linha será removida automaticamente.</li>", tipsOk: "Entendi", modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", lblInput: "Entrada (Inventário)", phInput: "Cole a lista de itens aqui...", lblOutput: "Resultado (Notecard)", phOutput: "O resultado sairá aqui...", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT", titleDb: "Lojas Registradas", phSearchStore: "Buscar loja...", btnDelAll: "Apagar Tudo", btnBackup: "Backup", titleAdd: "Registrar Lojas", formatAdd: "Formato Múltiplo: <b>LOJA = SLURL = TAG</b>", tagMixed: "Nenhuma Tag (Deixar Mista)", btnSave: "Salvar", titleEdit: "Editar Loja", phLink: "Link SLURL", phTag: "Tag", titleWarn: "Atenção", descWarn: "Detectei <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marcados como indefinidos (?). Sugiro que edite e atualize a lista antes de baixar.<br><br><b>DICA:</b> Substitua o \"<b>?</b>\" por <b>NO</b> e clique em <b>Atualizar Ordem</b> para deletá-los.<br><br>Deseja baixar mesmo assim?", btnCancel: "Cancelar", btnForceDown: "Sim, Baixar", alertTitle: "Aviso", btnOk: "OK", titlePassWipe: "Zerar Banco de Dados", descPassWipe: "Isso apagará todas as lojas. Digite a senha para confirmar.", phPassAdmin: "Senha de Segurança", btnConfirmDel: "Confirmar Exclusão", titleSuccess: "Sucesso", btnOkSuccess: "OK", titleAdmin: "Área Admin", descAdmin: "Acesso restrito", btnAuthAdmin: "Autenticar", titleAdminSettings: "Configurar Perfis", optP1: "Slot 1 (Esquerda)", optP2: "Slot 2 (Meio)", optP3: "Slot 3 (Direita)", lblSelAvatar: "Selecione um Avatar:", lblNamePerfil: "Nome do Perfil:", phNamePerfil: "Ex: Saori Suki", lblTrava: "Trava de Segurança:", phPass: "Digite uma senha (vazio = desativado)", btnSaveConfig: "Salvar Configuração", titleAuthPerfil: "Acesso Restrito", descAuthPerfil: "Digite a senha para acessar este perfil.", phPassPerfil: "Senha do Perfil", btnEnterAuth: "Entrar", msgSaved: "{n} loja(s) processada(s) com sucesso!", msgUpdated: "Loja atualizada com sucesso!", msgDeleted: "Loja removida com sucesso!", msgWiped: "Banco de dados zerado com sucesso!", errEmptyInp: "Cole a lista do seu inventário primeiro.", errFormat: "Cole pelo menos uma loja válida para salvar.", errEmptyDb: "O banco de dados já está vazio.", errPass: "Senha incorreta!", errNoGen: "Gere o Stylecard primeiro.", errNoDown: "Não há nada para baixar.", errAskPass: "Digite a senha para prosseguir.", statusGen: "PROCESSANDO...", askDel: "Apagar a loja {n}?", mixed: "Mista", btnUpdateEdit: "Atualizar", msgLearned: "Padrão aprendido com sucesso! O sistema o reconhecerá a partir de agora." },
+      pt: { brandTitle: "MMC | Gerador de Stylecard", guest: "Convidado", langBtn: "Language", teachBtn: "🧠 Ensinar Padrão", teachTitle: "Ensinar Padrão (IA Local)", teachDesc: "O sistema errou? Cole o pedaço do texto que identifica o item e associe ao nome correto da loja e botão.", teachLblGatilho: "Gatilho (Ex: T1S - NEW FACE)", teachLblLoja: "Nome Correto da Loja", teachLblCat: "Categoria Correta (Botão)", btnSaveTeach: "Salvar Padrão", helpBtn: "Ajuda", helpTitle: "Como obter sua lista", helpInst: "<li>Vá em <b>Avatar</b> -> <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li>", helpOk: "Entendi", tipsBtn: "Tips", tipsTitle: "Dicas Úteis", tipsInst: "<li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em \"Atualizar Ordem\", essa linha será removida automaticamente.</li>", tipsOk: "Entendi", modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", lblInput: "Entrada (Inventário)", phInput: "Cole a lista de itens aqui...", lblOutput: "Resultado (Notecard)", phOutput: "O resultado sairá aqui...", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT", titleDb: "Lojas Registradas", phSearchStore: "Buscar loja...", btnDelAll: "Apagar Tudo", btnBackup: "Backup", titleAdd: "Registrar Lojas", formatAdd: "Formato Múltiplo: <b>LOJA = SLURL = TAG</b>", tagMixed: "Nenhuma Tag (Deixar Mista)", btnSave: "Salvar", titleEdit: "Editar Loja", phLink: "Link SLURL", phTag: "Tag", titleWarn: "Atenção", descWarn: "Detectei <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marcados como indefinidos (?). Sugiro que edite e atualize a lista antes de baixar.<br><br><b>DICA:</b> Substitua o \"<b>?</b>\" por <b>NO</b> e clique em <b>Atualizar Ordem</b> para deletá-los.<br><br>Deseja baixar mesmo assim?", btnCancel: "Cancelar", btnForceDown: "Sim, Baixar", alertTitle: "Aviso", btnOk: "OK", titlePassWipe: "Zerar Banco de Dados", descPassWipe: "Isso apagará todas as lojas. Digite a senha para confirmar.", phPassAdmin: "Senha de Segurança", btnConfirmDel: "Confirm Exclusão", titleSuccess: "Sucesso", btnOkSuccess: "OK", titleAdmin: "Área Admin", descAdmin: "Acesso restrito", btnAuthAdmin: "Autenticar", titleAdminSettings: "Configurar Perfis", optP1: "Slot 1 (Esquerda)", optP2: "Slot 2 (Meio)", optP3: "Slot 3 (Direita)", lblSelAvatar: "Selecione um Avatar:", lblNamePerfil: "Nome do Perfil:", phNamePerfil: "Ex: Saori Suki", lblTrava: "Trava de Segurança:", phPass: "Digite uma senha (vazio = desativado)", btnSaveConfig: "Salvar Configuração", titleAuthPerfil: "Acesso Restrito", descAuthPerfil: "Digite a senha para acessar este perfil.", phPassPerfil: "Senha do Perfil", btnEnterAuth: "Entrar", msgSaved: "{n} loja(s) processada(s) com sucesso!", msgUpdated: "Loja atualizada com sucesso!", msgDeleted: "Loja removida com sucesso!", msgWiped: "Banco de dados zerado com sucesso!", errEmptyInp: "Cole a lista do seu inventário primeiro.", errFormat: "Cole pelo menos uma loja válida para salvar.", errEmptyDb: "O banco de dados já está vazio.", errPass: "Senha incorreta!", errNoGen: "Gere o Stylecard primeiro.", errNoDown: "Não há nada para baixar.", errAskPass: "Digite a senha para prosseguir.", statusGen: "PROCESSANDO...", askDel: "Apagar a loja {n}?", mixed: "Mista", btnUpdateEdit: "Atualizar", msgLearned: "Padrão aprendido com sucesso! O sistema o reconhecerá a partir de agora." },
       en: { brandTitle: "MMC | Stylecard Generator", guest: "Guest", langBtn: "Idioma", teachBtn: "🧠 Teach Pattern", teachTitle: "Teach Pattern (Local AI)", teachDesc: "Did the system make a mistake? Paste the snippet that identifies the item and associate it with the correct store name and button.", teachLblGatilho: "Trigger (Ex: T1S - NEW FACE)", teachLblLoja: "Correct Store Name", teachLblCat: "Correct Category (Button)", btnSaveTeach: "Save Pattern", helpBtn: "Help", helpTitle: "How to get your list", helpInst: "<li>Go to <b>Avatar</b> -> <b>Outfit</b></li><li>Click on the <b>Wearing</b> tab</li><li>Click on <b>Show additional information</b> (gear icon at the bottom of the list)</li><li>Select <b>Copy to clipboard</b></li>", helpOk: "Got it", tipsBtn: "Tips", tipsTitle: "Useful Tips", tipsInst: "<li>When generating the Stylecard, if there is an item you do not want to include in the final result, simply change the button name to <b>NO</b>. When you click \"Update Order\", that line will be removed automatically.</li>", tipsOk: "Got it", modalLangTitle: "Change Language", btnDb: "Registered Stores", btnAdd: "+ Add Store", lblInput: "Input (Inventory)", phInput: "Paste your item list here...", lblOutput: "Result (Notecard)", phOutput: "The result will appear here...", btnGen: "Generate Stylecard", btnUpdate: "Update Order", btnDown: "Download TXT", titleDb: "Registered Stores", phSearchStore: "Search store...", btnDelAll: "Delete All", btnBackup: "Backup", titleAdd: "Register Stores", formatAdd: "Multiple Format: <b>STORE = SLURL = TAG</b>", tagMixed: "No Tag (Leave Mixed)", btnSave: "Save", titleEdit: "Edit Store", phLink: "SLURL Link", phTag: "Tag", titleWarn: "Warning", descWarn: "Detected <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marked as undefined (?). It is highly recommended to edit and update the list before downloading.<br><br><b>TIP:</b> Replace \"<b>?</b>\" with <b>NO</b> and click <b>Update Order</b> to delete them.<br><br>Download anyway?", btnCancel: "Cancel", btnForceDown: "Yes, Download", alertTitle: "Notice", btnOk: "OK", titlePassWipe: "Wipe Database", descPassWipe: "This will delete all stores. Enter the password to confirm.", phPassAdmin: "Security Password", btnConfirmDel: "Confirm Deletion", titleSuccess: "Success", btnOkSuccess: "OK", titleAdmin: "Admin Area", descAdmin: "Restricted Access", btnAuthAdmin: "Authenticate", titleAdminSettings: "Configure Profiles", optP1: "Slot 1 (Left)", optP2: "Slot 2 (Middle)", optP3: "Slot 3 (Right)", lblSelAvatar: "Select an Avatar:", lblNamePerfil: "Profile Name:", phNamePerfil: "e.g., Saori Suki", lblTrava: "Security Lock:", phPass: "Enter a password (empty = disabled)", btnSaveConfig: "Save Configuration", titleAuthPerfil: "Restricted Access", descAuthPerfil: "Enter the password to access this profile.", phPassPerfil: "Profile Password", btnEnterAuth: "Enter", msgSaved: "{n} store(s) processed successfully!", msgUpdated: "Store updated successfully!", msgDeleted: "Store removed successfully!", msgWiped: "Database wiped successfully!", errEmptyInp: "Paste your inventory list first.", errFormat: "Paste at least one valid store to save.", errEmptyDb: "The database is already empty.", errPass: "Incorrect password!", errNoGen: "Generate the Stylecard first.", errNoDown: "There is nothing to download.", errAskPass: "Enter the password to proceed.", statusGen: "PROCESSING...", askDel: "Delete store {n}?", mixed: "Mixed", btnUpdateEdit: "Update", msgLearned: "Pattern successfully learned! The system will recognize it from now on." }
     };
     let currentLang = localStorage.getItem('mmc_lang') || 'pt';
@@ -325,6 +389,18 @@
       document.getElementById('genBtnText').innerText = i18n[lang].btnGen; document.getElementById('btnTeachText').innerText = i18n[lang].teachBtn; fecharModal('modalChangeLang');
     }
     function t(key) { return i18n[currentLang][key] || key; }
+    function traduzirErroApi(error) {
+      const code = error && error.message ? error.message : "";
+      if (["INVALID_CREDENTIALS", "ADMIN_REQUIRED"].includes(code)) return t('errPass');
+      if (["AUTH_REQUIRED", "INVALID_SESSION", "SESSION_EXPIRED"].includes(code)) {
+        return currentLang === "en"
+          ? "Your session has expired. Reload the page and select your profile again."
+          : "Sua sessão expirou. Recarregue a página e selecione o perfil novamente.";
+      }
+      return currentLang === "en"
+        ? "Could not connect to the database. Check the Google Apps Script deployment."
+        : "Não foi possível conectar ao banco de dados. Verifique a implantação do Google Apps Script.";
+    }
     function stringToColor(s){ if(!s) return '#555'; let h=0; for(let i=0;i<s.length;i++) h=s.charCodeAt(i)+((h<<5)-h); return `hsl(${Math.abs(h)%360},70%,80%)`; }
     function abrirModal(id){ document.getElementById(id).style.display='flex'; } function fecharModal(id){ document.getElementById(id).style.display='none'; } function msg(m){ document.getElementById('successMsg').innerHTML=m; abrirModal('modalSuccess'); } function alerta(m){ document.getElementById('alertMsg').innerHTML=m; abrirModal('modalAlert'); }
 
@@ -332,41 +408,219 @@
       const gatilho = document.getElementById('teachGatilho').value; const loja = document.getElementById('teachLoja').value; const botao = document.getElementById('teachBotao').value;
       if(!gatilho.trim() || !loja.trim()) return alerta(t('errFormat'));
       const btn = document.getElementById('saveTeachBtn'); btn.innerHTML = "<span class='loader'></span>";
-      let res = await callApi('adicionarDicionario', { gatilho: gatilho, loja: loja, botao: botao });
-      btn.innerText = t('btnSaveTeach');
-      if(res === "SUCCESS") { msg(t('msgLearned')); fecharModal('modalTeach'); document.getElementById('teachGatilho').value = ''; document.getElementById('teachLoja').value = ''; } else { alerta("Erro ao salvar."); }
+      try {
+        let res = await callApi('adicionarDicionario', { gatilho: gatilho, loja: loja, botao: botao });
+        if(res !== "SUCCESS") throw new Error(res || "SAVE_ERROR");
+        msg(t('msgLearned'));
+        fecharModal('modalTeach');
+        document.getElementById('teachGatilho').value = '';
+        document.getElementById('teachLoja').value = '';
+      } catch (error) {
+        alerta(traduzirErroApi(error));
+      } finally {
+        btn.innerText = t('btnSaveTeach');
+      }
     }
-    async function abrirModalAdd(){ abrirModal('modalAdd'); document.getElementById('tagSelect').innerHTML = `<option value="">Carregando...</option>`; let lojas = await callApi('getLojas'); if(lojas && !lojas.texto) { let tags = [...new Set(lojas.map(i => i.tag).filter(tag => tag))].sort(); let html = `<option value="">${t('tagMixed')}</option>`; tags.forEach(tag => html += `<option value="${tag}">${tag}</option>`); document.getElementById('tagSelect').innerHTML = html; } }
-    async function salvarLoja(){ const val = document.getElementById('fastInput').value; const tag = document.getElementById('tagSelect').value; if(!val.trim()) return alerta(t('errFormat')); const btn = document.getElementById('saveBtn'); btn.innerHTML = "<span class='loader'></span>"; let res = await callApi('adicionarLoja', { texto: val, tag: tag }); if(res !== null && !res.texto) { msg(t('msgSaved').replace('{n}', res)); btn.innerText = t('btnSave'); fecharModal('modalAdd'); document.getElementById('fastInput').value = ''; } }
-    async function abrirModalLojas(){ abrirModal('modalLojas'); document.getElementById('storeGrid').innerHTML = "<div style='text-align:center; width:100%; padding: 20px;'><span class='loader'></span></div>"; let ls = await callApi('getLojas'); if(ls && !ls.texto) { let h=""; ls.forEach(i => { let c = stringToColor(i.tag); let exTag = i.tag || t('mixed'); h += `<div class="store-card" data-name="${i.loja}"><div class="store-name-container" onclick="abrirEdit('${i.loja}','${i.slurl}','${i.tag}')"><div class="store-name">${i.loja}</div><span class="mini-tag" style="background:${c}">${exTag}</span></div><svg class="store-delete" onclick="apagarLoja('${i.loja}')" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></div>`; }); document.getElementById('storeGrid').innerHTML=h; } }
+
+    async function abrirModalAdd(){
+      abrirModal('modalAdd');
+      const select = document.getElementById('tagSelect');
+      select.replaceChildren(new Option("Carregando...", ""));
+      try {
+        const lojas = await callApi('getLojas');
+        const tags = [...new Set(lojas.map(i => i.tag).filter(Boolean))].sort();
+        select.replaceChildren(new Option(t('tagMixed'), ""));
+        tags.forEach(tag => select.add(new Option(tag, tag)));
+      } catch (error) {
+        select.replaceChildren(new Option("Erro", ""));
+        alerta(traduzirErroApi(error));
+      }
+    }
+
+    async function salvarLoja(){
+      const val = document.getElementById('fastInput').value;
+      const tag = document.getElementById('tagSelect').value;
+      if(!val.trim()) return alerta(t('errFormat'));
+      const btn = document.getElementById('saveBtn');
+      btn.innerHTML = "<span class='loader'></span>";
+      try {
+        const res = await callApi('adicionarLoja', { texto: val, tag: tag });
+        msg(t('msgSaved').replace('{n}', res));
+        fecharModal('modalAdd');
+        document.getElementById('fastInput').value = '';
+      } catch (error) {
+        alerta(traduzirErroApi(error));
+      } finally {
+        btn.innerText = t('btnSave');
+      }
+    }
+
+    function criarIconeLixeira_() {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("viewBox", "0 0 24 24");
+      svg.classList.add("store-delete");
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z");
+      svg.appendChild(path);
+      return svg;
+    }
+
+    function criarCardLoja_(item) {
+      const card = document.createElement("div");
+      card.className = "store-card";
+      card.dataset.name = String(item.loja || "").toUpperCase();
+
+      const info = document.createElement("div");
+      info.className = "store-name-container";
+      info.addEventListener("click", () => abrirEdit(item.loja, item.slurl, item.tag));
+
+      const name = document.createElement("div");
+      name.className = "store-name";
+      name.textContent = item.loja;
+
+      const tag = document.createElement("span");
+      tag.className = "mini-tag";
+      tag.style.background = stringToColor(item.tag);
+      tag.textContent = item.tag || t('mixed');
+
+      const remove = criarIconeLixeira_();
+      remove.addEventListener("click", event => {
+        event.stopPropagation();
+        apagarLoja(item.loja);
+      });
+
+      info.append(name, tag);
+      card.append(info, remove);
+      return card;
+    }
+
+    async function abrirModalLojas(){
+      abrirModal('modalLojas');
+      const grid = document.getElementById('storeGrid');
+      grid.innerHTML = "<div style='text-align:center; width:100%; padding:20px;'><span class='loader'></span></div>";
+      try {
+        const lojas = await callApi('getLojas');
+        grid.replaceChildren();
+        lojas.forEach(item => grid.appendChild(criarCardLoja_(item)));
+      } catch (error) {
+        grid.replaceChildren();
+        alerta(traduzirErroApi(error));
+      }
+    }
+
     function abrirEdit(n,s,tg){ editando=n; document.getElementById('editName').innerText=n; document.getElementById('editSlurl').value=s; document.getElementById('editTag').value=tg; abrirModal('modalEdit'); }
-    async function salvarEdicao(){ const btn = document.getElementById('saveEditBtn'); btn.innerHTML = "<span class='loader'></span>"; let res = await callApi('atualizarLoja', { nomeLoja: editando, novaSlurl: document.getElementById('editSlurl').value, novaTag: document.getElementById('editTag').value }); if(res) { msg(t('msgUpdated')); btn.innerText = t('btnUpdateEdit'); fecharModal('modalEdit'); abrirModalLojas(); } }
-    async function apagarLoja(n){ if(confirm(t('askDel').replace('{n}', n))) { await callApi('deletarLoja', { nomeLoja: n }); msg(t('msgDeleted')); abrirModalLojas(); } }
+
+    async function salvarEdicao(){
+      const btn = document.getElementById('saveEditBtn');
+      btn.innerHTML = "<span class='loader'></span>";
+      try {
+        const res = await callApi('atualizarLoja', {
+          nomeLoja: editando,
+          novaSlurl: document.getElementById('editSlurl').value,
+          novaTag: document.getElementById('editTag').value
+        });
+        if(res !== "SUCCESS") throw new Error(res || "SAVE_ERROR");
+        msg(t('msgUpdated'));
+        fecharModal('modalEdit');
+        abrirModalLojas();
+      } catch (error) {
+        alerta(traduzirErroApi(error));
+      } finally {
+        btn.innerText = t('btnUpdateEdit');
+      }
+    }
+
+    async function apagarLoja(n){
+      if(!confirm(t('askDel').replace('{n}', n))) return;
+      try {
+        const res = await callApi('deletarLoja', { nomeLoja: n });
+        if(res !== "SUCCESS") throw new Error(res || "DELETE_ERROR");
+        msg(t('msgDeleted'));
+        abrirModalLojas();
+      } catch (error) {
+        alerta(traduzirErroApi(error));
+      }
+    }
+
     function abrirModalPassword(){ document.getElementById('passInp').value = ""; abrirModal('modalPass'); }
-    async function confirmarApagarTudo(){ let senha = document.getElementById('passInp').value; if (!senha) return alerta(t('errAskPass')); const btn = document.getElementById('confirmPassBtn'); btn.innerHTML = "<span class='loader'></span>"; let r = await callApi('apagarTodasLojas', { senha: senha }); btn.innerText = t('btnConfirmDel'); if(r) { fecharModal('modalPass'); if(r === "WRONG_PASS") alerta(t('errPass')); else if (r === "EMPTY") alerta(t('errEmptyDb')); else { msg(t('msgWiped')); abrirModalLojas(); } } }
+
+    async function confirmarApagarTudo(){
+      const senha = document.getElementById('passInp').value;
+      if (!senha) return alerta(t('errAskPass'));
+      const btn = document.getElementById('confirmPassBtn');
+      btn.innerHTML = "<span class='loader'></span>";
+      try {
+        const login = await callApi('loginAdmin', { password: senha }, null);
+        adminSessionToken = login.token;
+        const result = await callApi('apagarTodasLojas', {}, adminSessionToken);
+        fecharModal('modalPass');
+        if (result === "EMPTY") {
+          alerta(t('errEmptyDb'));
+        } else {
+          msg(t('msgWiped'));
+          abrirModalLojas();
+        }
+      } catch (error) {
+        alerta(traduzirErroApi(error));
+      } finally {
+        btn.innerText = t('btnConfirmDel');
+        document.getElementById('passInp').value = "";
+      }
+    }
 
     async function gerarNotecard(){ 
       const entrada = document.getElementById('inputList').value;
       if(!entrada.trim()) return alerta(t('errEmptyInp'));
-      
       const btn = document.getElementById('genBtnText');
       btn.innerText = t('statusGen');
-      
-      let res = await callApi('processarLista', { textoBruto: entrada });
-      
-      if(res && res.texto) {
-        document.getElementById('outputList').value = res.texto; 
-      } else {
-        document.getElementById('outputList').value = res && res.texto ? res.texto : "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR A RESPOSTA."; 
+      try {
+        const res = await callApi('processarLista', { textoBruto: entrada });
+        document.getElementById('outputList').value = res && res.texto
+          ? res.texto
+          : "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR A RESPOSTA.";
+      } catch (error) {
+        alerta(traduzirErroApi(error));
+      } finally {
+        btn.innerText = t('btnGen');
       }
-      btn.innerText = t('btnGen'); 
     }
 
     function reorganizar(){ let txt = document.getElementById('outputList').value; if(!txt) return alerta(t('errNoGen')); let ordem = ["HEAD", "FACE SKIN", "BODY", "BODY SKIN", "FACE ADDON", "BEARD", "EYES", "LASHES", "HAIRBASE", "HAIR", "DEFORMS", "TATTOO", "BODY ADDON", "BODY HAIR", "MAKEUP", "NAILS", "SPANKER", "ACESSORIES", "CLOTHING", "?"]; let blocos = txt.split('------------------------------------------------------------').filter(b => b.trim() !== "").map(b => { let m = b.match(/BUTTON NAME:\s*(.+)/); let btn = m ? m[1].trim() : "?"; return { btn, texto: "------------------------------------------------------------\n" + b.trim() + "\n" }; }).filter(b => b.btn !== "NO"); blocos.sort((a,b) => (ordem.indexOf(a.btn)===-1?998:ordem.indexOf(a.btn)) - (ordem.indexOf(b.btn)===-1?998:ordem.indexOf(b.btn))); document.getElementById('outputList').value = blocos.map(b => b.texto).join(""); }
     function verificarDownload(){ let txt = document.getElementById('outputList').value; if(!txt) return alerta(t('errNoDown')); let indefinidos = (txt.match(/BUTTON NAME:\s*\?\r?\n/g) || []).length; if (indefinidos > 0) { document.getElementById('descWarn').innerHTML = t('descWarn').replace('{n}', indefinidos); abrirModal('modalConfirm'); } else { execDownload(); } }
-    function execDownload(){ let blob = new Blob([document.getElementById('outputList').value], {type:'text/plain'}); let a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='STYLECARD_HUD.txt'; a.click(); fecharModal('modalConfirm'); }
-    async function downloadDatabase(){ let ls = await callApi('getLojas'); if(ls && !ls.texto) { let t = ls.map(i => `${i.loja} = ${i.slurl}${i.tag?' = '+i.tag:''}`).join('\n'); let b = new Blob([t], {type:'text/plain'}); let a = document.createElement('a'); a.href=URL.createObjectURL(b); a.download='BACKUP_LOJAS.txt'; a.click(); } }
-    function filtrarLojas() { let input = document.getElementById('searchInput').value.toUpperCase(); let cards = document.querySelectorAll('.store-card'); cards.forEach(c => c.style.display = c.getAttribute('data-name').includes(input) ? 'flex' : 'none'); }
+
+    function baixarTexto_(conteudo, nomeArquivo) {
+      const blob = new Blob([conteudo], {type:'text/plain;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = nomeArquivo;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function execDownload(){
+      baixarTexto_(document.getElementById('outputList').value, 'STYLECARD_HUD.txt');
+      fecharModal('modalConfirm');
+    }
+
+    async function downloadDatabase(){
+      try {
+        const lojas = await callApi('getLojas');
+        const texto = lojas.map(i => `${i.loja} = ${i.slurl}${i.tag ? ' = ' + i.tag : ''}`).join('\n');
+        baixarTexto_(texto, 'BACKUP_LOJAS.txt');
+      } catch (error) {
+        alerta(traduzirErroApi(error));
+      }
+    }
+
+    function filtrarLojas() {
+      const input = document.getElementById('searchInput').value.toUpperCase();
+      document.querySelectorAll('.store-card').forEach(card => {
+        card.style.display = card.dataset.name.includes(input) ? 'flex' : 'none';
+      });
+    }
   </script>
 </body>
 </html>
