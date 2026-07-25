@@ -919,15 +919,8 @@ textarea:focus-visible {
   text-transform: uppercase;
 }
 
-.discord-example {
-  width: 100%;
-  margin: 12px 0 18px;
-  padding: 13px 14px;
-  color: var(--ash);
-  background: #11100f;
-  border: 1px solid var(--line);
-  font: 500 9px/1.6 'IBM Plex Mono', monospace;
-  overflow-wrap: anywhere;
+.discord-name-label.is-second {
+  margin-top: 16px;
 }
 
 .ignored-items-btn {
@@ -3508,7 +3501,7 @@ label {
   <div class="modal-overlay" id="modalAlert"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAlert')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--tomato);" id="alertTitle" data-i18n="alertTitle">Aviso</h3><p id="alertMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalAlert')" data-i18n="btnOk">OK</button></div></div></div>
   <div class="modal-overlay" id="modalPass"><div class="modal" style="width:400px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="cancelarSenhaAcaoLoja_()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" id="titlePass">Ação protegida</h3><p id="descPass">Digite a senha para continuar.</p><input type="password" autocomplete="current-password" id="passInp" placeholder="Senha da ação" onkeydown="if(event.key === 'Enter') confirmarSenhaAcaoLoja_()"><div class="modal-actions"><button type="button" class="btn btn-danger" id="confirmPassBtn" onclick="confirmarSenhaAcaoLoja_()">Confirmar</button></div></div></div>
   <div class="modal-overlay" id="modalSuccess"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--mmc-green);" id="titleSuccess" data-i18n="titleSuccess">Sucesso</h3><p id="successMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalSuccess')" data-i18n="btnOkSuccess">OK</button></div></div></div>
-  <div class="modal-overlay" id="modalDiscordShare"><div class="modal" style="width:500px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalDiscordShare')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3>Enviar para Discord</h3><p>Escolha o nome que será usado no arquivo de texto enviado ao canal.</p><div class="discord-example">Exemplo: Shok - NAME Shape [Lel NAME]</div><label class="discord-name-label" for="discordShapeName">Nome do shape</label><input type="text" id="discordShapeName" maxlength="100" placeholder="Shok - NAME Shape [Lel NAME]" onkeydown="if(event.key === 'Enter') enviarNotecardDiscord()"><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-success" id="discordSubmitBtn" style="width:100%;" onclick="enviarNotecardDiscord()">Enviar arquivo</button></div></div></div>
+  <div class="modal-overlay" id="modalDiscordShare"><div class="modal" style="width:500px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalDiscordShare')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3>Enviar para Discord</h3><p>Informe o nome do shape e o link da imagem para enviar o Stylecard ao canal.</p><label class="discord-name-label" for="discordShapeName">Nome do shape</label><input type="text" id="discordShapeName" maxlength="100" placeholder="Shok - NAME Shape [Lel NAME]" onkeydown="if(event.key === 'Enter') document.getElementById('discordGyazoLink').focus()"><label class="discord-name-label is-second" for="discordGyazoLink">Gyazo Link</label><input type="url" id="discordGyazoLink" maxlength="500" placeholder="Cole aqui o link do Gyazo" inputmode="url" onkeydown="if(event.key === 'Enter') enviarNotecardDiscord()"><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-success" id="discordSubmitBtn" style="width:100%;" onclick="enviarNotecardDiscord()">Enviar arquivo</button></div></div></div>
   <div class="modal-overlay" id="modalIgnored"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalIgnored')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="ignoredTitle">Itens ignorados</h3><p data-i18n="ignoredDesc">Confira os itens removidos automaticamente e o motivo.</p><div class="ignored-list" id="ignoredList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" style="width:100%;" onclick="fecharModal('modalIgnored')" data-i18n="btnOk">OK</button></div></div></div>
   <div class="modal-overlay" id="modalLearnCorrections"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="cancelarAprendizadoCorrecoes()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="learnCorrectionTitle">Memorizar correções?</h3><p data-i18n="learnCorrectionDesc">Deseja registrar estas correções no Google Sheets para os próximos Stylecards?</p><div class="ignored-list" id="learnCorrectionsList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" onclick="cancelarAprendizadoCorrecoes()" data-i18n="learnCorrectionNo">Não</button><button type="button" class="btn btn-success" id="saveCorrectionsBtn" onclick="confirmarAprendizadoCorrecoes()" data-i18n="learnCorrectionYes">Sim, memorizar</button></div></div></div>
 
@@ -4259,6 +4252,7 @@ label {
 
       const input = document.getElementById('discordShapeName');
       input.value = "Shok - NAME Shape [Lel NAME]";
+      document.getElementById('discordGyazoLink').value = "";
       abrirModal('modalDiscordShare');
       setTimeout(() => {
         input.focus();
@@ -4273,8 +4267,13 @@ label {
       }
 
       const nomeShape = document.getElementById('discordShapeName').value.trim();
+      const gyazoLink = document.getElementById('discordGyazoLink').value.trim();
       const conteudo = document.getElementById('outputList').value.trim();
       if (!nomeShape) return alerta("Digite um nome para o shape.");
+      if (!gyazoLink) return alerta("Cole o link do Gyazo.");
+      if (!/^https:\/\/(?:www\.|i\.)?gyazo\.com\/\S+$/i.test(gyazoLink)) {
+        return alerta("Informe um link válido do Gyazo.");
+      }
       if (!conteudo) return alerta("Não há um notecard para enviar.");
 
       const btn = document.getElementById('discordSubmitBtn');
@@ -4285,11 +4284,12 @@ label {
         const result = await callApi('enviarNotecardDiscord', {
           profileId: activeProfileID,
           nomeShape: nomeShape,
+          gyazoLink: gyazoLink,
           conteudo: conteudo
         });
         if (!result || result.sent !== true) throw new Error("DISCORD_SEND_FAILED");
         fecharModal('modalDiscordShare');
-        msg("Notecard enviado para o Discord com sucesso!");
+        msg("Notecard e link do Gyazo enviados para o Discord com sucesso!");
       } catch (error) {
         alerta(traduzirErroApi(error));
       } finally {
@@ -4414,6 +4414,11 @@ label {
       if (["INVALID_CREDENTIALS", "ADMIN_REQUIRED"].includes(code)) return t('errPass');
       if (code === "DISCORD_WEBHOOK_NOT_CONFIGURED") return "A webhook do Discord ainda não foi configurada nas Propriedades do Google Apps Script.";
       if (code === "GUEST_DISCORD_FORBIDDEN") return "O perfil Convidado não pode enviar arquivos para o Discord.";
+      if (code === "INVALID_GYAZO_URL") return "Informe um link válido do Gyazo.";
+      if (code === "DISCORD_PERMISSION_REQUIRED") return "O Google Apps Script precisa ser autorizado para conectar ao Discord. Execute a função autorizarConexaoDiscord no editor do Apps Script.";
+      if (code === "DISCORD_FETCH_ERROR") return "O Google Apps Script não conseguiu alcançar o Discord. Verifique o registro de execução do Apps Script.";
+      if (code.startsWith("DISCORD_GYAZO_HTTP_")) return "O arquivo foi enviado, mas o Discord recusou a mensagem do Gyazo com o erro HTTP " + code.replace("DISCORD_GYAZO_HTTP_", "") + ".";
+      if (code.startsWith("DISCORD_HTTP_")) return "O Discord recusou o envio com o erro HTTP " + code.replace("DISCORD_HTTP_", "") + ".";
       if (code === "DISCORD_SEND_FAILED") return "O Discord recusou o envio. Confirme se a webhook continua ativa.";
       return currentLang === "en"
         ? "Could not connect to the database. Check the Google Apps Script deployment."
