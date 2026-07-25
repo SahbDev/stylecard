@@ -54,6 +54,17 @@
     .box { flex: 1; display: flex; flex-direction: column; background: var(--surface); border-radius: 12px; padding: 20px; border: 1px solid var(--border); }
     label { font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; display: block; }
     textarea { flex: 1; background: var(--bg-dark); color: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 15px; font-family: 'Courier New', monospace; resize: none; line-height: 1.6; cursor: auto; }
+    .box-label-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .box-label-row label { margin-bottom: 0; }
+    .ignored-items-btn { display: inline-flex; align-items: center; gap: 7px; padding: 5px 9px; background: #18181b; color: var(--text-muted); border: 1px solid var(--border); border-radius: 999px; font: inherit; font-size: 10px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.2s; }
+    .ignored-items-btn:hover, .ignored-items-btn.has-items { color: #ffb74d; border-color: rgba(255, 152, 0, 0.7); background: rgba(255, 152, 0, 0.08); }
+    .ignored-count { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 5px; color: #fff; background: #3f3f46; border-radius: 999px; font-size: 10px; }
+    .ignored-items-btn.has-items .ignored-count { color: #111; background: #ffb74d; }
+    .ignored-help-icon { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border: 1px solid currentColor; border-radius: 50%; font-size: 10px; }
+    .ignored-list { width: 100%; display: flex; flex-direction: column; gap: 10px; max-height: 55vh; overflow-y: auto; padding-right: 4px; }
+    .ignored-card { width: 100%; padding: 13px 15px; background: #09090b; border: 1px solid var(--border); border-left: 3px solid #ff9800; border-radius: 8px; }
+    .ignored-reason { margin-bottom: 7px; color: #ffb74d; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; }
+    .ignored-product { color: var(--text-main); font: 12px/1.5 'Courier New', monospace; overflow-wrap: anywhere; }
     
     .action-bar { text-align: center; margin: 30px 0; gap: 15px; display: flex; justify-content: center; flex-wrap: wrap; }
     .btn-action { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 6px; transition: all 0.2s ease; position: relative; outline: none; background: #27272a; color: #fff; border: 1px solid var(--border); }
@@ -154,7 +165,14 @@
           <textarea id="inputList" data-i18n="phInput" placeholder="Cole a lista de itens aqui..."></textarea>
         </div>
         <div class="box">
-          <label id="lblOutputText" data-i18n="lblOutput">Resultado (Notecard)</label>
+          <div class="box-label-row">
+            <label id="lblOutputText" data-i18n="lblOutput">Resultado (Notecard)</label>
+            <button type="button" class="ignored-items-btn" id="ignoredItemsBtn" onclick="abrirItensIgnorados()">
+              <span data-i18n="ignoredBtn">Itens ignorados</span>
+              <span class="ignored-count" id="ignoredCount">0</span>
+              <span class="ignored-help-icon" aria-hidden="true">?</span>
+            </button>
+          </div>
           <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..."></textarea>
         </div>
       </div>
@@ -214,6 +232,7 @@
   <div class="modal-overlay" id="modalAlert"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAlert')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: #ff9800;" id="alertTitle" data-i18n="alertTitle">Aviso</h3><p id="alertMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalAlert')" data-i18n="btnOk">OK</button></div></div></div>
   <div class="modal-overlay" id="modalPass"><div class="modal" style="width:400px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalPass')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" id="titlePass" data-i18n="titlePassWipe">Zerar Banco de Dados</h3><p data-i18n="descPassWipe">Isso apagará todas as lojas. Digite a senha para confirmar.</p><input type="password" autocomplete="current-password" id="passInp"><div class="modal-actions"><button type="button" class="btn btn-danger" id="confirmPassBtn" onclick="confirmarApagarTudo()" data-i18n="btnConfirmDel">Confirmar</button></div></div></div>
   <div class="modal-overlay" id="modalSuccess"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--mmc-green);" id="titleSuccess" data-i18n="titleSuccess">Sucesso</h3><p id="successMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%; color: var(--text-main); border-color: var(--text-main);" onclick="fecharModal('modalSuccess')" data-i18n="btnOkSuccess">OK</button></div></div></div>
+  <div class="modal-overlay" id="modalIgnored"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalIgnored')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="ignoredTitle">Itens ignorados</h3><p data-i18n="ignoredDesc" style="margin-top:-8px; margin-bottom:20px; text-align:center;">Confira os itens removidos automaticamente e o motivo.</p><div class="ignored-list" id="ignoredList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" style="width:100%;" onclick="fecharModal('modalIgnored')" data-i18n="btnOk">OK</button></div></div></div>
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbz7puKpktpv0e2ubhyq4mlbSXQcUKl0OL84gGeBk-JW1b4vaQEqSw3diOfyZAbYv0za/exec";
@@ -246,6 +265,7 @@
     let profileOpening = false;
     let adminPasswordMemory = "";
     let editando = "";
+    let ignoredItems = [];
 
     async function callApi(action, data = {}) {
       try {
@@ -375,13 +395,82 @@
       pt: { brandTitle: "MMC | Gerador de Stylecard", guest: "Convidado", langBtn: "Language", teachBtn: "🧠 Ensinar Padrão", teachTitle: "Ensinar Padrão (IA Local)", teachDesc: "O sistema errou? Cole o pedaço do texto que identifica o item e associe ao nome correto da loja e botão.", teachLblGatilho: "Gatilho (Ex: T1S - NEW FACE)", teachLblLoja: "Nome Correto da Loja", teachLblCat: "Categoria Correta (Botão)", btnSaveTeach: "Salvar Padrão", helpBtn: "Ajuda", helpTitle: "Como obter sua lista", helpInst: "<li>Vá em <b>Avatar</b> -> <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li>", helpOk: "Entendi", tipsBtn: "Tips", tipsTitle: "Dicas Úteis", tipsInst: "<li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em \"Atualizar Ordem\", essa linha será removida automaticamente.</li>", tipsOk: "Entendi", modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", lblInput: "Entrada (Inventário)", phInput: "Cole a lista de itens aqui...", lblOutput: "Resultado (Notecard)", phOutput: "O resultado sairá aqui...", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT", titleDb: "Lojas Registradas", phSearchStore: "Buscar loja...", btnDelAll: "Apagar Tudo", btnBackup: "Backup", titleAdd: "Registrar Lojas", formatAdd: "Formato Múltiplo: <b>LOJA = SLURL = TAG</b>", tagMixed: "Nenhuma Tag (Deixar Mista)", btnSave: "Salvar", titleEdit: "Editar Loja", phLink: "Link SLURL", phTag: "Tag", titleWarn: "Atenção", descWarn: "Detectei <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marcados como indefinidos (?). Sugiro que edite e atualize a lista antes de baixar.<br><br><b>DICA:</b> Substitua o \"<b>?</b>\" por <b>NO</b> e clique em <b>Atualizar Ordem</b> para deletá-los.<br><br>Deseja baixar mesmo assim?", btnCancel: "Cancelar", btnForceDown: "Sim, Baixar", alertTitle: "Aviso", btnOk: "OK", titlePassWipe: "Zerar Banco de Dados", descPassWipe: "Isso apagará todas as lojas. Digite a senha para confirmar.", phPassAdmin: "Senha de Segurança", btnConfirmDel: "Confirm Exclusão", titleSuccess: "Sucesso", btnOkSuccess: "OK", titleAdmin: "Área Admin", descAdmin: "Acesso restrito", btnAuthAdmin: "Autenticar", titleAdminSettings: "Configurar Perfis", optP1: "Slot 1 (Esquerda)", optP2: "Slot 2 (Meio)", optP3: "Slot 3 (Direita)", lblSelAvatar: "Selecione um Avatar:", lblNamePerfil: "Nome do Perfil:", phNamePerfil: "Ex: Saori Suki", lblTrava: "Trava de Segurança:", phPass: "Digite uma senha (vazio = desativado)", btnSaveConfig: "Salvar Configuração", titleAuthPerfil: "Acesso Restrito", descAuthPerfil: "Digite a senha para acessar este perfil.", phPassPerfil: "Senha do Perfil", btnEnterAuth: "Entrar", msgSaved: "{n} loja(s) processada(s) com sucesso!", msgUpdated: "Loja atualizada com sucesso!", msgDeleted: "Loja removida com sucesso!", msgWiped: "Banco de dados zerado com sucesso!", errEmptyInp: "Cole a lista do seu inventário primeiro.", errFormat: "Cole pelo menos uma loja válida para salvar.", errEmptyDb: "O banco de dados já está vazio.", errPass: "Senha incorreta!", errNoGen: "Gere o Stylecard primeiro.", errNoDown: "Não há nada para baixar.", errAskPass: "Digite a senha para prosseguir.", statusGen: "PROCESSANDO...", askDel: "Apagar a loja {n}?", mixed: "Mista", btnUpdateEdit: "Atualizar", msgLearned: "Padrão aprendido com sucesso! O sistema o reconhecerá a partir de agora." },
       en: { brandTitle: "MMC | Stylecard Generator", guest: "Guest", langBtn: "Idioma", teachBtn: "🧠 Teach Pattern", teachTitle: "Teach Pattern (Local AI)", teachDesc: "Did the system make a mistake? Paste the snippet that identifies the item and associate it with the correct store name and button.", teachLblGatilho: "Trigger (Ex: T1S - NEW FACE)", teachLblLoja: "Correct Store Name", teachLblCat: "Correct Category (Button)", btnSaveTeach: "Save Pattern", helpBtn: "Help", helpTitle: "How to get your list", helpInst: "<li>Go to <b>Avatar</b> -> <b>Outfit</b></li><li>Click on the <b>Wearing</b> tab</li><li>Click on <b>Show additional information</b> (gear icon at the bottom of the list)</li><li>Select <b>Copy to clipboard</b></li>", helpOk: "Got it", tipsBtn: "Tips", tipsTitle: "Useful Tips", tipsInst: "<li>When generating the Stylecard, if there is an item you do not want to include in the final result, simply change the button name to <b>NO</b>. When you click \"Update Order\", that line will be removed automatically.</li>", tipsOk: "Got it", modalLangTitle: "Change Language", btnDb: "Registered Stores", btnAdd: "+ Add Store", lblInput: "Input (Inventory)", phInput: "Paste your item list here...", lblOutput: "Result (Notecard)", phOutput: "The result will appear here...", btnGen: "Generate Stylecard", btnUpdate: "Update Order", btnDown: "Download TXT", titleDb: "Registered Stores", phSearchStore: "Search store...", btnDelAll: "Delete All", btnBackup: "Backup", titleAdd: "Register Stores", formatAdd: "Multiple Format: <b>STORE = SLURL = TAG</b>", tagMixed: "No Tag (Leave Mixed)", btnSave: "Save", titleEdit: "Edit Store", phLink: "SLURL Link", phTag: "Tag", titleWarn: "Warning", descWarn: "Detected <b style='color:#ff9800; font-size:15px;'>{n}</b> item(s) marked as undefined (?). It is highly recommended to edit and update the list before downloading.<br><br><b>TIP:</b> Replace \"<b>?</b>\" with <b>NO</b> and click <b>Update Order</b> to delete them.<br><br>Download anyway?", btnCancel: "Cancel", btnForceDown: "Yes, Download", alertTitle: "Notice", btnOk: "OK", titlePassWipe: "Wipe Database", descPassWipe: "This will delete all stores. Enter the password to confirm.", phPassAdmin: "Security Password", btnConfirmDel: "Confirm Deletion", titleSuccess: "Success", btnOkSuccess: "OK", titleAdmin: "Admin Area", descAdmin: "Restricted Access", btnAuthAdmin: "Authenticate", titleAdminSettings: "Configure Profiles", optP1: "Slot 1 (Left)", optP2: "Slot 2 (Middle)", optP3: "Slot 3 (Right)", lblSelAvatar: "Select an Avatar:", lblNamePerfil: "Profile Name:", phNamePerfil: "e.g., Saori Suki", lblTrava: "Security Lock:", phPass: "Enter a password (empty = disabled)", btnSaveConfig: "Save Configuration", titleAuthPerfil: "Restricted Access", descAuthPerfil: "Enter the password to access this profile.", phPassPerfil: "Profile Password", btnEnterAuth: "Enter", msgSaved: "{n} store(s) processed successfully!", msgUpdated: "Store updated successfully!", msgDeleted: "Store removed successfully!", msgWiped: "Database wiped successfully!", errEmptyInp: "Paste your inventory list first.", errFormat: "Paste at least one valid store to save.", errEmptyDb: "The database is already empty.", errPass: "Incorrect password!", errNoGen: "Generate the Stylecard first.", errNoDown: "There is nothing to download.", errAskPass: "Enter the password to proceed.", statusGen: "PROCESSING...", askDel: "Delete store {n}?", mixed: "Mixed", btnUpdateEdit: "Update", msgLearned: "Pattern successfully learned! The system will recognize it from now on." }
     };
+    Object.assign(i18n.pt, {
+      ignoredBtn: "Itens ignorados",
+      ignoredTitle: "Itens ignorados",
+      ignoredDesc: "Confira os itens removidos automaticamente e o motivo.",
+      ignoredEmpty: "Nenhum item foi ignorado nesta geração.",
+      ignoredReasonSpanker: "Spanker interativo",
+      ignoredReasonTechnical: "Item técnico do viewer",
+      ignoredReasonHud: "HUD técnico",
+      ignoredReasonNo: "Regra marcada como NO"
+    });
+    Object.assign(i18n.en, {
+      ignoredBtn: "Ignored items",
+      ignoredTitle: "Ignored items",
+      ignoredDesc: "Review the items removed automatically and the reason.",
+      ignoredEmpty: "No items were ignored in this generation.",
+      ignoredReasonSpanker: "Interactive spanker",
+      ignoredReasonTechnical: "Technical viewer item",
+      ignoredReasonHud: "Technical HUD",
+      ignoredReasonNo: "Rule marked as NO"
+    });
     let currentLang = localStorage.getItem('mmc_lang') || 'pt';
     function setLanguage(lang) {
       currentLang = lang; localStorage.setItem('mmc_lang', lang); document.getElementById('card-pt').classList.remove('active'); document.getElementById('card-en').classList.remove('active'); document.getElementById('card-' + lang).classList.add('active');
       document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (i18n[lang][key]) { if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = i18n[lang][key]; else el.innerHTML = i18n[lang][key]; } });
-      document.getElementById('genBtnText').innerText = i18n[lang].btnGen; document.getElementById('btnTeachText').innerText = i18n[lang].teachBtn; fecharModal('modalChangeLang');
+      document.getElementById('genBtnText').innerText = i18n[lang].btnGen; document.getElementById('btnTeachText').innerText = i18n[lang].teachBtn; atualizarContadorIgnorados_(); fecharModal('modalChangeLang');
     }
     function t(key) { return i18n[currentLang][key] || key; }
+    function traduzirMotivoIgnorado_(motivo) {
+      const chaves = {
+        SPANKER_INTERATIVO: 'ignoredReasonSpanker',
+        ITEM_TECNICO: 'ignoredReasonTechnical',
+        HUD_TECNICO: 'ignoredReasonHud',
+        REGRA_NO: 'ignoredReasonNo'
+      };
+      return chaves[motivo] ? t(chaves[motivo]) : (motivo || t('ignoredReasonTechnical'));
+    }
+    function atualizarContadorIgnorados_() {
+      const count = ignoredItems.length;
+      const countEl = document.getElementById('ignoredCount');
+      const btn = document.getElementById('ignoredItemsBtn');
+      if (countEl) countEl.textContent = String(count);
+      if (btn) {
+        btn.classList.toggle('has-items', count > 0);
+        btn.setAttribute('aria-label', t('ignoredBtn') + ': ' + count);
+      }
+    }
+    function renderizarItensIgnorados_() {
+      const list = document.getElementById('ignoredList');
+      if (!list) return;
+      list.replaceChildren();
+      if (!ignoredItems.length) {
+        const empty = document.createElement('p');
+        empty.textContent = t('ignoredEmpty');
+        empty.style.color = 'var(--text-muted)';
+        empty.style.textAlign = 'center';
+        empty.style.margin = '20px 0';
+        list.appendChild(empty);
+        return;
+      }
+      ignoredItems.forEach(registro => {
+        const card = document.createElement('div');
+        card.className = 'ignored-card';
+        const reason = document.createElement('div');
+        reason.className = 'ignored-reason';
+        reason.textContent = traduzirMotivoIgnorado_(registro.motivo);
+        const product = document.createElement('div');
+        product.className = 'ignored-product';
+        product.textContent = registro.item || '';
+        card.append(reason, product);
+        list.appendChild(card);
+      });
+    }
+    function abrirItensIgnorados() {
+      renderizarItensIgnorados_();
+      abrirModal('modalIgnored');
+    }
     function traduzirErroApi(error) {
       const code = error && error.message ? error.message : "";
       if (["INVALID_CREDENTIALS", "ADMIN_REQUIRED"].includes(code)) return t('errPass');
@@ -559,8 +648,12 @@
       if(!entrada.trim()) return alerta(t('errEmptyInp'));
       const btn = document.getElementById('genBtnText');
       btn.innerText = t('statusGen');
+      ignoredItems = [];
+      atualizarContadorIgnorados_();
       try {
         const res = await callApi('processarLista', { textoBruto: entrada });
+        ignoredItems = Array.isArray(res && res.ignorados) ? res.ignorados : [];
+        atualizarContadorIgnorados_();
         document.getElementById('outputList').value = res && res.texto
           ? res.texto
           : "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR A RESPOSTA.";
