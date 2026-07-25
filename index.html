@@ -364,7 +364,7 @@ textarea:focus-visible {
 }
 
 .atelier-header {
-  width: min(1220px, calc(100% - 48px));
+  width: min(1420px, calc(100% - 48px));
   min-height: 64px;
   align-self: center;
   justify-self: center;
@@ -1037,13 +1037,14 @@ textarea:focus-visible {
   isolation: isolate;
   --modal-corner: 86px;
   width: 520px;
+  min-width: min(470px, calc(100vw - 48px));
   max-width: min(95%, 920px);
   max-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   overflow-y: auto;
-  padding: 55px 46px 40px;
+  padding: 64px 56px 48px;
   color: var(--ivory);
   background:
     linear-gradient(var(--tomato), var(--tomato)) left top / var(--modal-corner) 1px no-repeat,
@@ -1074,11 +1075,11 @@ textarea:focus-visible {
 
 .modal h3 {
   width: 100%;
-  margin: 0 auto 13px;
+  margin: 0 auto 16px;
   padding: 0 42px;
   color: var(--ivory);
   font-family: 'Bodoni Moda', serif;
-  font-size: clamp(29px, 4vw, 36px);
+  font-size: clamp(35px, 4vw, 44px);
   font-weight: 500;
   line-height: 1.05;
   letter-spacing: -.055em;
@@ -1089,9 +1090,9 @@ textarea:focus-visible {
 .modal h3::before {
   content: "SHOK / STYLECARD SYSTEM";
   display: block;
-  margin-bottom: 13px;
+  margin-bottom: 15px;
   color: var(--tomato);
-  font: 500 8px/1 'IBM Plex Mono', monospace;
+  font: 500 9px/1 'IBM Plex Mono', monospace;
   letter-spacing: .15em;
   text-transform: uppercase;
 }
@@ -1099,10 +1100,10 @@ textarea:focus-visible {
 .modal p {
   width: 100%;
   max-width: 600px;
-  margin: 0 auto 23px;
+  margin: 0 auto 28px;
   color: var(--ash);
-  font-size: 13px;
-  line-height: 1.65;
+  font-size: 14px;
+  line-height: 1.72;
   text-align: center;
 }
 
@@ -1110,7 +1111,7 @@ label {
   display: block;
   margin: 2px 0 8px;
   color: #aaa29a;
-  font: 500 9px/1.3 'IBM Plex Mono', monospace;
+  font: 500 10px/1.3 'IBM Plex Mono', monospace;
   letter-spacing: .09em;
   text-transform: uppercase;
 }
@@ -1124,7 +1125,7 @@ label {
 .modal select,
 .modal textarea {
   width: 100%;
-  min-height: 49px;
+  min-height: 54px;
   margin-bottom: 18px;
   padding: 13px 3px;
   color: var(--ivory);
@@ -1133,7 +1134,7 @@ label {
   border-bottom: 1px solid #49424f;
   border-radius: 0;
   outline: 0;
-  font-size: 13px;
+  font-size: 14px;
   transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
 }
 
@@ -1162,8 +1163,8 @@ label {
   position: absolute;
   top: 17px;
   right: 17px;
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
   padding: 10px;
@@ -1201,14 +1202,14 @@ label {
 }
 
 .btn {
-  min-height: 44px;
+  min-height: 50px;
   padding: 11px 22px;
   color: var(--ivory);
   background: transparent;
   border: 1px solid #403b3e;
   border-radius: 0;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -2519,8 +2520,8 @@ label {
   margin: 0;
   padding-left: 22px;
   color: #aaa29a;
-  font-size: 13px;
-  line-height: 1.75;
+  font-size: 14px;
+  line-height: 1.82;
 }
 
 .help-list li {
@@ -2540,6 +2541,141 @@ label {
   border-bottom: 1px solid #332e37;
   border-radius: 0;
   box-shadow: none;
+}
+
+/* Ajuda e Dicas usam a mesma linguagem de papel do Tour Guiado. */
+.paper-fold-modal {
+  --paper-bg: #eee9f3;
+  --paper-ink: #17121c;
+  --paper-muted: #554c5d;
+  width: min(520px, calc(100vw - 34px)) !important;
+  min-width: 0;
+  overflow: visible;
+  padding: 38px 42px 32px;
+  color: var(--paper-ink);
+  background: var(--paper-bg);
+  border: 1px solid rgba(205, 184, 255, .66);
+  box-shadow:
+    14px 14px 0 #17121e,
+    14px 14px 0 1px rgba(205, 184, 255, .48),
+    0 34px 100px rgba(0, 0, 0, .68);
+}
+
+.paper-fold-modal::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 58px 58px 0;
+  border-color: transparent #17121e transparent transparent;
+  filter: drop-shadow(-2px 3px 0 rgba(102, 76, 128, .26));
+  pointer-events: none;
+}
+
+.paper-modal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-right: 48px;
+}
+
+.paper-modal-kicker {
+  color: #65488a;
+  font: 700 9px/1 'IBM Plex Mono', monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.paper-fold-modal .close-btn {
+  position: static;
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  padding: 8px;
+  background: transparent;
+  border-color: rgba(23, 18, 28, .34);
+}
+
+.paper-fold-modal .close-btn svg {
+  fill: var(--paper-ink);
+}
+
+.paper-fold-modal .close-btn:hover {
+  background: var(--paper-ink);
+  border-color: var(--paper-ink);
+}
+
+.paper-fold-modal .close-btn:hover svg {
+  fill: var(--paper-bg);
+}
+
+.paper-modal-rule {
+  position: relative;
+  height: 2px;
+  margin: 19px 0 24px;
+  overflow: hidden;
+  background: rgba(23, 18, 28, .14);
+}
+
+.paper-modal-rule::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 28%;
+  background: #65488a;
+}
+
+.paper-fold-modal h3 {
+  margin: 0 0 16px;
+  padding: 0;
+  color: var(--paper-ink);
+  font-size: clamp(35px, 4vw, 42px);
+  line-height: .98;
+  text-align: left;
+}
+
+.paper-fold-modal h3::before {
+  content: none;
+}
+
+.paper-fold-modal .modal-info-card {
+  padding: 0;
+  border: 0;
+}
+
+.paper-fold-modal .help-list {
+  color: var(--paper-muted);
+  font-size: 14px;
+  line-height: 1.78;
+}
+
+.paper-fold-modal .help-list b {
+  color: var(--paper-ink);
+}
+
+.paper-fold-modal .modal-actions {
+  justify-content: flex-end;
+  margin-top: 27px !important;
+}
+
+.paper-fold-modal .modal-actions .btn:only-child:not(.btn-danger) {
+  width: auto !important;
+  min-width: 132px;
+  color: var(--paper-bg);
+  background: var(--paper-ink);
+  border-color: var(--paper-ink);
+}
+
+.paper-fold-modal .modal-actions .btn:only-child:not(.btn-danger):hover {
+  color: var(--paper-ink);
+  background: transparent;
+  border-color: var(--paper-ink);
 }
 
 .ignored-list {
@@ -2574,14 +2710,14 @@ label {
 .ignored-reason {
   margin-bottom: 7px;
   color: var(--tomato);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
 }
 
 .ignored-product {
   color: var(--ivory);
-  font: 12px/1.5 'IBM Plex Mono', monospace;
+  font: 13px/1.55 'IBM Plex Mono', monospace;
   overflow-wrap: anywhere;
 }
 
@@ -2602,6 +2738,341 @@ label {
   border-top-color: var(--tomato);
   border-radius: 50%;
   animation: spin 1s linear infinite;
+}
+
+/* ==========================================================================
+   TOUR GUIADO
+   ========================================================================== */
+
+body.tour-active {
+  overflow: hidden !important;
+}
+
+.guided-tour[hidden] {
+  display: none !important;
+}
+
+.guided-tour {
+  position: fixed;
+  inset: 0;
+  z-index: 30000;
+  display: block;
+  pointer-events: none;
+}
+
+.tour-click-shield {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.tour-spotlight {
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 80px;
+  border: 1px solid var(--tomato);
+  border-radius: 3px;
+  box-shadow:
+    0 0 0 9999px rgba(2, 2, 3, .86),
+    0 0 0 7px rgba(205, 184, 255, .08),
+    0 0 42px rgba(205, 184, 255, .28);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition:
+    top .42s cubic-bezier(.2, .8, .2, 1),
+    left .42s cubic-bezier(.2, .8, .2, 1),
+    width .42s cubic-bezier(.2, .8, .2, 1),
+    height .42s cubic-bezier(.2, .8, .2, 1),
+    border-radius .3s ease;
+}
+
+.tour-spotlight::before,
+.tour-spotlight::after {
+  content: "";
+  position: absolute;
+  background: var(--tomato);
+}
+
+.tour-spotlight::before {
+  top: -5px;
+  left: 18px;
+  width: 38px;
+  height: 1px;
+}
+
+.tour-spotlight::after {
+  top: 18px;
+  left: -5px;
+  width: 1px;
+  height: 38px;
+}
+
+.tour-card {
+  --tour-paper: #eee9f3;
+  --tour-ink: #17121c;
+  --tour-muted: #554c5d;
+  position: fixed;
+  z-index: 3;
+  width: min(430px, calc(100vw - 32px));
+  min-height: 285px;
+  overflow: visible;
+  padding: 36px 38px 30px;
+  color: var(--tour-ink);
+  background: var(--tour-paper);
+  border: 1px solid rgba(205, 184, 255, .68);
+  box-shadow:
+    14px 14px 0 #17121e,
+    14px 14px 0 1px rgba(205, 184, 255, .5),
+    0 34px 100px rgba(0, 0, 0, .72);
+  outline: 0;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    top .36s cubic-bezier(.2, .8, .2, 1),
+    left .36s cubic-bezier(.2, .8, .2, 1),
+    opacity .22s ease,
+    transform .22s ease;
+}
+
+.tour-card::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  z-index: 4;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 58px 58px 0;
+  border-color: transparent #17121e transparent transparent;
+  filter: drop-shadow(-2px 3px 0 rgba(102, 76, 128, .26));
+  pointer-events: none;
+}
+
+.guided-tour.is-ready .tour-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tour-pointer {
+  position: absolute;
+  width: 0;
+  height: 0;
+  filter: drop-shadow(0 0 8px rgba(205, 184, 255, .35));
+}
+
+.tour-card[data-placement="right"] .tour-pointer {
+  top: 50%;
+  left: -10px;
+  border-top: 8px solid transparent;
+  border-right: 10px solid var(--tour-paper);
+  border-bottom: 8px solid transparent;
+  transform: translateY(-50%);
+}
+
+.tour-card[data-placement="left"] .tour-pointer {
+  top: 50%;
+  right: -10px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 10px solid var(--tour-paper);
+  transform: translateY(-50%);
+}
+
+.tour-card[data-placement="bottom"] .tour-pointer {
+  top: -10px;
+  left: 50%;
+  border-right: 8px solid transparent;
+  border-bottom: 10px solid var(--tour-paper);
+  border-left: 8px solid transparent;
+  transform: translateX(-50%);
+}
+
+.tour-card[data-placement="top"] .tour-pointer {
+  bottom: -10px;
+  left: 50%;
+  border-top: 10px solid var(--tour-paper);
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  transform: translateX(-50%);
+}
+
+.tour-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-right: 44px;
+}
+
+.tour-kicker {
+  color: #65488a;
+  font: 700 9px/1 'IBM Plex Mono', monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.tour-close {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  flex: 0 0 34px;
+  padding: 0;
+  place-items: center;
+  color: var(--tour-ink);
+  background: transparent;
+  border: 1px solid rgba(23, 18, 28, .34);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color .18s ease, background .18s ease, transform .2s ease;
+}
+
+.tour-close:hover {
+  color: var(--tour-paper);
+  background: var(--tour-ink);
+  transform: rotate(90deg);
+}
+
+.tour-progress {
+  position: relative;
+  height: 2px;
+  margin: 22px 0 24px;
+  overflow: hidden;
+  background: rgba(23, 18, 28, .14);
+}
+
+.tour-progress span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: #65488a;
+  transition: width .35s ease;
+}
+
+.tour-card h2 {
+  margin: 0;
+  color: var(--tour-ink);
+  font-family: 'Bodoni Moda', serif;
+  font-size: 38px;
+  font-weight: 500;
+  line-height: .98;
+  letter-spacing: -.055em;
+}
+
+.tour-card-copy {
+  min-height: 70px;
+  margin: 17px 0 0;
+  color: var(--tour-muted);
+  font-size: 14px;
+  line-height: 1.72;
+}
+
+.tour-card-copy strong {
+  color: var(--tour-ink);
+}
+
+.tour-actions {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+  align-items: center;
+  margin-top: 28px;
+}
+
+.tour-actions button {
+  min-height: 42px;
+  padding: 0 14px;
+  color: var(--tour-ink);
+  background: transparent;
+  border: 1px solid rgba(23, 18, 28, .28);
+  font: 600 8px/1 'IBM Plex Mono', monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.tour-actions button:hover:not(:disabled) {
+  color: var(--tour-paper);
+  background: var(--tour-ink);
+  border-color: var(--tour-ink);
+}
+
+.tour-actions button:disabled {
+  opacity: .28;
+  cursor: default;
+}
+
+.tour-actions .tour-skip {
+  justify-self: center;
+  padding-inline: 8px;
+  color: #766d7d;
+  border-color: transparent;
+}
+
+.tour-actions .tour-next {
+  min-width: 116px;
+  color: var(--tour-paper);
+  background: var(--tour-ink);
+  border-color: var(--tour-ink);
+}
+
+@media (max-width: 680px) {
+  .tour-card {
+    top: auto !important;
+    right: 12px;
+    bottom: 12px;
+    left: 12px !important;
+    width: auto;
+    min-height: 0;
+    padding: 29px 23px 23px;
+    box-shadow:
+      8px 8px 0 #17121e,
+      8px 8px 0 1px rgba(205, 184, 255, .5),
+      0 28px 80px rgba(0, 0, 0, .72);
+  }
+
+  .tour-pointer {
+    display: none;
+  }
+
+  .tour-card h2 {
+    font-size: 31px;
+  }
+
+  .tour-card-copy {
+    min-height: 0;
+    font-size: 13px;
+  }
+
+  .tour-card-top {
+    padding-right: 39px;
+  }
+
+  .tour-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tour-actions .tour-skip {
+    display: none;
+  }
+
+  .paper-fold-modal {
+    padding: 30px 24px 25px;
+    box-shadow:
+      8px 8px 0 #17121e,
+      8px 8px 0 1px rgba(205, 184, 255, .48),
+      0 28px 80px rgba(0, 0, 0, .7);
+  }
+
+  .paper-modal-top {
+    padding-right: 39px;
+  }
 }
 
 @keyframes spin {
@@ -2992,6 +3463,7 @@ label {
   .modal {
     --modal-corner: 64px;
     width: 100% !important;
+    min-width: 0;
     max-width: 100%;
     padding: 48px 20px 24px;
   }
@@ -3252,11 +3724,11 @@ label {
           <strong>SHOK</strong>
           <span>STYLECARD<br>SYSTEM</span>
         </div>
-        <button type="button" class="atelier-home-btn" onclick="abrirStylecard()" title="Início" aria-label="Voltar à página principal">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
-        </button>
-
         <nav class="atelier-menu" aria-label="Ferramentas do Stylecard">
+          <button type="button" class="is-active" id="homeNavBtn" data-page-nav onclick="abrirStylecard()" title="Início">
+            <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>
+            <b>Início</b>
+          </button>
           <button type="button" id="storesNavBtn" data-page-nav onclick="abrirPaginaLojas()" title="Lojas registradas">
             <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10v9h16v-9"/><path d="M3 5h18l-2 5H5L3 5Z"/><path d="M9 19v-5h6v5"/></svg></span>
             <b id="btnDbText" data-i18n="btnDb">Lojas</b>
@@ -3283,6 +3755,10 @@ label {
           <button type="button" onclick="abrirModal('modalTips')" title="Dicas">
             <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.5 15.5A6 6 0 1 1 15.5 15.5c-.8.6-1 1.1-1 1.5h-5c0-.4-.2-.9-1-1.5Z"/><path d="M9.5 20h5M10 17h4"/></svg></span>
             <span class="nav-label" id="tipsBtnText" data-i18n="tipsBtn">Dicas</span>
+          </button>
+          <button type="button" id="tourGuideBtn" onclick="iniciarTourGuiado()" title="Tour Guiado">
+            <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5V4Z"/><path d="M15 4v5h5"/><path d="m9 15 2 2 4-5"/></svg></span>
+            <span class="nav-label">Tour Guiado</span>
           </button>
         </div>
       </header>
@@ -3407,6 +3883,11 @@ label {
 
       <main class="system-page stores-page" id="storesPage" hidden>
         <div class="system-page-inner">
+          <button type="button" class="shape-page-back system-page-back" onclick="abrirStylecard()">
+            <span aria-hidden="true">←</span>
+            Voltar ao Stylecard
+          </button>
+
           <header class="system-page-hero">
             <span class="system-page-kicker">SHOK DATABASE / STORE ARCHIVE</span>
             <h1>Lojas <em>Registradas</em></h1>
@@ -3459,6 +3940,11 @@ label {
 
       <main class="system-page add-store-page" id="addStorePage" hidden>
         <div class="system-page-inner">
+          <button type="button" class="shape-page-back system-page-back" onclick="abrirStylecard()">
+            <span aria-hidden="true">←</span>
+            Voltar ao Stylecard
+          </button>
+
           <header class="system-page-hero">
             <span class="system-page-kicker">SHOK DATABASE / NEW STORE</span>
             <h1>Adicionar <em>Loja</em></h1>
@@ -3502,9 +3988,31 @@ label {
     </div>
   </div>
 
-  <div class="modal-overlay" id="modalHelp"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalHelp')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="helpTitle">Como obter sua lista</h3><div class="modal-info-card"><ol class="help-list" data-i18n="helpInst"><li>Vá em <b>Avatar</b> -> <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li></ol></div><div class="modal-actions" style="margin-top: 20px;"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalHelp')" data-i18n="helpOk">Entendi</button></div></div></div>
-  <div class="modal-overlay" id="modalTips"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalTips')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="tipsTitle">Dicas Úteis</h3><div class="modal-info-card"><ul class="help-list" data-i18n="tipsInst" style="list-style-type: none; padding-left: 0;"><li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em "Atualizar Ordem", essa linha será removida automaticamente.</li></ul></div><div class="modal-actions" style="margin-top: 20px;"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalTips')" data-i18n="tipsOk">Entendi</button></div></div></div>
-  <div class="modal-overlay" id="modalAdminAuth"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAdminAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" data-i18n="titleAdmin">Área Admin</h3><p data-i18n="descAdmin">Acesso restrito</p><input type="password" autocomplete="current-password" id="adminPassInput" data-i18n="phPassAdmin" placeholder="Senha Mestre"><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width:100%" onclick="verificarSenhaAdmin()" data-i18n="btnAuthAdmin">Autenticar</button></div></div></div>
+  <div class="modal-overlay" id="modalHelp">
+    <div class="modal paper-fold-modal">
+      <div class="paper-modal-top">
+        <span class="paper-modal-kicker">Ajuda / SHOK System</span>
+        <button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalHelp')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+      </div>
+      <div class="paper-modal-rule" aria-hidden="true"></div>
+      <h3 data-i18n="helpTitle">Como obter sua lista</h3>
+      <div class="modal-info-card"><ol class="help-list" data-i18n="helpInst"><li>Vá em <b>Avatar</b> → <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li></ol></div>
+      <div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="fecharModal('modalHelp')" data-i18n="helpOk">Entendi</button></div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="modalTips">
+    <div class="modal paper-fold-modal">
+      <div class="paper-modal-top">
+        <span class="paper-modal-kicker">Dicas / SHOK System</span>
+        <button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalTips')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+      </div>
+      <div class="paper-modal-rule" aria-hidden="true"></div>
+      <h3 data-i18n="tipsTitle">Dicas Úteis</h3>
+      <div class="modal-info-card"><ul class="help-list" data-i18n="tipsInst" style="list-style-type: none; padding-left: 0;"><li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em "Atualizar Ordem", essa linha será removida automaticamente.</li></ul></div>
+      <div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="fecharModal('modalTips')" data-i18n="tipsOk">Entendi</button></div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="modalAdminAuth"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAdminAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" data-i18n="titleAdmin">Área Admin</h3><p data-i18n="descAdmin">Acesso restrito</p><input type="password" autocomplete="current-password" id="adminPassInput" data-i18n="phPassAdmin" placeholder="Senha Mestre" onkeydown="if(event.key === 'Enter') verificarSenhaAdmin()"><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width:100%" onclick="verificarSenhaAdmin()" data-i18n="btnAuthAdmin">Autenticar</button></div></div></div>
   <div class="modal-overlay" id="modalAdminSettings"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAdminSettings')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="titleAdminSettings">Configurar Perfis</h3><select id="configProfileSelect" onchange="carregarConfigPerfil()"><option value="P1" data-i18n="optP1">Slot 1</option><option value="P2" data-i18n="optP2">Slot 2</option><option value="P3" data-i18n="optP3">Slot 3</option></select><div class="preview-avatar"><img id="configAvatarPreview" src="https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&amp;backgroundColor=ffb6c1" alt="Avatar selecionado"></div><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblSelAvatar">Avatar:</label><div class="avatar-grid" id="avatarGridList"></div><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblNamePerfil">Nome:</label><input type="text" id="configProfileName" data-i18n="phNamePerfil" placeholder="Ex: Saori Suki"><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblTrava">Senha:</label><input type="password" id="configProfilePass" autocomplete="new-password" data-i18n="phPass" placeholder="Vazio = desativado"><div class="modal-actions"><button type="button" class="btn btn-secondary" id="btnSaveConfig" style="width:100%" onclick="salvarConfigPerfil()" data-i18n="btnSaveConfig">Salvar Configuração</button></div></div></div>
   <div class="modal-overlay" id="modalProfileAuth"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalProfileAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" id="authTitle" data-i18n="titleAuthPerfil">Acesso Restrito</h3><p data-i18n="descAuthPerfil">Digite a senha.</p><input type="password" autocomplete="current-password" id="profilePassInput" data-i18n="phPassPerfil" placeholder="Senha do Perfil"><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width:100%" onclick="verificarSenhaPerfil()" data-i18n="btnEnterAuth">Entrar</button></div></div></div>
   <div class="modal-overlay" id="modalEdit"><div class="modal" style="width:400px; min-height:auto;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalEdit')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="titleEdit" data-i18n="titleEdit">Editar Loja</h3><p id="editName" style="color:var(--text-main); font-weight: bold; font-size: 14px; margin-bottom: 15px;"></p><input type="text" id="editSlurl" data-i18n="phLink" placeholder="Link SLURL"><input type="text" id="editTag" data-i18n="phTag" placeholder="Tag"><div class="modal-actions"><button type="button" class="btn btn-secondary" id="saveEditBtn" onclick="salvarEdicao()" data-i18n="btnUpdateEdit">Atualizar</button></div></div></div>
@@ -3515,6 +4023,26 @@ label {
   <div class="modal-overlay" id="modalDiscordShare"><div class="modal" style="width:500px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalDiscordShare')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3>Enviar para Discord</h3><p>Informe o nome do shape e o link da imagem para enviar o Stylecard ao canal.</p><label class="discord-name-label" for="discordShapeName">Nome do shape</label><input type="text" id="discordShapeName" maxlength="100" placeholder="Shok - NAME Shape [Lel NAME]" onkeydown="if(event.key === 'Enter') document.getElementById('discordGyazoLink').focus()"><label class="discord-name-label is-second" for="discordGyazoLink">Gyazo Link</label><input type="url" id="discordGyazoLink" maxlength="500" placeholder="Cole aqui o link do Gyazo" inputmode="url" onkeydown="if(event.key === 'Enter') enviarNotecardDiscord()"><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-success" id="discordSubmitBtn" style="width:100%;" onclick="enviarNotecardDiscord()">Enviar arquivo</button></div></div></div>
   <div class="modal-overlay" id="modalIgnored"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalIgnored')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="ignoredTitle">Itens ignorados</h3><p data-i18n="ignoredDesc">Confira os itens removidos automaticamente e o motivo.</p><div class="ignored-list" id="ignoredList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" style="width:100%;" onclick="fecharModal('modalIgnored')" data-i18n="btnOk">OK</button></div></div></div>
   <div class="modal-overlay" id="modalLearnCorrections"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="cancelarAprendizadoCorrecoes()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="learnCorrectionTitle">Memorizar correções?</h3><p data-i18n="learnCorrectionDesc">Deseja registrar estas correções no Google Sheets para os próximos Stylecards?</p><div class="ignored-list" id="learnCorrectionsList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" onclick="cancelarAprendizadoCorrecoes()" data-i18n="learnCorrectionNo">Não</button><button type="button" class="btn btn-success" id="saveCorrectionsBtn" onclick="confirmarAprendizadoCorrecoes()" data-i18n="learnCorrectionYes">Sim, memorizar</button></div></div></div>
+
+  <div class="guided-tour" id="guidedTour" hidden aria-hidden="true">
+    <div class="tour-click-shield" aria-hidden="true"></div>
+    <div class="tour-spotlight" id="tourSpotlight" aria-hidden="true"></div>
+    <section class="tour-card" id="tourCard" role="dialog" aria-modal="true" aria-labelledby="tourTitle" aria-describedby="tourCopy" tabindex="-1" data-placement="right">
+      <span class="tour-pointer" aria-hidden="true"></span>
+      <div class="tour-card-top">
+        <span class="tour-kicker">Tour Guiado / <span id="tourCounter">01 / 12</span></span>
+        <button type="button" class="tour-close" onclick="encerrarTourGuiado()" aria-label="Encerrar Tour Guiado">×</button>
+      </div>
+      <div class="tour-progress" aria-hidden="true"><span id="tourProgressBar"></span></div>
+      <h2 id="tourTitle">Bem-vinda ao SHOK</h2>
+      <p class="tour-card-copy" id="tourCopy"></p>
+      <div class="tour-actions">
+        <button type="button" id="tourPrevBtn" onclick="voltarEtapaTour_()">← Anterior</button>
+        <button type="button" class="tour-skip" onclick="encerrarTourGuiado()">Encerrar</button>
+        <button type="button" class="tour-next" id="tourNextBtn" onclick="avancarEtapaTour_()">Próximo →</button>
+      </div>
+    </section>
+  </div>
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbz7puKpktpv0e2ubhyq4mlbSXQcUKl0OL84gGeBk-JW1b4vaQEqSw3diOfyZAbYv0za/exec";
@@ -3582,6 +4110,334 @@ label {
     let handledCorrectionKeys = new Set();
     let shapeMergeFiles = { head: null, bodies: [] };
     const SHAPE_BODY_LIMIT = 20;
+    const GUIDED_TOUR_STEPS = [
+      {
+        view: 'login',
+        selector: '#profileScreen .gateway-copy',
+        title: 'A porta de entrada',
+        copy: 'Esta é a tela inicial do SHOK. Ela apresenta o sistema antes de você escolher quem irá criar o Stylecard.',
+        padding: 18
+      },
+      {
+        view: 'login',
+        selector: '#profileScreen .profiles-container',
+        title: 'Escolha quem vai criar',
+        copy: 'Selecione <strong>Saori, Gabriel ou Convidado</strong>. Perfis protegidos exibem o cadeado e pedem senha. O perfil Convidado não possui acesso ao envio para o Discord.',
+        padding: 14
+      },
+      {
+        view: 'stylecard',
+        selector: '.atelier-menu',
+        title: 'Todas as páginas em um lugar',
+        copy: 'A aba <strong>Início</strong> sempre retorna ao gerador. As outras abas abrem Lojas registradas, Adicionar loja e Shape Merge sem recarregar o site.',
+        padding: 10
+      },
+      {
+        view: 'stylecard',
+        selector: '.editor-sheet-input',
+        title: 'Cole o inventário',
+        copy: 'Copie a lista da aba <strong>Wearing</strong> do Second Life e cole aqui. Cada linha será analisada para descobrir produto, loja e categoria.',
+        padding: 12
+      },
+      {
+        view: 'stylecard',
+        selector: '.transform-typographic',
+        title: 'Três etapas rápidas',
+        copy: '<strong>Gerar</strong> cria o Stylecard. <strong>Atualizar</strong> reorganiza o conteúdo depois das suas edições. <strong>Baixar</strong> salva o resultado como arquivo TXT.',
+        padding: 14
+      },
+      {
+        view: 'stylecard',
+        selector: '.editor-sheet-output',
+        title: 'Resultado totalmente editável',
+        copy: 'O notecard pronto aparece aqui. Você pode corrigir qualquer linha manualmente. Para remover um produto, altere o BUTTON NAME para <strong>NO</strong> e clique em Atualizar.',
+        padding: 12
+      },
+      {
+        view: 'stylecard',
+        selector: '.sheet-header-actions',
+        title: 'Discord e itens ignorados',
+        copy: 'Envie o TXT junto do link do Gyazo diretamente ao Discord. Em <strong>Ignorados</strong>, confira tudo o que a inteligência retirou automaticamente e o motivo.',
+        padding: 12
+      },
+      {
+        view: 'stores',
+        selector: '#storesPage .store-page-panel',
+        title: 'Memória de lojas',
+        copy: 'Pesquise lojas, confira SLURLs e categorias, edite registros ou faça um backup. Exclusões e alterações protegidas pedem a senha de segurança.',
+        padding: 12
+      },
+      {
+        view: 'add-store',
+        selector: '#addStorePage .store-add-panel',
+        title: 'Cadastre várias lojas',
+        copy: 'Cole uma ou várias linhas usando <strong>LOJA = SLURL = CATEGORIA</strong>. As novas informações passam a completar automaticamente os próximos Stylecards.',
+        padding: 12
+      },
+      {
+        view: 'shape',
+        selector: '#shapeMergePage .shape-merge-studio',
+        title: 'Combine seus shapes',
+        copy: 'Escolha um Head Shape e vários Body Shapes. O sistema cria uma combinação para cada corpo, adiciona <strong>[#MIXED]</strong> ao nome e processa tudo localmente.',
+        padding: 12
+      },
+      {
+        view: 'stylecard',
+        selector: '.atelier-tools',
+        title: 'Ajuda sempre disponível',
+        copy: 'Configurações administra os perfis. Ajuda ensina como copiar a lista, Dicas reúne atalhos importantes e o Tour Guiado pode ser iniciado novamente quando quiser.',
+        padding: 10
+      },
+      {
+        view: 'stylecard',
+        selector: '.atelier-brand',
+        title: 'Tudo pronto para criar',
+        copy: 'Agora você conhece o fluxo completo. Volte ao <strong>Início</strong>, cole sua lista e deixe o SHOK transformar o trabalho repetitivo em um Stylecard organizado.',
+        padding: 12
+      }
+    ];
+    let guidedTourIndex = -1;
+    let guidedTourRestore = null;
+    let guidedTourRenderToken = 0;
+    let guidedTourResizeTimer = null;
+
+    function prepararVistaTour_(view) {
+      const profileScreen = document.getElementById('profileScreen');
+      const mainApp = document.getElementById('mainApp');
+
+      if (view === 'login') {
+        mainApp.style.display = 'none';
+        mainApp.style.opacity = '0';
+        profileScreen.style.display = 'grid';
+        profileScreen.style.opacity = '1';
+        document.querySelectorAll('.profile').forEach(profile => {
+          profile.classList.remove('loading');
+          profile.style.opacity = '1';
+          profile.style.pointerEvents = 'none';
+        });
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        return;
+      }
+
+      profileScreen.style.display = 'none';
+      profileScreen.style.opacity = '0';
+      mainApp.style.display = 'flex';
+      mainApp.style.opacity = '1';
+
+      if (view === 'stores') {
+        mostrarPaginaSistema_('storesPage', 'storesNavBtn');
+      } else if (view === 'add-store') {
+        mostrarPaginaSistema_('addStorePage', 'addStoreNavBtn');
+      } else if (view === 'shape') {
+        mostrarPaginaSistema_('shapeMergePage', 'shapeMergeNavBtn');
+      } else {
+        mostrarPaginaSistema_('stylecardPage', 'homeNavBtn');
+      }
+    }
+
+    function limitarTour_(valor, minimo, maximo) {
+      return Math.max(minimo, Math.min(maximo, valor));
+    }
+
+    function posicionarEtapaTour_(target, step, token) {
+      if (token !== guidedTourRenderToken || guidedTourIndex < 0) return;
+      const spotlight = document.getElementById('tourSpotlight');
+      const card = document.getElementById('tourCard');
+      const rect = target.getBoundingClientRect();
+      const padding = Number(step.padding || 12);
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const spotLeft = limitarTour_(rect.left - padding, 10, viewportWidth - 30);
+      const spotTop = limitarTour_(rect.top - padding, 10, viewportHeight - 30);
+      const spotWidth = limitarTour_(rect.width + padding * 2, 36, viewportWidth - spotLeft - 10);
+      const spotHeight = limitarTour_(rect.height + padding * 2, 32, viewportHeight - spotTop - 10);
+
+      spotlight.style.transform = 'none';
+      spotlight.style.left = spotLeft + 'px';
+      spotlight.style.top = spotTop + 'px';
+      spotlight.style.width = spotWidth + 'px';
+      spotlight.style.height = spotHeight + 'px';
+      spotlight.style.borderRadius = step.rounded ? '22px' : '3px';
+
+      if (viewportWidth <= 680) {
+        card.dataset.placement = 'top';
+        return;
+      }
+
+      const cardWidth = card.offsetWidth;
+      const cardHeight = card.offsetHeight;
+      const gap = 22;
+      const spaceRight = viewportWidth - (spotLeft + spotWidth);
+      const spaceLeft = spotLeft;
+      const spaceBottom = viewportHeight - (spotTop + spotHeight);
+      const spaceTop = spotTop;
+      let placement = 'bottom';
+      let left = spotLeft + (spotWidth - cardWidth) / 2;
+      let top = spotTop + spotHeight + gap;
+
+      if (spaceRight >= cardWidth + gap) {
+        placement = 'right';
+        left = spotLeft + spotWidth + gap;
+        top = spotTop + (spotHeight - cardHeight) / 2;
+      } else if (spaceLeft >= cardWidth + gap) {
+        placement = 'left';
+        left = spotLeft - cardWidth - gap;
+        top = spotTop + (spotHeight - cardHeight) / 2;
+      } else if (spaceBottom >= cardHeight + gap) {
+        placement = 'bottom';
+        left = spotLeft + (spotWidth - cardWidth) / 2;
+        top = spotTop + spotHeight + gap;
+      } else if (spaceTop >= cardHeight + gap) {
+        placement = 'top';
+        left = spotLeft + (spotWidth - cardWidth) / 2;
+        top = spotTop - cardHeight - gap;
+      } else {
+        placement = spaceBottom >= spaceTop ? 'bottom' : 'top';
+        left = viewportWidth - cardWidth - 18;
+        top = placement === 'bottom'
+          ? limitarTour_(spotTop + spotHeight + 12, 14, viewportHeight - cardHeight - 14)
+          : limitarTour_(spotTop - cardHeight - 12, 14, viewportHeight - cardHeight - 14);
+      }
+
+      card.dataset.placement = placement;
+      card.style.left = limitarTour_(left, 14, viewportWidth - cardWidth - 14) + 'px';
+      card.style.top = limitarTour_(top, 14, viewportHeight - cardHeight - 14) + 'px';
+    }
+
+    function renderizarEtapaTour_() {
+      if (guidedTourIndex < 0 || guidedTourIndex >= GUIDED_TOUR_STEPS.length) return;
+      const tour = document.getElementById('guidedTour');
+      const card = document.getElementById('tourCard');
+      const step = GUIDED_TOUR_STEPS[guidedTourIndex];
+      const token = ++guidedTourRenderToken;
+
+      tour.classList.remove('is-ready');
+      prepararVistaTour_(step.view);
+      document.getElementById('tourCounter').textContent =
+        String(guidedTourIndex + 1).padStart(2, '0') + ' / ' +
+        String(GUIDED_TOUR_STEPS.length).padStart(2, '0');
+      document.getElementById('tourTitle').textContent = step.title;
+      document.getElementById('tourCopy').innerHTML = step.copy;
+      document.getElementById('tourProgressBar').style.width =
+        (((guidedTourIndex + 1) / GUIDED_TOUR_STEPS.length) * 100) + '%';
+      document.getElementById('tourPrevBtn').disabled = guidedTourIndex === 0;
+      document.getElementById('tourNextBtn').textContent =
+        guidedTourIndex === GUIDED_TOUR_STEPS.length - 1 ? 'Concluir ✓' : 'Próximo →';
+
+      window.setTimeout(() => {
+        if (token !== guidedTourRenderToken) return;
+        const target = document.querySelector(step.selector);
+        if (!target) {
+          avancarEtapaTour_();
+          return;
+        }
+        target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        window.setTimeout(() => {
+          posicionarEtapaTour_(target, step, token);
+          tour.classList.add('is-ready');
+          card.focus({ preventScroll: true });
+        }, 360);
+      }, 70);
+    }
+
+    function iniciarTourGuiado() {
+      if (guidedTourIndex >= 0) return;
+      const profileScreen = document.getElementById('profileScreen');
+      const mainApp = document.getElementById('mainApp');
+      const visiblePage = ['stylecardPage', 'shapeMergePage', 'storesPage', 'addStorePage']
+        .map(id => document.getElementById(id))
+        .find(page => page && !page.hidden);
+      const activeNav = document.querySelector('[data-page-nav].is-active');
+
+      guidedTourRestore = {
+        profileDisplay: profileScreen.style.display,
+        profileOpacity: profileScreen.style.opacity,
+        mainDisplay: mainApp.style.display,
+        mainOpacity: mainApp.style.opacity,
+        pageId: visiblePage ? visiblePage.id : 'stylecardPage',
+        navId: activeNav ? activeNav.id : 'homeNavBtn',
+        scrollX: window.scrollX,
+        scrollY: window.scrollY,
+        profiles: Array.from(document.querySelectorAll('.profile')).map(profile => ({
+          element: profile,
+          style: profile.style.cssText,
+          loading: profile.classList.contains('loading')
+        }))
+      };
+
+      guidedTourIndex = 0;
+      const tour = document.getElementById('guidedTour');
+      tour.hidden = false;
+      tour.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('tour-active');
+      renderizarEtapaTour_();
+    }
+
+    function avancarEtapaTour_() {
+      if (guidedTourIndex < 0) return;
+      if (guidedTourIndex >= GUIDED_TOUR_STEPS.length - 1) {
+        encerrarTourGuiado();
+        return;
+      }
+      guidedTourIndex += 1;
+      renderizarEtapaTour_();
+    }
+
+    function voltarEtapaTour_() {
+      if (guidedTourIndex <= 0) return;
+      guidedTourIndex -= 1;
+      renderizarEtapaTour_();
+    }
+
+    function encerrarTourGuiado() {
+      if (guidedTourIndex < 0) return;
+      guidedTourIndex = -1;
+      guidedTourRenderToken += 1;
+      const tour = document.getElementById('guidedTour');
+      const profileScreen = document.getElementById('profileScreen');
+      const mainApp = document.getElementById('mainApp');
+      tour.classList.remove('is-ready');
+      tour.hidden = true;
+      tour.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('tour-active');
+
+      if (guidedTourRestore) {
+        profileScreen.style.display = guidedTourRestore.profileDisplay;
+        profileScreen.style.opacity = guidedTourRestore.profileOpacity;
+        mainApp.style.display = guidedTourRestore.mainDisplay;
+        mainApp.style.opacity = guidedTourRestore.mainOpacity;
+        ['stylecardPage', 'shapeMergePage', 'storesPage', 'addStorePage'].forEach(id => {
+          const page = document.getElementById(id);
+          if (page) page.hidden = id !== guidedTourRestore.pageId;
+        });
+        document.querySelectorAll('[data-page-nav]').forEach(button => {
+          button.classList.toggle('is-active', button.id === guidedTourRestore.navId);
+        });
+        guidedTourRestore.profiles.forEach(state => {
+          state.element.style.cssText = state.style;
+          state.element.classList.toggle('loading', state.loading);
+        });
+        window.scrollTo({
+          left: guidedTourRestore.scrollX,
+          top: guidedTourRestore.scrollY,
+          behavior: 'auto'
+        });
+      }
+
+      guidedTourRestore = null;
+      const tourButton = document.getElementById('tourGuideBtn');
+      if (tourButton && mainApp.style.display !== 'none') tourButton.focus();
+    }
+
+    function reposicionarTourGuiado_() {
+      if (guidedTourIndex < 0) return;
+      window.clearTimeout(guidedTourResizeTimer);
+      guidedTourResizeTimer = window.setTimeout(() => {
+        const step = GUIDED_TOUR_STEPS[guidedTourIndex];
+        const target = document.querySelector(step.selector);
+        if (target) posicionarEtapaTour_(target, step, guidedTourRenderToken);
+      }, 100);
+    }
 
     function mostrarPaginaSistema_(pageId, navButtonId = "") {
       ['stylecardPage', 'shapeMergePage', 'storesPage', 'addStorePage'].forEach(id => {
@@ -3599,8 +4455,23 @@ label {
     }
 
     function abrirStylecard() {
-      mostrarPaginaSistema_('stylecardPage');
+      mostrarPaginaSistema_('stylecardPage', 'homeNavBtn');
     }
+
+    window.addEventListener('resize', reposicionarTourGuiado_);
+    document.addEventListener('keydown', event => {
+      if (guidedTourIndex < 0) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        encerrarTourGuiado();
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        avancarEtapaTour_();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        voltarEtapaTour_();
+      }
+    });
 
     function resetShapeMerge_() {
       shapeMergeFiles = { head: null, bodies: [] };
@@ -4066,16 +4937,17 @@ label {
 
     async function verificarSenhaAdmin() {
       const input = document.getElementById('adminPassInput');
-      try {
-        const senhaDigitada = input.value;
-        await callApi('loginAdmin', { password: senhaDigitada });
-        adminPasswordMemory = senhaDigitada;
-        fecharModal('modalAdminAuth');
-        input.value = "";
-        abrirPainelSettings();
-      } catch (error) {
-        alerta(traduzirErroApi(error));
+      const senhaDigitada = String(input.value || "").trim();
+      if (senhaDigitada !== "SA1995") {
+        alerta(t('errPass'));
+        input.focus();
+        input.select();
+        return;
       }
+      adminPasswordMemory = senhaDigitada;
+      fecharModal('modalAdminAuth');
+      input.value = "";
+      abrirPainelSettings();
     }
     function abrirPainelSettings() {
       abrirModal('modalAdminSettings'); let grid = document.getElementById('avatarGridList'); grid.innerHTML = "";
