@@ -2594,82 +2594,281 @@ label {
   text-transform: uppercase;
 }
 
-.processing-summary-stats {
+.processing-summary-modal {
+  width: min(900px, calc(100vw - 36px));
+  padding: 58px 42px 34px;
+}
+
+.processing-summary-modal h3 {
+  margin-bottom: 11px;
+  font-size: clamp(38px, 5vw, 52px);
+}
+
+.processing-summary-modal > p {
+  margin-bottom: 24px;
+}
+
+.processing-summary-overview {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 4px 0 26px;
-  border-top: 1px solid #332e37;
-  border-left: 1px solid #332e37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px 0;
+  margin: 0 0 22px;
+  padding: 14px 18px;
+  background: rgba(205, 184, 255, .035);
+  border-top: 1px solid #353039;
+  border-bottom: 1px solid #353039;
+}
+
+.processing-summary-overview[hidden] {
+  display: none;
+}
+
+.processing-summary-overview > strong {
+  color: var(--ivory);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.processing-summary-overview > strong::after,
+.processing-summary-stat::after {
+  content: "•";
+  margin: 0 12px;
+  color: var(--tomato);
+}
+
+.processing-summary-stats {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .processing-summary-stat {
-  min-width: 0;
-  padding: 15px 10px;
-  border-right: 1px solid #332e37;
-  border-bottom: 1px solid #332e37;
-  text-align: center;
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.processing-summary-stat:last-child::after {
+  content: none;
 }
 
 .processing-summary-stat strong {
-  display: block;
-  margin-bottom: 4px;
+  margin-right: 5px;
   color: var(--tomato);
-  font: 500 20px/1 'Bodoni Moda', serif;
+  font: 700 13px/1.3 'IBM Plex Mono', monospace;
 }
 
 .processing-summary-stat span {
-  color: var(--ash);
-  font: 500 8px/1.3 'IBM Plex Mono', monospace;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  color: #aaa3ac;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .processing-summary-sections {
   width: 100%;
-  max-height: 48vh;
+  max-height: 49vh;
+  display: grid;
+  gap: 10px;
   overflow-y: auto;
-  border-top: 1px solid #332e37;
+  padding-right: 5px;
 }
 
 .processing-summary-section {
-  padding: 19px 0 4px;
-  border-bottom: 1px solid #332e37;
+  width: 100%;
+  background: #111113;
+  border: 1px solid #353138;
 }
 
-.processing-summary-section h4 {
-  margin: 0 0 12px;
+.processing-summary-section[open] {
+  border-color: #45404a;
+}
+
+.processing-summary-section > summary {
+  min-height: 66px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 22px;
+  align-items: center;
+  gap: 12px;
+  padding: 17px 21px;
+  color: var(--ivory);
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.processing-summary-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+.processing-summary-section > summary:hover {
+  background: rgba(205, 184, 255, .035);
+}
+
+.processing-summary-section-title {
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.processing-summary-section-count {
+  min-width: 29px;
+  height: 25px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0 9px;
   color: var(--tomato);
-  font: 600 10px/1.3 'IBM Plex Mono', monospace;
-  letter-spacing: .11em;
-  text-transform: uppercase;
+  background: rgba(205, 184, 255, .11);
+  border-radius: 999px;
+  font: 700 10px/1 'IBM Plex Mono', monospace;
+}
+
+.processing-summary-section-chevron {
+  color: var(--tomato);
+  font: 800 16px/1 'IBM Plex Mono', monospace;
+  text-align: center;
+  transition: transform .2s ease;
+}
+
+.processing-summary-section[open] .processing-summary-section-chevron {
+  transform: rotate(180deg);
+}
+
+.processing-summary-section-body {
+  padding: 0 21px 4px;
+  border-top: 1px solid #353138;
 }
 
 .processing-summary-item {
   position: relative;
-  padding: 0 0 15px 20px;
-  color: var(--ivory);
-  font: 12px/1.65 'IBM Plex Mono', monospace;
+  padding: 15px 0 15px 20px;
+  color: #c6c0c8;
+  border-bottom: 1px solid #302c32;
+  font-size: 12px;
+  line-height: 1.65;
   overflow-wrap: anywhere;
+}
+
+.processing-summary-item:last-child {
+  border-bottom: 0;
 }
 
 .processing-summary-item::before {
   content: "→";
   position: absolute;
+  top: 15px;
   left: 0;
   color: var(--tomato);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.processing-summary-merge {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) 34px minmax(0, 1.15fr);
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid #353138;
+}
+
+.processing-summary-merge:last-child {
+  border-bottom: 0;
+}
+
+.processing-summary-merge-before {
+  display: grid;
+  gap: 7px;
+  color: #9e979f;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.processing-summary-merge-arrow {
+  color: var(--tomato);
+  font: 500 18px/1 'IBM Plex Mono', monospace;
+  text-align: center;
+}
+
+.processing-summary-merge-after {
+  min-width: 0;
+}
+
+.processing-summary-merge-product {
+  color: var(--ivory);
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.processing-summary-info {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 9px;
+  padding: 7px 10px;
+  color: var(--tomato);
+  background: rgba(205, 184, 255, .11);
+  border-radius: 999px;
+  font: 700 10px/1.35 'IBM Plex Mono', monospace;
+  overflow-wrap: anywhere;
 }
 
 .processing-summary-empty {
-  margin: 4px 0 0 !important;
+  margin: 0 !important;
+  padding: 18px 20px;
   color: var(--ash) !important;
+  background: #111113;
+  border: 1px solid #353138;
   font-size: 13px !important;
-  text-align: left !important;
+  text-align: center !important;
 }
 
-@media (max-width: 620px) {
+.processing-summary-actions {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.processing-summary-actions .processing-summary-continue {
+  width: auto;
+  min-width: 0;
+  min-height: 42px;
+  padding: 10px 23px;
+}
+
+@media (max-width: 680px) {
+  .processing-summary-modal {
+    padding: 58px 18px 26px;
+  }
+
+  .processing-summary-overview {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px 16px;
+  }
+
+  .processing-summary-overview > strong::after,
+  .processing-summary-stat::after {
+    content: none;
+  }
+
   .processing-summary-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: flex-start;
+    gap: 7px 13px;
+  }
+
+  .processing-summary-merge {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+
+  .processing-summary-merge-arrow {
+    text-align: left;
+    transform: rotate(90deg);
+    transform-origin: center;
   }
 }
 
@@ -3929,7 +4128,7 @@ body.tour-active {
   <div class="modal-overlay" id="modalDiscordShare"><div class="modal" style="width:500px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalDiscordShare')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3>Enviar para Discord</h3><p>Informe o nome do shape e o link da imagem para enviar o Stylecard ao canal.</p><label class="discord-name-label" for="discordShapeName">Nome do shape</label><input type="text" id="discordShapeName" maxlength="100" placeholder="Shok - NAME Shape [Lel NAME]" onkeydown="if(event.key === 'Enter') document.getElementById('discordGyazoLink').focus()"><label class="discord-name-label is-second" for="discordGyazoLink">Gyazo Link</label><input type="url" id="discordGyazoLink" maxlength="500" placeholder="Cole aqui o link do Gyazo" inputmode="url" onkeydown="if(event.key === 'Enter') enviarNotecardDiscord()"><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-success" id="discordSubmitBtn" style="width:100%;" onclick="enviarNotecardDiscord()">Enviar arquivo</button></div></div></div>
   <div class="modal-overlay" id="modalIgnored"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalIgnored')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="ignoredTitle">Itens ignorados</h3><p data-i18n="ignoredDesc">Confira os itens removidos automaticamente e o motivo.</p><div class="ignored-list" id="ignoredList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" style="width:100%;" onclick="fecharModal('modalIgnored')" data-i18n="btnOk">OK</button></div></div></div>
   <div class="modal-overlay" id="modalLearnCorrections"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="cancelarAprendizadoCorrecoes()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="learnCorrectionTitle">Memorizar correções?</h3><p data-i18n="learnCorrectionDesc">Correções aplicadas. Deseja salvar para usos futuros?</p><div class="ignored-list" id="learnCorrectionsList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" onclick="cancelarAprendizadoCorrecoes()" data-i18n="learnCorrectionNo">Não</button><button type="button" class="btn btn-success" id="saveCorrectionsBtn" onclick="confirmarAprendizadoCorrecoes()" data-i18n="learnCorrectionYes">Sim, memorizar</button></div></div></div>
-  <div class="modal-overlay" id="modalProcessingSummary"><div class="modal" style="width:780px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharResumoProcessamento_()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3>Resumo do processamento</h3><p id="processingSummaryIntro">Confira tudo o que o sistema ajustou nesta operação.</p><div class="processing-summary-stats" id="processingSummaryStats"></div><div class="processing-summary-sections" id="processingSummarySections"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" style="width:100%;" onclick="fecharResumoProcessamento_()">Continuar</button></div></div></div>
+  <div class="modal-overlay" id="modalProcessingSummary"><div class="modal processing-summary-modal"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharResumoProcessamento_()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="processingSummaryTitle">Pronto para usar.</h3><p id="processingSummaryIntro">O painel começa curto. Abra apenas a informação que deseja conferir.</p><div class="processing-summary-overview" id="processingSummaryOverview"><strong>Stylecard pronto</strong><div class="processing-summary-stats" id="processingSummaryStats"></div></div><div class="processing-summary-sections" id="processingSummarySections"></div><div class="modal-actions processing-summary-actions"><button type="button" class="btn btn-secondary processing-summary-continue" onclick="fecharResumoProcessamento_()">Continuar</button></div></div></div>
 
   <div class="guided-tour" id="guidedTour" hidden aria-hidden="true">
     <div class="tour-click-shield" aria-hidden="true"></div>
@@ -4773,6 +4972,9 @@ body.tour-active {
     async function callApi(action, data = {}) {
       try {
         const payload = { action: action, ...data };
+        if (activeProfileID && !Object.prototype.hasOwnProperty.call(payload, 'profileId')) {
+          payload.profileId = activeProfileID;
+        }
 
         const response = await fetch(API_URL, {
           method: 'POST',
@@ -5221,6 +5423,27 @@ body.tour-active {
       correctionsToLearn = [];
       fecharModal('modalLearnCorrections');
     }
+    function aplicarPreferenciasResolvidasNoNotecard_(preferencias) {
+      if (!Array.isArray(preferencias) || !preferencias.length) return;
+      const porProduto = new Map();
+      preferencias.forEach(preferencia => {
+        if (!preferencia || !preferencia.slurl) return;
+        porProduto.set(normalizarChaveProduto_(preferencia.produto), preferencia);
+        porProduto.set(normalizarChaveProduto_(preferencia.produtoOriginal), preferencia);
+      });
+      if (!porProduto.size) return;
+
+      const output = document.getElementById('outputList');
+      const blocos = extrairBlocosNotecard_(output.value);
+      blocos.forEach(bloco => {
+        const preferencia = porProduto.get(normalizarChaveProduto_(bloco.produto));
+        if (!preferencia) return;
+        bloco.texto = bloco.texto
+          .replace(/^STORE:[ \t]*[^\r\n]*$/mi, 'STORE: ' + preferencia.loja)
+          .replace(/^SLURL:[ \t]*[^\r\n]*$/mi, 'SLURL: ' + preferencia.slurl);
+      });
+      output.value = blocos.map(bloco => bloco.texto).join('');
+    }
     async function confirmarAprendizadoCorrecoes() {
       if (!correctionsToLearn.length) {
         fecharModal('modalLearnCorrections');
@@ -5241,19 +5464,22 @@ body.tour-active {
         const salvas = Number(res && res.salvas || 0);
         if (salvas <= 0) throw new Error('NO_CORRECTIONS_SAVED');
         marcarCorrecoesComoTratadas_();
+        aplicarPreferenciasResolvidasNoNotecard_(
+          Array.isArray(res && res.preferencias) ? res.preferencias : []
+        );
+        generatedBaselineBlocks = extrairBlocosNotecard_(
+          document.getElementById('outputList').value
+        );
         correctionsToLearn = [];
         fecharModal('modalLearnCorrections');
         mostrarResumoProcessamento_({
-          itensRecebidos: 0,
-          itensGerados: generatedBaselineBlocks.length,
-          unificacoes: [],
-          duplicados: [],
-          regrasAplicadas: [],
-          memoriaAplicada: [],
-          ignorados: 0,
-          regrasAprendidas: aprendidas.slice(0, salvas)
+          regrasAprendidas: aprendidas.slice(0, salvas),
+          lojasSalvas: Array.isArray(res && res.lojas) ? res.lojas : []
         }, {
-          intro: salvas + ' correção(ões) foram salvas e serão reaplicadas em produtos equivalentes.'
+          titulo: 'Correções memorizadas',
+          intro: salvas + ' correção(ões) foram salvas e serão reaplicadas em produtos equivalentes.',
+          mostrarEstatisticas: false,
+          incluirIgnorados: false
         });
       } catch (error) {
         alerta(traduzirErroApi(error));
@@ -5272,20 +5498,81 @@ body.tour-active {
       stat.append(numero, texto);
       container.appendChild(stat);
     }
+    function criarFaixaResumo_(container, titulo, quantidade, abrir = false) {
+      const section = document.createElement('details');
+      section.className = 'processing-summary-section';
+      section.open = abrir;
+
+      const summary = document.createElement('summary');
+      const heading = document.createElement('span');
+      heading.className = 'processing-summary-section-title';
+      heading.textContent = titulo;
+
+      const count = document.createElement('span');
+      count.className = 'processing-summary-section-count';
+      count.textContent = String(quantidade);
+
+      const chevron = document.createElement('span');
+      chevron.className = 'processing-summary-section-chevron';
+      chevron.setAttribute('aria-hidden', 'true');
+      chevron.textContent = '⌃';
+
+      const body = document.createElement('div');
+      body.className = 'processing-summary-section-body';
+      summary.append(heading, count, chevron);
+      section.append(summary, body);
+      container.appendChild(section);
+      return body;
+    }
     function adicionarSecaoResumo_(container, titulo, itens) {
       if (!Array.isArray(itens) || !itens.length) return;
-      const section = document.createElement('section');
-      section.className = 'processing-summary-section';
-      const heading = document.createElement('h4');
-      heading.textContent = titulo;
-      section.appendChild(heading);
+      const body = criarFaixaResumo_(container, titulo, itens.length);
       itens.forEach(texto => {
         const item = document.createElement('div');
         item.className = 'processing-summary-item';
         item.textContent = texto;
-        section.appendChild(item);
+        body.appendChild(item);
       });
-      container.appendChild(section);
+    }
+    function adicionarUnificacoesResumo_(container, unificacoes) {
+      if (!Array.isArray(unificacoes) || !unificacoes.length) return;
+      const body = criarFaixaResumo_(container, 'Produtos combinados', unificacoes.length, true);
+      unificacoes.forEach(item => {
+        const merge = document.createElement('div');
+        merge.className = 'processing-summary-merge';
+
+        const before = document.createElement('div');
+        before.className = 'processing-summary-merge-before';
+        const originais = Array.isArray(item.originais) && item.originais.length
+          ? item.originais
+          : [item.produto || 'Produto original'];
+        originais.forEach(original => {
+          const line = document.createElement('span');
+          line.textContent = original;
+          before.appendChild(line);
+        });
+
+        const arrow = document.createElement('div');
+        arrow.className = 'processing-summary-merge-arrow';
+        arrow.setAttribute('aria-hidden', 'true');
+        arrow.textContent = '→';
+
+        const after = document.createElement('div');
+        after.className = 'processing-summary-merge-after';
+        const product = document.createElement('div');
+        product.className = 'processing-summary-merge-product';
+        product.textContent = item.produto || 'Produto combinado';
+        after.appendChild(product);
+        if (item.info) {
+          const info = document.createElement('div');
+          info.className = 'processing-summary-info';
+          info.textContent = 'Add como INFO: ' + item.info;
+          after.appendChild(info);
+        }
+
+        merge.append(before, arrow, after);
+        body.appendChild(merge);
+      });
     }
     function mostrarResumoProcessamento_(relatorio, opcoes = {}) {
       const resumo = relatorio || {};
@@ -5293,11 +5580,15 @@ body.tour-active {
       pendingLearningAfterSummary = opcoes.abrirAprendizado === true;
 
       const stats = document.getElementById('processingSummaryStats');
+      const overview = document.getElementById('processingSummaryOverview');
       const sections = document.getElementById('processingSummarySections');
       const intro = document.getElementById('processingSummaryIntro');
+      const title = document.getElementById('processingSummaryTitle');
       stats.replaceChildren();
       sections.replaceChildren();
-      intro.textContent = opcoes.intro || 'Confira tudo o que o sistema ajustou nesta operação.';
+      overview.hidden = opcoes.mostrarEstatisticas === false;
+      title.textContent = opcoes.titulo || 'Pronto para usar.';
+      intro.textContent = opcoes.intro || 'O painel começa curto. Abra apenas a informação que deseja conferir.';
 
       const unificacoes = Array.isArray(resumo.unificacoes) ? resumo.unificacoes : [];
       const duplicados = Array.isArray(resumo.duplicados) ? resumo.duplicados : [];
@@ -5305,24 +5596,23 @@ body.tour-active {
       const memoria = Array.isArray(resumo.memoriaAplicada) ? resumo.memoriaAplicada : [];
       const manuais = Array.isArray(resumo.ajustesManuais) ? resumo.ajustesManuais : [];
       const aprendidas = Array.isArray(resumo.regrasAprendidas) ? resumo.regrasAprendidas : [];
+      const lojasSalvas = Array.isArray(resumo.lojasSalvas) ? resumo.lojasSalvas : [];
       const duplicadosRemovidos = duplicados.reduce((total, item) => total + Number(item.removidos || 0), 0);
 
-      adicionarStatResumo_(stats, Number(resumo.itensRecebidos || 0), 'Itens lidos');
-      adicionarStatResumo_(stats, Number(resumo.itensGerados || 0), 'Itens finais');
-      adicionarStatResumo_(stats, unificacoes.length, 'Unificações');
-      adicionarStatResumo_(stats, duplicadosRemovidos, 'Duplicados');
+      if (opcoes.mostrarEstatisticas !== false) {
+        adicionarStatResumo_(stats, Number(resumo.itensGerados || 0), 'itens finais');
+        adicionarStatResumo_(stats, unificacoes.length, 'produtos combinados');
+        adicionarStatResumo_(stats, duplicadosRemovidos, 'repetições removidas');
+      }
 
-      adicionarSecaoResumo_(sections, 'Itens unificados', unificacoes.map(item => {
-        const originais = Array.isArray(item.originais) ? item.originais.join(' + ') : '';
-        return item.produto + (item.info ? ' — ' + item.info : '') + (originais ? ' | Originais: ' + originais : '');
-      }));
-      adicionarSecaoResumo_(sections, 'Duplicidades removidas', duplicados.map(item =>
+      adicionarUnificacoesResumo_(sections, unificacoes);
+      adicionarSecaoResumo_(sections, 'Duplicidades consolidadas', duplicados.map(item =>
         item.produto + ' — ' + Number(item.removidos || 0) + ' ocorrência(s) consolidada(s). ' + (item.detalhe || '')
       ));
-      adicionarSecaoResumo_(sections, 'Conhecimento de domínio aplicado', regras.map(item =>
+      adicionarSecaoResumo_(sections, 'Conhecimento aplicado', regras.map(item =>
         item.produto + (item.detalhe ? ' — ' + item.detalhe : '')
       ));
-      adicionarSecaoResumo_(sections, 'Memória reaplicada', memoria.map(item =>
+      adicionarSecaoResumo_(sections, 'Memória do perfil aplicada', memoria.map(item =>
         item.original + ' → ' + (item.produto || item.original) + ' [' + item.botao + '] · ' + (item.loja || 'loja não informada') +
           (item.info ? ' · ' + item.info : '')
       ));
@@ -5332,9 +5622,24 @@ body.tour-active {
       adicionarSecaoResumo_(sections, 'Regras aprendidas', aprendidas.map(item =>
         item.produtoOriginal + ' — ' + item.alteracoes.join(' • ')
       ));
-      adicionarSecaoResumo_(sections, 'Itens ignorados', ignoredItems.map(item =>
-        (item.item || '') + ' — ' + traduzirMotivoIgnorado_(item.motivo)
-      ));
+      adicionarSecaoResumo_(sections, 'Lojas e landmarks', lojasSalvas.map(item => {
+        if (item.status === 'CRIADA') {
+          return item.loja + ' — nova loja cadastrada · ' + item.slurl;
+        }
+        if (item.status === 'ATUALIZADA') {
+          return item.loja + ' — landmark atualizado · ' + item.slurl;
+        }
+        if (item.status === 'RECONHECIDA') {
+          return item.loja + ' — loja já cadastrada' +
+            (item.slurl ? ' · landmark reaproveitado: ' + item.slurl : '');
+        }
+        return item.loja + ' — correção memorizada; informe uma SLURL para cadastrar esta loja.';
+      }));
+      if (opcoes.incluirIgnorados !== false) {
+        adicionarSecaoResumo_(sections, 'Itens ignorados', ignoredItems.map(item =>
+          (item.item || '') + ' — ' + traduzirMotivoIgnorado_(item.motivo)
+        ));
+      }
 
       if (!sections.children.length) {
         const vazio = document.createElement('p');
@@ -5715,21 +6020,10 @@ body.tour-active {
       });
 
       document.getElementById('outputList').value = blocos.map(bloco => bloco.texto).join('');
-      mostrarResumoProcessamento_({
-        itensRecebidos: blocosAntesDaOrdem.length,
-        itensGerados: blocos.length,
-        unificacoes: [],
-        duplicados: [],
-        regrasAplicadas: [],
-        memoriaAplicada: [],
-        ignorados: ignoredItems.length,
-        ajustesManuais: todasAsCorrecoes
-      }, {
-        intro: todasAsCorrecoes.length
-          ? 'A ordem foi atualizada e todas as correções manuais detectadas estão listadas abaixo.'
-          : 'A ordem foi atualizada. Nenhuma correção manual foi detectada.',
-        abrirAprendizado: correctionsToLearn.length > 0
-      });
+      if (correctionsToLearn.length) {
+        renderizarCorrecoesParaAprender_();
+        abrirModal('modalLearnCorrections');
+      }
     }
     function verificarDownload(){ let txt = document.getElementById('outputList').value; if(!txt) return alerta(t('errNoDown')); let indefinidos = (txt.match(/BUTTON NAME:\s*\?\r?\n/g) || []).length; if (indefinidos > 0) { document.getElementById('descWarn').innerHTML = t('descWarn').replace('{n}', indefinidos); abrirModal('modalConfirm'); } else { execDownload(); } }
 
