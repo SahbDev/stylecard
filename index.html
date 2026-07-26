@@ -2594,6 +2594,85 @@ label {
   text-transform: uppercase;
 }
 
+.processing-summary-stats {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 4px 0 26px;
+  border-top: 1px solid #332e37;
+  border-left: 1px solid #332e37;
+}
+
+.processing-summary-stat {
+  min-width: 0;
+  padding: 15px 10px;
+  border-right: 1px solid #332e37;
+  border-bottom: 1px solid #332e37;
+  text-align: center;
+}
+
+.processing-summary-stat strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--tomato);
+  font: 500 20px/1 'Bodoni Moda', serif;
+}
+
+.processing-summary-stat span {
+  color: var(--ash);
+  font: 500 8px/1.3 'IBM Plex Mono', monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.processing-summary-sections {
+  width: 100%;
+  max-height: 48vh;
+  overflow-y: auto;
+  border-top: 1px solid #332e37;
+}
+
+.processing-summary-section {
+  padding: 19px 0 4px;
+  border-bottom: 1px solid #332e37;
+}
+
+.processing-summary-section h4 {
+  margin: 0 0 12px;
+  color: var(--tomato);
+  font: 600 10px/1.3 'IBM Plex Mono', monospace;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.processing-summary-item {
+  position: relative;
+  padding: 0 0 15px 20px;
+  color: var(--ivory);
+  font: 12px/1.65 'IBM Plex Mono', monospace;
+  overflow-wrap: anywhere;
+}
+
+.processing-summary-item::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--tomato);
+}
+
+.processing-summary-empty {
+  margin: 4px 0 0 !important;
+  color: var(--ash) !important;
+  font-size: 13px !important;
+  text-align: left !important;
+}
+
+@media (max-width: 620px) {
+  .processing-summary-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .loader {
   width: 16px;
   height: 16px;
@@ -3849,7 +3928,8 @@ body.tour-active {
   <div class="modal-overlay" id="modalSuccess"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--mmc-green);" id="titleSuccess" data-i18n="titleSuccess">Sucesso</h3><p id="successMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalSuccess')" data-i18n="btnOkSuccess">OK</button></div></div></div>
   <div class="modal-overlay" id="modalDiscordShare"><div class="modal" style="width:500px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalDiscordShare')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3>Enviar para Discord</h3><p>Informe o nome do shape e o link da imagem para enviar o Stylecard ao canal.</p><label class="discord-name-label" for="discordShapeName">Nome do shape</label><input type="text" id="discordShapeName" maxlength="100" placeholder="Shok - NAME Shape [Lel NAME]" onkeydown="if(event.key === 'Enter') document.getElementById('discordGyazoLink').focus()"><label class="discord-name-label is-second" for="discordGyazoLink">Gyazo Link</label><input type="url" id="discordGyazoLink" maxlength="500" placeholder="Cole aqui o link do Gyazo" inputmode="url" onkeydown="if(event.key === 'Enter') enviarNotecardDiscord()"><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-success" id="discordSubmitBtn" style="width:100%;" onclick="enviarNotecardDiscord()">Enviar arquivo</button></div></div></div>
   <div class="modal-overlay" id="modalIgnored"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalIgnored')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="ignoredTitle">Itens ignorados</h3><p data-i18n="ignoredDesc">Confira os itens removidos automaticamente e o motivo.</p><div class="ignored-list" id="ignoredList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" style="width:100%;" onclick="fecharModal('modalIgnored')" data-i18n="btnOk">OK</button></div></div></div>
-  <div class="modal-overlay" id="modalLearnCorrections"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="cancelarAprendizadoCorrecoes()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="learnCorrectionTitle">Memorizar correções?</h3><p data-i18n="learnCorrectionDesc">Deseja registrar estas correções no Google Sheets para os próximos Stylecards?</p><div class="ignored-list" id="learnCorrectionsList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" onclick="cancelarAprendizadoCorrecoes()" data-i18n="learnCorrectionNo">Não</button><button type="button" class="btn btn-success" id="saveCorrectionsBtn" onclick="confirmarAprendizadoCorrecoes()" data-i18n="learnCorrectionYes">Sim, memorizar</button></div></div></div>
+  <div class="modal-overlay" id="modalLearnCorrections"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="cancelarAprendizadoCorrecoes()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="learnCorrectionTitle">Memorizar correções?</h3><p data-i18n="learnCorrectionDesc">Correções aplicadas. Deseja salvar para usos futuros?</p><div class="ignored-list" id="learnCorrectionsList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" onclick="cancelarAprendizadoCorrecoes()" data-i18n="learnCorrectionNo">Não</button><button type="button" class="btn btn-success" id="saveCorrectionsBtn" onclick="confirmarAprendizadoCorrecoes()" data-i18n="learnCorrectionYes">Sim, memorizar</button></div></div></div>
+  <div class="modal-overlay" id="modalProcessingSummary"><div class="modal" style="width:780px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharResumoProcessamento_()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3>Resumo do processamento</h3><p id="processingSummaryIntro">Confira tudo o que o sistema ajustou nesta operação.</p><div class="processing-summary-stats" id="processingSummaryStats"></div><div class="processing-summary-sections" id="processingSummarySections"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" style="width:100%;" onclick="fecharResumoProcessamento_()">Continuar</button></div></div></div>
 
   <div class="guided-tour" id="guidedTour" hidden aria-hidden="true">
     <div class="tour-click-shield" aria-hidden="true"></div>
@@ -3933,8 +4013,11 @@ body.tour-active {
     let storeActionPasswordMemory = "";
     let ignoredItems = [];
     let generatedUnknownItems = [];
+    let generatedBaselineBlocks = [];
     let correctionsToLearn = [];
     let handledCorrectionKeys = new Set();
+    let pendingLearningAfterSummary = false;
+    let lastProcessingSummary = null;
     let shapeMergeFiles = { head: null, bodies: [] };
     const SHAPE_BODY_LIMIT = 20;
     const GUIDED_TOUR_STEPS = [
@@ -4849,7 +4932,7 @@ body.tour-active {
       ignoredReasonHud: "HUD técnico",
       ignoredReasonNo: "Regra marcada como NO",
       learnCorrectionTitle: "Memorizar correções?",
-      learnCorrectionDesc: "Deseja registrar estas correções no Google Sheets para os próximos Stylecards?",
+      learnCorrectionDesc: "Correções aplicadas. Deseja salvar para usos futuros?",
       learnCorrectionNo: "Não",
       learnCorrectionYes: "Sim, memorizar",
       learnCorrectionSaving: "SALVANDO...",
@@ -4910,7 +4993,8 @@ body.tour-active {
         SPANKER_INTERATIVO: 'ignoredReasonSpanker',
         ITEM_TECNICO: 'ignoredReasonTechnical',
         HUD_TECNICO: 'ignoredReasonHud',
-        REGRA_NO: 'ignoredReasonNo'
+        REGRA_NO: 'ignoredReasonNo',
+        PREFERENCIA_NO: 'ignoredReasonNo'
       };
       return chaves[motivo] ? t(chaves[motivo]) : (motivo || t('ignoredReasonTechnical'));
     }
@@ -5012,25 +5096,31 @@ body.tour-active {
       return String(produto || '').replace(/\s+/g, ' ').trim().toUpperCase();
     }
     function extrairCampoBloco_(bloco, campo) {
-      const match = String(bloco || '').match(new RegExp('^' + campo + ':\\s*(.*)$', 'mi'));
+      const match = String(bloco || '').match(
+        new RegExp('^' + campo + ':[ \\t]*([^\\r\\n]*)$', 'mi')
+      );
       return match ? match[1].trim() : '';
     }
     function extrairBlocosNotecard_(texto) {
       return String(texto || '')
         .split('------------------------------------------------------------')
-        .filter(bloco => bloco.trim() !== '')
-        .map(bloco => {
+        .filter(bloco => bloco.trim() !== '' && /PRODUCT NAME:/i.test(bloco))
+        .map((bloco, indice) => {
           const conteudo = bloco.trim();
           return {
             botao: extrairCampoBloco_(conteudo, 'BUTTON NAME').toUpperCase() || '?',
             produto: extrairCampoBloco_(conteudo, 'PRODUCT NAME'),
             loja: extrairCampoBloco_(conteudo, 'STORE').toUpperCase(),
+            slurl: extrairCampoBloco_(conteudo, 'SLURL'),
+            info: extrairCampoBloco_(conteudo, 'INFO'),
+            indice: indice,
             texto: '------------------------------------------------------------\n' + conteudo + '\n'
           };
         });
     }
     function capturarIndefinidosGerados_(texto) {
-      generatedUnknownItems = extrairBlocosNotecard_(texto)
+      generatedBaselineBlocks = extrairBlocosNotecard_(texto);
+      generatedUnknownItems = generatedBaselineBlocks
         .filter(bloco => bloco.botao === '?' && bloco.produto)
         .map(bloco => ({
           produto: bloco.produto,
@@ -5041,33 +5131,70 @@ body.tour-active {
     }
     function chaveCorrecao_(correcao) {
       return [
+        normalizarChaveProduto_(correcao.produtoOriginal),
         normalizarChaveProduto_(correcao.produto),
         String(correcao.botao || '').toUpperCase(),
-        String(correcao.loja || '').toUpperCase()
+        String(correcao.loja || '').toUpperCase(),
+        String(correcao.slurl || ''),
+        String(correcao.info || '')
       ].join('|');
     }
     function detectarCorrecoesMemorizaveis_(blocos) {
-      const indefinidos = new Set(generatedUnknownItems.map(item => item.chaveProduto));
+      const filasPorProduto = new Map();
+      generatedBaselineBlocks.forEach((bloco, indice) => {
+        const chave = normalizarChaveProduto_(bloco.produto);
+        if (!filasPorProduto.has(chave)) filasPorProduto.set(chave, []);
+        filasPorProduto.get(chave).push(indice);
+      });
+      const basesUsadas = new Set();
       const vistos = new Set();
-      return blocos.filter(bloco => {
-        const chaveProduto = normalizarChaveProduto_(bloco.produto);
-        const categoriaValida = STYLECARD_ORDER.includes(bloco.botao)
-          && bloco.botao !== '?'
-          && bloco.botao !== 'NO';
-        const correcaoValida = indefinidos.has(chaveProduto)
-          && categoriaValida
-          && bloco.produto
-          && bloco.loja;
-        if (!correcaoValida) return false;
-        const chave = chaveCorrecao_(bloco);
-        if (vistos.has(chave) || handledCorrectionKeys.has(chave)) return false;
+      const resultado = [];
+
+      blocos.forEach((bloco, indiceAtual) => {
+        let indiceBase = -1;
+        const filaExata = filasPorProduto.get(normalizarChaveProduto_(bloco.produto)) || [];
+        while (filaExata.length && basesUsadas.has(filaExata[0])) filaExata.shift();
+        if (filaExata.length) {
+          indiceBase = filaExata.shift();
+        } else if (
+          blocos.length === generatedBaselineBlocks.length &&
+          generatedBaselineBlocks[indiceAtual] &&
+          !basesUsadas.has(indiceAtual)
+        ) {
+          indiceBase = indiceAtual;
+        }
+
+        if (indiceBase < 0) return;
+        basesUsadas.add(indiceBase);
+        const base = generatedBaselineBlocks[indiceBase];
+        const categoriaValida = STYLECARD_ORDER.includes(bloco.botao) || bloco.botao === 'NO';
+        if (!categoriaValida || !base.produto || !bloco.produto) return;
+
+        const alteracoes = [];
+        if (normalizarChaveProduto_(base.produto) !== normalizarChaveProduto_(bloco.produto)) {
+          alteracoes.push('Produto: ' + base.produto + ' → ' + bloco.produto);
+        }
+        if (base.botao !== bloco.botao) alteracoes.push('Categoria: ' + base.botao + ' → ' + bloco.botao);
+        if (base.loja !== bloco.loja) alteracoes.push('Loja: ' + (base.loja || 'vazia') + ' → ' + (bloco.loja || 'vazia'));
+        if (base.slurl !== bloco.slurl) alteracoes.push('SLURL atualizada');
+        if (base.info !== bloco.info) alteracoes.push('INFO: ' + (base.info || 'vazia') + ' → ' + (bloco.info || 'vazia'));
+        if (!alteracoes.length) return;
+
+        const correcao = {
+          produtoOriginal: base.produto,
+          produto: bloco.produto,
+          loja: bloco.loja,
+          botao: bloco.botao,
+          slurl: bloco.slurl,
+          info: bloco.info,
+          alteracoes: alteracoes
+        };
+        const chave = chaveCorrecao_(correcao);
+        if (vistos.has(chave)) return;
         vistos.add(chave);
-        return true;
-      }).map(bloco => ({
-        produto: bloco.produto,
-        loja: bloco.loja,
-        botao: bloco.botao
-      }));
+        resultado.push(correcao);
+      });
+      return resultado;
     }
     function renderizarCorrecoesParaAprender_() {
       const list = document.getElementById('learnCorrectionsList');
@@ -5078,10 +5205,10 @@ body.tour-active {
         card.className = 'ignored-card';
         const product = document.createElement('div');
         product.className = 'ignored-product';
-        product.textContent = correcao.produto;
+        product.textContent = correcao.produtoOriginal;
         const meta = document.createElement('div');
         meta.className = 'learn-correction-line';
-        meta.textContent = correcao.botao + ' • ' + correcao.loja;
+        meta.textContent = correcao.alteracoes.join(' • ');
         card.append(product, meta);
         list.appendChild(card);
       });
@@ -5103,7 +5230,12 @@ body.tour-active {
       btn.disabled = true;
       btn.textContent = t('learnCorrectionSaving');
       try {
-        const res = await callApi('registrarCorrecoesDicionario', {
+        const aprendidas = correctionsToLearn.map(correcao => ({
+          produtoOriginal: correcao.produtoOriginal,
+          produto: correcao.produto,
+          alteracoes: correcao.alteracoes.slice()
+        }));
+        const res = await callApi('registrarPreferenciasEdicao', {
           correcoes: correctionsToLearn
         });
         const salvas = Number(res && res.salvas || 0);
@@ -5111,13 +5243,116 @@ body.tour-active {
         marcarCorrecoesComoTratadas_();
         correctionsToLearn = [];
         fecharModal('modalLearnCorrections');
-        msg(t('learnCorrectionSaved').replace('{n}', salvas));
+        mostrarResumoProcessamento_({
+          itensRecebidos: 0,
+          itensGerados: generatedBaselineBlocks.length,
+          unificacoes: [],
+          duplicados: [],
+          regrasAplicadas: [],
+          memoriaAplicada: [],
+          ignorados: 0,
+          regrasAprendidas: aprendidas.slice(0, salvas)
+        }, {
+          intro: salvas + ' correção(ões) foram salvas e serão reaplicadas em produtos equivalentes.'
+        });
       } catch (error) {
         alerta(traduzirErroApi(error));
       } finally {
         btn.disabled = false;
         btn.textContent = t('learnCorrectionYes');
       }
+    }
+    function adicionarStatResumo_(container, valor, rotulo) {
+      const stat = document.createElement('div');
+      stat.className = 'processing-summary-stat';
+      const numero = document.createElement('strong');
+      numero.textContent = String(valor);
+      const texto = document.createElement('span');
+      texto.textContent = rotulo;
+      stat.append(numero, texto);
+      container.appendChild(stat);
+    }
+    function adicionarSecaoResumo_(container, titulo, itens) {
+      if (!Array.isArray(itens) || !itens.length) return;
+      const section = document.createElement('section');
+      section.className = 'processing-summary-section';
+      const heading = document.createElement('h4');
+      heading.textContent = titulo;
+      section.appendChild(heading);
+      itens.forEach(texto => {
+        const item = document.createElement('div');
+        item.className = 'processing-summary-item';
+        item.textContent = texto;
+        section.appendChild(item);
+      });
+      container.appendChild(section);
+    }
+    function mostrarResumoProcessamento_(relatorio, opcoes = {}) {
+      const resumo = relatorio || {};
+      lastProcessingSummary = resumo;
+      pendingLearningAfterSummary = opcoes.abrirAprendizado === true;
+
+      const stats = document.getElementById('processingSummaryStats');
+      const sections = document.getElementById('processingSummarySections');
+      const intro = document.getElementById('processingSummaryIntro');
+      stats.replaceChildren();
+      sections.replaceChildren();
+      intro.textContent = opcoes.intro || 'Confira tudo o que o sistema ajustou nesta operação.';
+
+      const unificacoes = Array.isArray(resumo.unificacoes) ? resumo.unificacoes : [];
+      const duplicados = Array.isArray(resumo.duplicados) ? resumo.duplicados : [];
+      const regras = Array.isArray(resumo.regrasAplicadas) ? resumo.regrasAplicadas : [];
+      const memoria = Array.isArray(resumo.memoriaAplicada) ? resumo.memoriaAplicada : [];
+      const manuais = Array.isArray(resumo.ajustesManuais) ? resumo.ajustesManuais : [];
+      const aprendidas = Array.isArray(resumo.regrasAprendidas) ? resumo.regrasAprendidas : [];
+      const duplicadosRemovidos = duplicados.reduce((total, item) => total + Number(item.removidos || 0), 0);
+
+      adicionarStatResumo_(stats, Number(resumo.itensRecebidos || 0), 'Itens lidos');
+      adicionarStatResumo_(stats, Number(resumo.itensGerados || 0), 'Itens finais');
+      adicionarStatResumo_(stats, unificacoes.length, 'Unificações');
+      adicionarStatResumo_(stats, duplicadosRemovidos, 'Duplicados');
+
+      adicionarSecaoResumo_(sections, 'Itens unificados', unificacoes.map(item => {
+        const originais = Array.isArray(item.originais) ? item.originais.join(' + ') : '';
+        return item.produto + (item.info ? ' — ' + item.info : '') + (originais ? ' | Originais: ' + originais : '');
+      }));
+      adicionarSecaoResumo_(sections, 'Duplicidades removidas', duplicados.map(item =>
+        item.produto + ' — ' + Number(item.removidos || 0) + ' ocorrência(s) consolidada(s). ' + (item.detalhe || '')
+      ));
+      adicionarSecaoResumo_(sections, 'Conhecimento de domínio aplicado', regras.map(item =>
+        item.produto + (item.detalhe ? ' — ' + item.detalhe : '')
+      ));
+      adicionarSecaoResumo_(sections, 'Memória reaplicada', memoria.map(item =>
+        item.original + ' → ' + (item.produto || item.original) + ' [' + item.botao + '] · ' + (item.loja || 'loja não informada') +
+          (item.info ? ' · ' + item.info : '')
+      ));
+      adicionarSecaoResumo_(sections, 'Correções manuais detectadas', manuais.map(item =>
+        item.produtoOriginal + ' — ' + item.alteracoes.join(' • ')
+      ));
+      adicionarSecaoResumo_(sections, 'Regras aprendidas', aprendidas.map(item =>
+        item.produtoOriginal + ' — ' + item.alteracoes.join(' • ')
+      ));
+      adicionarSecaoResumo_(sections, 'Itens ignorados', ignoredItems.map(item =>
+        (item.item || '') + ' — ' + traduzirMotivoIgnorado_(item.motivo)
+      ));
+
+      if (!sections.children.length) {
+        const vazio = document.createElement('p');
+        vazio.className = 'processing-summary-empty';
+        vazio.textContent = 'Nenhum conteúdo foi alterado silenciosamente nesta operação.';
+        sections.appendChild(vazio);
+      }
+      abrirModal('modalProcessingSummary');
+    }
+    function fecharResumoProcessamento_() {
+      fecharModal('modalProcessingSummary');
+      if (!pendingLearningAfterSummary || !correctionsToLearn.length) {
+        pendingLearningAfterSummary = false;
+        return;
+      }
+      pendingLearningAfterSummary = false;
+      renderizarCorrecoesParaAprender_();
+      abrirModal('modalLearnCorrections');
     }
     function traduzirErroApi(error) {
       const code = error && error.message ? error.message : "";
@@ -5437,6 +5672,15 @@ body.tour-active {
           : "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR A RESPOSTA.";
         document.getElementById('outputList').value = textoGerado;
         capturarIndefinidosGerados_(res && res.texto ? res.texto : '');
+        mostrarResumoProcessamento_(res && res.relatorio ? res.relatorio : {
+          itensRecebidos: entrada.split('\n').filter(Boolean).length,
+          itensGerados: generatedBaselineBlocks.length,
+          unificacoes: [],
+          duplicados: [],
+          regrasAplicadas: [],
+          memoriaAplicada: [],
+          ignorados: ignoredItems.length
+        });
       } catch (error) {
         alerta(traduzirErroApi(error));
       } finally {
@@ -5448,8 +5692,21 @@ body.tour-active {
       const txt = document.getElementById('outputList').value;
       if (!txt) return alerta(t('errNoGen'));
 
-      const blocos = extrairBlocosNotecard_(txt)
-        .filter(bloco => bloco.botao !== 'NO');
+      const blocosAntesDaOrdem = extrairBlocosNotecard_(txt);
+      const todasAsCorrecoes = detectarCorrecoesMemorizaveis_(blocosAntesDaOrdem);
+      correctionsToLearn = todasAsCorrecoes.filter(correcao =>
+        !handledCorrectionKeys.has(chaveCorrecao_(correcao))
+      );
+      const blocosRemovidos = blocosAntesDaOrdem.filter(bloco => bloco.botao === 'NO');
+      blocosRemovidos.forEach(bloco => {
+        const existe = ignoredItems.some(item =>
+          item.item === bloco.produto && item.motivo === 'REGRA_NO'
+        );
+        if (!existe) ignoredItems.push({ item: bloco.produto, motivo: 'REGRA_NO' });
+      });
+      atualizarContadorIgnorados_();
+
+      const blocos = blocosAntesDaOrdem.filter(bloco => bloco.botao !== 'NO');
 
       blocos.sort((a, b) => {
         const indiceA = STYLECARD_ORDER.indexOf(a.botao);
@@ -5458,12 +5715,21 @@ body.tour-active {
       });
 
       document.getElementById('outputList').value = blocos.map(bloco => bloco.texto).join('');
-
-      correctionsToLearn = detectarCorrecoesMemorizaveis_(blocos);
-      if (correctionsToLearn.length) {
-        renderizarCorrecoesParaAprender_();
-        abrirModal('modalLearnCorrections');
-      }
+      mostrarResumoProcessamento_({
+        itensRecebidos: blocosAntesDaOrdem.length,
+        itensGerados: blocos.length,
+        unificacoes: [],
+        duplicados: [],
+        regrasAplicadas: [],
+        memoriaAplicada: [],
+        ignorados: ignoredItems.length,
+        ajustesManuais: todasAsCorrecoes
+      }, {
+        intro: todasAsCorrecoes.length
+          ? 'A ordem foi atualizada e todas as correções manuais detectadas estão listadas abaixo.'
+          : 'A ordem foi atualizada. Nenhuma correção manual foi detectada.',
+        abrirAprendizado: correctionsToLearn.length > 0
+      });
     }
     function verificarDownload(){ let txt = document.getElementById('outputList').value; if(!txt) return alerta(t('errNoDown')); let indefinidos = (txt.match(/BUTTON NAME:\s*\?\r?\n/g) || []).length; if (indefinidos > 0) { document.getElementById('descWarn').innerHTML = t('descWarn').replace('{n}', indefinidos); abrirModal('modalConfirm'); } else { execDownload(); } }
 
