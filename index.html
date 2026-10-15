@@ -3783,7 +3783,6 @@ body.tour-active {
     grid-column: 1 / -1;
   }
 }
-
 .output-visual { display: flex; flex-direction: column; gap: 14px; padding: 20px; overflow-y: auto; overflow-x: hidden; height: 100%; }
 .visual-block { display: flex; gap: 12px; background: #111110; border: 1px solid var(--line); border-radius: 12px; padding: 14px; transition: all 0.25s ease; }
 .visual-block.is-confirmed { border-color: #61ff8b; background: rgba(97, 255, 139, 0.04); }
@@ -3795,7 +3794,6 @@ body.tour-active {
 .v-btn-trash:hover, .visual-block.is-deleted .v-btn-trash { background: var(--danger); color: var(--noir); border-color: var(--danger); }
 .visual-textarea { flex: 1; min-height: 110px; background: transparent; border: 0; color: #d8d1c8; font: 400 11px/1.72 'IBM Plex Mono', monospace; resize: vertical; outline: none; }
 .visual-block.is-deleted .visual-textarea { opacity: 0.5; text-decoration: line-through; text-decoration-color: rgba(255, 107, 97, 0.6); }
-
   </style>
 </head>
 <body>
@@ -3844,4 +3842,160 @@ body.tour-active {
             <img id="img-P3" src="https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6" alt="Perfil 3">
           </div>
           <div class="profile-card-foot">
-            <span class="profile-name-text"><span id="name-P3">Convidado</span> <svg class="lock-icon" id="lock-P3" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-
+            <span class="profile-name-text"><span id="name-P3">Convidado</span> <svg class="lock-icon" id="lock-P3" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/></svg></span>
+            <span class="profile-open">ABRIR →</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="gateway-footer">
+      <span>CRIADO POR SAORI SUKI</span>
+      <span>SHOK / GERADOR DE STYLECARD</span>
+    </footer>
+  </div>
+
+  <div id="mainApp">
+    <div class="atelier-shell">
+      <header class="atelier-header">
+        <div class="atelier-brand">
+          <strong>SHOK</strong>
+          <span>STYLECARD<br>SYSTEM</span>
+        </div>
+        <nav class="atelier-menu" aria-label="Ferramentas do Stylecard">
+          <button type="button" class="is-active" id="homeNavBtn" data-page-nav onclick="abrirStylecard()" title="Início">
+            <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>
+            <b>Início</b>
+          </button>
+          <button type="button" id="storesNavBtn" data-page-nav onclick="abrirPaginaLojas()" title="Lojas registradas">
+            <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10v9h16v-9"/><path d="M3 5h18l-2 5H5L3 5Z"/><path d="M9 19v-5h6v5"/></svg></span>
+            <b id="btnDbText" data-i18n="btnDb">Lojas</b>
+          </button>
+          <button type="button" id="addStoreNavBtn" data-page-nav onclick="abrirPaginaAdicionarLoja()" title="Adicionar loja">
+            <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10v9h10"/><path d="M3 5h15l-2 5H5L3 5Z"/><path d="M17 14v7M13.5 17.5h7"/></svg></span>
+            <b id="btnAddText" data-i18n="btnAdd">Adicionar loja</b>
+          </button>
+          <button type="button" id="shapeMergeNavBtn" data-page-nav onclick="abrirShapeMerge()" title="Shape Merge">
+            <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 7h10l-3-3"/><path d="m17 7-3 3"/><path d="M17 17H7l3-3"/><path d="m7 17 3 3"/></svg></span>
+            <b>Shape Merge</b>
+          </button>
+        </nav>
+
+        <div class="atelier-tools">
+          <button type="button" onclick="abrirModal('modalAdminAuth')" title="Configurações">
+            <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg></span>
+            <span class="nav-label" data-i18n="settingsBtn">Configurações</span>
+          </button>
+          <button type="button" onclick="abrirModal('modalHelp')" title="Ajuda">
+            <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 3.2 2.3c-.7.3-1 1-1 1.7"/><path d="M12 17h.01"/></svg></span>
+            <span class="nav-label" id="helpBtnText" data-i18n="helpBtn">Ajuda</span>
+          </button>
+          <button type="button" onclick="abrirModal('modalTips')" title="Dicas">
+            <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.5 15.5A6 6 0 1 1 15.5 15.5c-.8.6-1 1.1-1 1.5h-5c0-.4-.2-.9-1-1.5Z"/><path d="M9.5 20h5M10 17h4"/></svg></span>
+            <span class="nav-label" id="tipsBtnText" data-i18n="tipsBtn">Dicas</span>
+          </button>
+          <button type="button" id="tourGuideBtn" onclick="iniciarTourGuiado()" title="Tour Guiado">
+            <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5V4Z"/><path d="M15 4v5h5"/><path d="m9 15 2 2 4-5"/></svg></span>
+            <span class="nav-label">Tour Guiado</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="atelier-main" id="stylecardPage">
+        <section class="atelier-masthead">
+          <h1 id="sysTitle">Stylecard <em>System</em></h1>
+        </section>
+
+        <section class="atelier-workspace">
+          <article class="editor-sheet editor-sheet-input">
+            <header class="sheet-header">
+              <div>
+                <span class="sheet-step">ENTRADA / 01</span>
+                <label id="lblInputText" for="inputList" data-i18n="lblInput">Inventário</label>
+              </div>
+              <span class="sheet-command">COLE A LISTA</span>
+            </header>
+            <textarea id="inputList" data-i18n="phInput" placeholder="Cole a lista de itens aqui..." spellcheck="false"></textarea>
+            <footer class="sheet-footer"><span>INVENTÁRIO BRUTO</span><span>VISUALIZADOR SECOND LIFE</span></footer>
+          </article>
+
+          <div class="transform-column">
+            <div class="transform-typographic" aria-label="Etapas do Stylecard">
+              <button type="button" class="transform-step" onclick="gerarNotecard()">
+                <span class="transform-step-number">01</span>
+                <span class="transform-step-copy"><b>Gerar</b><small id="genBtnText">Stylecard →</small></span>
+              </button>
+              <button type="button" class="transform-step" onclick="reorganizar()">
+                <span class="transform-step-number">02</span>
+                <span class="transform-step-copy"><b>Atualizar</b><small>Ordem →</small></span>
+              </button>
+              <button type="button" class="transform-step" onclick="verificarDownload()">
+                <span class="transform-step-number">03</span>
+                <span class="transform-step-copy"><b>Baixar</b><small>Arquivo TXT →</small></span>
+              </button>
+            </div>
+          </div>
+
+          <article class="editor-sheet editor-sheet-output">
+            <header class="sheet-header">
+              <div>
+                <span class="sheet-step">RESULTADO / 02</span>
+                <label id="lblOutputText" for="outputList" data-i18n="lblOutput">Notecard</label>
+              </div>
+              <div class="sheet-header-actions">
+                <button type="button" class="discord-send-btn" id="discordSendBtn" onclick="abrirEnvioDiscord()" title="Enviar notecard para o Discord">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 5.3A16.5 16.5 0 0 0 14.8 4l-.5 1a14.8 14.8 0 0 0-4.6 0l-.5-1a16.4 16.4 0 0 0-4.1 1.3C2.5 9.1 1.8 12.8 2.1 16.5A16.8 16.8 0 0 0 7.2 19l1.2-1.6c-.7-.3-1.4-.7-2-1.2l.5-.4c3.8 1.8 7.9 1.8 11.6 0l.6.4c-.7.5-1.4.9-2.1 1.2l1.2 1.6a16.7 16.7 0 0 0 5.1-2.5c.4-4.3-.7-7.9-4.4-11.2ZM9 14.5c-1.1 0-2-1-2-2.3S7.9 10 9 10s2 1 2 2.2-.9 2.3-2 2.3Zm6 0c-1.1 0-2-1-2-2.3s.9-2.2 2-2.2 2 1 2 2.2-.9 2.3-2 2.3Z"/></svg>
+                  <span>Enviar para Discord</span>
+                </button>
+                <button type="button" class="ignored-items-btn" id="ignoredItemsBtn" onclick="abrirItensIgnorados()">
+                  <span data-i18n="ignoredBtn">Ignorados</span>
+                  <span class="ignored-count" id="ignoredCount">0</span>
+                  <span class="ignored-help-icon" aria-hidden="true">?</span>
+                </button>
+              </div>
+            </header>
+            <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false"></textarea>
+            <div id="outputVisual" class="output-visual" style="display:none;"></div>
+            <footer class="sheet-footer"><span>RESULTADO EDITÁVEL</span><span>MEMÓRIA SHOK ATIVA</span></footer>
+          </article>
+        </section>
+      </main>
+
+      <main class="shape-page" id="shapeMergePage" hidden>
+        <div class="shape-page-inner">
+          <button type="button" class="shape-page-back" onclick="abrirStylecard()">
+            <span aria-hidden="true">←</span>
+            Voltar ao Stylecard
+          </button>
+
+          <header class="shape-page-hero">
+            <span class="shape-page-kicker">SHOK UTILITY / SHAPE MERGE</span>
+            <h1>Body + Head<br><em>Shape Combinação</em></h1>
+            <p>Escolha uma cabeça e adicione vários corpos de uma vez. A SHOK cria uma versão completa para cada corpo sem alterar os seus arquivos originais.</p>
+          </header>
+
+          <section class="shape-merge-studio" aria-labelledby="shapeMergeTitle">
+            <header class="shape-merge-studio-head">
+              <span id="shapeMergeTitle">COMBINAR SHAPES</span>
+              <b>PROCESSAMENTO LOCAL E PRIVADO</b>
+            </header>
+
+            <div class="shape-merge-grid">
+              <label class="shape-upload-card" id="shapeHeadCard" for="shapeHeadFile" data-index="01">
+                <input type="file" id="shapeHeadFile" accept=".xml,text/xml,application/xml" onchange="selecionarArquivoShape('head', this)">
+                <span class="shape-upload-top">
+                  <span class="shape-upload-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 14v5h14v-5"/></svg></span>
+                  <span class="shape-upload-copy">
+                    <small>ETAPA 01 / CABEÇA</small>
+                    <b>Escolha o Head Shape</b>
+                    <span>Um arquivo XML completo</span>
+                  </span>
+                </span>
+              </label>
+
+              <span class="shape-merge-plus" aria-hidden="true">+</span>
+
+              <label class="shape-upload-card" id="shapeBodyCard" for="shapeBodyFile" data-index="02">
+                <input type="file" id="shapeBodyFile" accept=".xml,text/xml,application/xml" multiple onchange="selecionarArquivoShape('body', this)">
+                <span class="shape-upload-top">
+                  <span class="shape-upload-icon" aria-hidden="true"><svg viewBox="0 0 24 2
