@@ -968,7 +968,7 @@ textarea:focus-visible {
 
 .atelier-actions {
   display: grid;
-  grid-template-columns: 1fr 190px 190px;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   border: 1px solid var(--line);
 }
 
@@ -989,16 +989,18 @@ textarea:focus-visible {
 }
 
 .atelier-actions button {
+  min-width: 148px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  padding: 0 18px;
+  gap: 14px;
+  padding: 0 16px;
   color: var(--ivory);
   background: #0d0d0c;
   border: 0;
   border-left: 1px solid var(--line);
   cursor: pointer;
+  transition: color .18s ease, background .18s ease;
 }
 
 .atelier-actions button:hover {
@@ -4151,7 +4153,7 @@ body.tour-active {
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwXGfjjtVz_hRiIDNJvOlCYcSEO1MdcNLxxfH22r7zlAAEUrhqs9vhOu_ocECZ4C8pipw/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbz7puKpktpv0e2ubhyq4mlbSXQcUKl0OL84gGeBk-JW1b4vaQEqSw3diOfyZAbYv0za/exec";
     const STYLECARD_ORDER = ["HEAD", "FACE SKIN", "FACE OVERLAY", "BODY", "BODY SKIN", "FACE ADDON", "BEARD", "EYES", "LASHES", "HAIRBASE", "HAIR", "DEFORMS", "TATTOO", "BODY ADDON", "BODY HAIR", "MAKEUP", "NAILS", "SPANKER", "ACESSORIES", "CLOTHING", "?"];
     const SHAPE_HEAD_PARAM_IDS = new Set([
       "1", "2", "4", "5", "6", "7", "8", "10", "11", "12", "13", "14", "15", "17", "18", "19",
