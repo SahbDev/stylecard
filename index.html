@@ -689,18 +689,40 @@ textarea:focus-visible {
 }
 
 .editor-sheet-output textarea {
-  color: #d8d1c8;
+  color: transparent;
   caret-color: var(--tomato);
+  position: relative;
+  z-index: 2;
 }
+.editor-sheet-output textarea::selection {
+  background: rgba(205,184,255,.28);
+}
+.output-text-highlight {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 20px;
+  color: #d8d1c8;
+  font: 400 11px/1.72 'IBM Plex Mono', monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  pointer-events: none;
+  z-index: 1;
+}
+.output-text-highlight .status-no { color: #f08080; }
+.output-text-highlight .status-yes { color: #83d69a; }
 
 .editor-sheet-output textarea::placeholder {
   color: #4d4944;
 }
 
-.output-editor-body {
+ .output-editor-body {
+  position: relative;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 150px;
+  grid-template-columns: minmax(0, 1fr);
   overflow: hidden;
 }
 .output-editor-body textarea {
@@ -710,58 +732,41 @@ textarea:focus-visible {
   overflow: auto;
 }
 .output-quick-controls {
-  min-height: 0;
-  overflow: auto;
-  padding: 12px 9px;
-  border-left: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: rgba(255,255,255,.018);
-}
-.output-quick-title {
-  position: sticky;
-  top: -12px;
-  z-index: 1;
-  margin: -12px -9px 3px;
-  padding: 12px 9px 9px;
-  background: #0e0e0d;
-  color: #8d867d;
-  font: 600 9px/1.3 'IBM Plex Mono', monospace;
-  letter-spacing: .08em;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
 }
 .output-quick-item {
-  padding: 8px 7px;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  background: rgba(255,255,255,.025);
+  position: absolute;
+  display: flex;
+  gap: 3px;
+  height: 15px;
+  pointer-events: none;
 }
-.output-quick-name {
-  margin-bottom: 7px;
-  color: #cfc7bd;
-  font: 10px/1.35 'IBM Plex Mono', monospace;
-  overflow-wrap: anywhere;
-}
-.output-quick-actions { display: flex; gap: 5px; }
 .output-quick-btn {
-  flex: 1;
-  min-width: 0;
-  padding: 5px 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  padding: 0;
   border: 1px solid #514b43;
-  border-radius: 3px;
+  border-radius: 2px;
   color: #aaa197;
-  background: transparent;
-  font: 600 9px/1 'IBM Plex Mono', monospace;
+  background: #111110;
+  font: 600 9px/1 'DM Sans', sans-serif;
   cursor: pointer;
+  pointer-events: auto;
+  opacity: .92;
 }
-.output-quick-btn.is-no { color: #d98c83; border-color: rgba(217,140,131,.45); }
-.output-quick-btn.is-yes { color: #9bb99d; border-color: rgba(155,185,157,.45); }
-.output-quick-btn.is-active { background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px currentColor; }
-.output-quick-empty { color: #777068; font-size: 10px; line-height: 1.5; }
-@media (max-width: 900px) {
-  .output-editor-body { grid-template-columns: minmax(0, 1fr) 118px; }
-  .output-quick-controls { padding: 8px 6px; }
-}
+.output-quick-btn.is-no { color: #d98c83; border-color: rgba(217,140,131,.65); }
+.output-quick-btn.is-yes { color: #9bb99d; border-color: rgba(155,185,157,.65); }
+.output-quick-btn.is-active { background: rgba(255,255,255,.14); box-shadow: inset 0 0 0 1px currentColor; opacity: 1; }
+.output-quick-btn:hover { background: #25231f; }
+
 
 .editor-sheet textarea:focus {
   box-shadow: inset 4px 0 0 var(--tomato);
@@ -4012,11 +4017,9 @@ body.tour-active {
               </div>
             </header>
             <div class="output-editor-body">
-              <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false" oninput="renderizarControlesNoYes_()"></textarea>
-              <aside class="output-quick-controls" id="outputQuickControls" aria-label="Controles visuais YES e NO">
-                <div class="output-quick-title">MANTER / REMOVER</div>
-                <div class="output-quick-empty">Gere um Stylecard para ver os controles.</div>
-              </aside>
+              <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false" oninput="renderizarControlesNoYes_()" onscroll="renderizarControlesNoYes_()"></textarea>
+              <div class="output-text-highlight" id="outputTextHighlight" aria-hidden="true"></div>
+              <div class="output-quick-controls" id="outputQuickControls" aria-label="Controles rápidos de categoria"></div>
             </div>
             <footer class="sheet-footer"><span>RESULTADO EDITÁVEL</span><span>MEMÓRIA SHOK ATIVA</span></footer>
           </article>
@@ -6038,38 +6041,64 @@ body.tour-active {
       const panel = document.getElementById('outputQuickControls');
       const textarea = document.getElementById('outputList');
       if (!panel || !textarea) return;
-      const blocos = extrairBlocosNotecard_(textarea.value);
-      panel.innerHTML = '<div class="output-quick-title">MANTER / REMOVER</div>';
-      if (!blocos.length) {
-        const empty = document.createElement('div');
-        empty.className = 'output-quick-empty';
-        empty.textContent = 'Gere um Stylecard para ver os controles.';
-        panel.appendChild(empty);
-        return;
+      panel.innerHTML = '';
+      const texto = textarea.value;
+      const highlight = document.getElementById('outputTextHighlight');
+      if (highlight) {
+        const escapeHtml = (value) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const separadorTexto = '------------------------------------------------------------';
+        highlight.innerHTML = texto.split(separadorTexto).map((bloco) => {
+          if (!/PRODUCT NAME:/i.test(bloco)) return escapeHtml(bloco);
+          const match = bloco.match(/BUTTON NAME:[ \t]*([^\r\n]*)/i);
+          const status = match && match[1].trim().toUpperCase() === 'NO' ? 'status-no' : 'status-yes';
+          return `<span class="${status}">${escapeHtml(bloco)}</span>`;
+        }).join(escapeHtml(separadorTexto));
+        highlight.scrollTop = textarea.scrollTop;
+        highlight.scrollLeft = textarea.scrollLeft;
       }
-      blocos.forEach((bloco, indice) => {
-        const item = document.createElement('div');
-        item.className = 'output-quick-item';
-        const name = document.createElement('div');
-        name.className = 'output-quick-name';
-        name.textContent = bloco.produto || ('Item ' + (indice + 1));
-        const actions = document.createElement('div');
-        actions.className = 'output-quick-actions';
-        const yes = document.createElement('button');
-        yes.type = 'button';
-        yes.className = 'output-quick-btn is-yes' + (bloco.botao !== 'NO' ? ' is-active' : '');
-        yes.textContent = 'YES';
-        yes.title = 'Manter item e restaurar a categoria original';
-        yes.onclick = () => aplicarControleNoYes_(indice, true);
-        const no = document.createElement('button');
-        no.type = 'button';
-        no.className = 'output-quick-btn is-no' + (bloco.botao === 'NO' ? ' is-active' : '');
-        no.textContent = 'NO';
-        no.title = 'Marcar item para remoção ao clicar em Atualizar Ordem';
-        no.onclick = () => aplicarControleNoYes_(indice, false);
-        actions.append(yes, no);
-        item.append(name, actions);
-        panel.appendChild(item);
+      if (!texto.trim()) return;
+
+      const style = getComputedStyle(textarea);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+      const padLeft = parseFloat(style.paddingLeft) || 0;
+      const padTop = parseFloat(style.paddingTop) || 0;
+      const lineHeight = parseFloat(style.lineHeight) || 19;
+      const contentWidth = Math.max(1, textarea.clientWidth - padLeft - (parseFloat(style.paddingRight) || 0));
+      const linhas = texto.split('\n');
+      let visualRow = 0;
+      let blocoIndice = -1;
+
+      linhas.forEach((linha) => {
+        if (/PRODUCT NAME:/i.test(linha)) blocoIndice++;
+        if (/^\s*BUTTON NAME:/i.test(linha) && blocoIndice >= 0) {
+          const valor = (linha.match(/^\s*BUTTON NAME:[ \t]*(.*)$/i) || ['', '', ''])[1];
+          const larguraLinha = ctx.measureText(linha).width;
+          const itemIndice = blocoIndice;
+          const item = document.createElement('div');
+          item.className = 'output-quick-item';
+          item.style.left = Math.min(padLeft + larguraLinha + 7, textarea.clientWidth - 34) + 'px';
+          item.style.top = (padTop + visualRow * lineHeight - textarea.scrollTop + 1) + 'px';
+          const yes = document.createElement('button');
+          yes.type = 'button';
+          yes.className = 'output-quick-btn is-yes' + (valor.trim().toUpperCase() !== 'NO' ? ' is-active' : '');
+          yes.textContent = '✓';
+          yes.title = 'YES — manter item e restaurar a categoria original';
+          yes.setAttribute('aria-label', 'YES — manter item');
+          yes.onclick = () => aplicarControleNoYes_(itemIndice, true);
+          const no = document.createElement('button');
+          no.type = 'button';
+          no.className = 'output-quick-btn is-no' + (valor.trim().toUpperCase() === 'NO' ? ' is-active' : '');
+          no.textContent = '×';
+          no.title = 'NO — marcar item para remoção ao clicar em Atualizar Ordem';
+          no.setAttribute('aria-label', 'NO — remover item');
+          no.onclick = () => aplicarControleNoYes_(itemIndice, false);
+          item.append(yes, no);
+          panel.appendChild(item);
+        }
+        const largura = ctx.measureText(linha).width;
+        visualRow += Math.max(1, Math.ceil(largura / contentWidth));
       });
     }
 
