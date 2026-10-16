@@ -689,84 +689,13 @@ textarea:focus-visible {
 }
 
 .editor-sheet-output textarea {
-  color: transparent;
-  caret-color: var(--tomato);
-  position: relative;
-  z-index: 2;
-}
-.editor-sheet-output textarea::selection {
-  background: rgba(205,184,255,.28);
-}
-.output-text-highlight {
-  position: absolute;
-  inset: 0;
-  box-sizing: border-box;
-  overflow: hidden;
-  padding: 20px;
   color: #d8d1c8;
-  font: 400 11px/1.72 'IBM Plex Mono', monospace;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  pointer-events: none;
-  z-index: 1;
+  caret-color: var(--tomato);
 }
-.output-text-highlight .status-no { color: #f08080; }
-.output-text-highlight .status-yes { color: #83d69a; }
 
 .editor-sheet-output textarea::placeholder {
   color: #4d4944;
 }
-
- .output-editor-body {
-  position: relative;
-  min-height: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  overflow: hidden;
-}
-.output-editor-body textarea {
-  min-width: 0;
-  height: 100%;
-  box-sizing: border-box;
-  overflow: auto;
-}
-.output-quick-controls {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 2;
-}
-.output-quick-item {
-  position: absolute;
-  display: flex;
-  gap: 3px;
-  height: 15px;
-  pointer-events: none;
-}
-.output-quick-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 14px;
-  height: 14px;
-  min-width: 14px;
-  padding: 0;
-  border: 1px solid #514b43;
-  border-radius: 2px;
-  color: #aaa197;
-  background: #111110;
-  font: 600 9px/1 'DM Sans', sans-serif;
-  cursor: pointer;
-  pointer-events: auto;
-  opacity: .92;
-}
-.output-quick-btn.is-no { color: #d98c83; border-color: rgba(217,140,131,.65); }
-.output-quick-btn.is-yes { color: #9bb99d; border-color: rgba(155,185,157,.65); }
-.output-quick-btn.is-active { background: rgba(255,255,255,.14); box-shadow: inset 0 0 0 1px currentColor; opacity: 1; }
-.output-quick-btn:hover { background: #25231f; }
-
 
 .editor-sheet textarea:focus {
   box-shadow: inset 4px 0 0 var(--tomato);
@@ -4016,11 +3945,7 @@ body.tour-active {
                 </button>
               </div>
             </header>
-            <div class="output-editor-body">
-              <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false" oninput="renderizarControlesNoYes_()" onscroll="renderizarControlesNoYes_()"></textarea>
-              <div class="output-text-highlight" id="outputTextHighlight" aria-hidden="true"></div>
-              <div class="output-quick-controls" id="outputQuickControls" aria-label="Controles rápidos de categoria"></div>
-            </div>
+            <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false"></textarea>
             <footer class="sheet-footer"><span>RESULTADO EDITÁVEL</span><span>MEMÓRIA SHOK ATIVA</span></footer>
           </article>
         </section>
@@ -4290,7 +4215,6 @@ body.tour-active {
     let ignoredItems = [];
     let generatedUnknownItems = [];
     let generatedBaselineBlocks = [];
-    let outputQuickStates = []; // null = neutro, 'yes' = verde, 'no' = vermelho
     let correctionsToLearn = [];
     let handledCorrectionKeys = new Set();
     let pendingLearningAfterSummary = false;
@@ -5400,7 +5324,6 @@ body.tour-active {
     }
     function capturarIndefinidosGerados_(texto) {
       generatedBaselineBlocks = extrairBlocosNotecard_(texto);
-      if (!texto) outputQuickStates = [];
       generatedUnknownItems = generatedBaselineBlocks
         .filter(bloco => bloco.botao === '?' && bloco.produto)
         .map(bloco => ({
@@ -6039,132 +5962,6 @@ body.tour-active {
       abrirPaginaLojas();
     }
 
-    function renderizarControlesNoYes_() {
-      const panel = document.getElementById('outputQuickControls');
-      const textarea = document.getElementById('outputList');
-      if (!panel || !textarea) return;
-      panel.innerHTML = '';
-      const texto = textarea.value;
-      const highlight = document.getElementById('outputTextHighlight');
-      const separadorTexto = '------------------------------------------------------------';
-      const segmentos = texto.split(separadorTexto);
-      const blocosComProduto = segmentos.filter(bloco => /PRODUCT NAME:/i.test(bloco));
-
-      if (highlight) {
-        const escapeHtml = (value) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        let indiceBlocoCor = -1;
-        highlight.innerHTML = segmentos.map((bloco) => {
-          if (!/PRODUCT NAME:/i.test(bloco)) return escapeHtml(bloco);
-          indiceBlocoCor++;
-          const estado = outputQuickStates[indiceBlocoCor];
-          const classe = estado === 'no' ? 'status-no' : (estado === 'yes' ? 'status-yes' : '');
-          return classe ? `<span class="${classe}">${escapeHtml(bloco)}</span>` : escapeHtml(bloco);
-        }).join(escapeHtml(separadorTexto));
-        highlight.scrollTop = textarea.scrollTop;
-        highlight.scrollLeft = textarea.scrollLeft;
-      }
-      if (!texto.trim()) return;
-
-      const style = getComputedStyle(textarea);
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      ctx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-      const padLeft = parseFloat(style.paddingLeft) || 0;
-      const padTop = parseFloat(style.paddingTop) || 0;
-      const lineHeight = parseFloat(style.lineHeight) || 19;
-      const contentWidth = Math.max(1, textarea.clientWidth - padLeft - (parseFloat(style.paddingRight) || 0));
-      const linhas = texto.split('\n');
-      let visualRow = 0;
-      let blocoIndice = -1;
-
-      // Simula a quebra automática de linhas para manter os controles na linha correta.
-      const linhasVisuais = (linha) => {
-        if (!linha.length) return 1;
-        let count = 1;
-        let atual = '';
-        const palavras = linha.split(/(\s+)/);
-        for (const palavra of palavras) {
-          if (!palavra) continue;
-          if (ctx.measureText(atual + palavra).width <= contentWidth) {
-            atual += palavra;
-            continue;
-          }
-          if (ctx.measureText(palavra).width <= contentWidth) {
-            count++;
-            atual = palavra.trimStart();
-            continue;
-          }
-          for (const caractere of palavra) {
-            if (ctx.measureText(atual + caractere).width > contentWidth && atual) {
-              count++;
-              atual = '';
-            }
-            atual += caractere;
-          }
-        }
-        return count;
-      };
-
-      linhas.forEach((linha) => {
-        if (/PRODUCT NAME:/i.test(linha)) blocoIndice++;
-        if (/^\s*BUTTON NAME:/i.test(linha) && blocoIndice >= 0) {
-          const valor = (linha.match(/^\s*BUTTON NAME:[ \t]*(.*)$/i) || ['', '', ''])[1];
-          const larguraLinha = ctx.measureText(linha).width;
-          const itemIndice = blocoIndice;
-          const item = document.createElement('div');
-          item.className = 'output-quick-item';
-          item.style.left = Math.min(padLeft + larguraLinha + 7, textarea.clientWidth - 34) + 'px';
-          item.style.top = (padTop + visualRow * lineHeight - textarea.scrollTop + 1) + 'px';
-          const yes = document.createElement('button');
-          yes.type = 'button';
-          yes.className = 'output-quick-btn is-yes' + (outputQuickStates[itemIndice] === 'yes' ? ' is-active' : '');
-          yes.textContent = '✓';
-          yes.title = 'YES — manter item';
-          yes.setAttribute('aria-label', 'YES — manter item');
-          yes.onclick = () => aplicarControleNoYes_(itemIndice, true);
-          const no = document.createElement('button');
-          no.type = 'button';
-          no.className = 'output-quick-btn is-no' + (outputQuickStates[itemIndice] === 'no' ? ' is-active' : '');
-          no.textContent = '×';
-          no.title = 'NO — marcar item para remoção ao clicar em Atualizar Ordem';
-          no.setAttribute('aria-label', 'NO — remover item');
-          no.onclick = () => aplicarControleNoYes_(itemIndice, false);
-          item.append(yes, no);
-          panel.appendChild(item);
-        }
-        visualRow += linhasVisuais(linha);
-      });
-    }
-
-    function aplicarControleNoYes_(indice, manter) {
-      const textarea = document.getElementById('outputList');
-      if (!textarea) return;
-      const separador = '------------------------------------------------------------';
-      const partes = textarea.value.split(separador);
-      const indices = [];
-      partes.forEach((parte, idx) => {
-        if (/PRODUCT NAME:/i.test(parte)) indices.push(idx);
-      });
-      const parteIndex = indices[indice];
-      if (parteIndex === undefined) return;
-
-      // O estado visual é independente do texto exportado: YES não escreve YES no notecard.
-      outputQuickStates[indice] = manter ? 'yes' : 'no';
-      if (!manter) {
-        partes[parteIndex] = partes[parteIndex].replace(/(^\s*BUTTON NAME:[ \t]*)[^\r\n]*/mi, '$1NO');
-      } else {
-        const atual = extrairBlocosNotecard_(textarea.value)[indice];
-        const original = generatedBaselineBlocks.find(bloco =>
-          normalizarChaveProduto_(bloco.produto) === normalizarChaveProduto_(atual && atual.produto) &&
-          normalizarChaveProduto_(bloco.loja) === normalizarChaveProduto_(atual && atual.loja)
-        );
-        const valorOriginal = original && original.botao && original.botao !== 'NO' ? original.botao : '?';
-        partes[parteIndex] = partes[parteIndex].replace(/(^\s*BUTTON NAME:[ \t]*)[^\r\n]*/mi, '$1' + valorOriginal);
-      }
-      textarea.value = partes.join(separador);
-      renderizarControlesNoYes_();
-    }
-
     async function gerarNotecard(){ 
       const entrada = document.getElementById('inputList').value;
       if(!entrada.trim()) return alerta(t('errEmptyInp'));
@@ -6181,9 +5978,7 @@ body.tour-active {
           ? res.texto
           : "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR A RESPOSTA.";
         document.getElementById('outputList').value = textoGerado;
-        outputQuickStates = Array(extrairBlocosNotecard_(textoGerado).length).fill(null);
         capturarIndefinidosGerados_(res && res.texto ? res.texto : '');
-        renderizarControlesNoYes_();
         mostrarResumoProcessamento_(res && res.relatorio ? res.relatorio : {
           itensRecebidos: entrada.split('\n').filter(Boolean).length,
           itensGerados: generatedBaselineBlocks.length,
@@ -6227,7 +6022,6 @@ body.tour-active {
       });
 
       document.getElementById('outputList').value = blocos.map(bloco => bloco.texto).join('');
-      renderizarControlesNoYes_();
       if (correctionsToLearn.length) {
         renderizarCorrecoesParaAprender_();
         abrirModal('modalLearnCorrections');
