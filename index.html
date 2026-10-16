@@ -4290,6 +4290,7 @@ body.tour-active {
     let ignoredItems = [];
     let generatedUnknownItems = [];
     let generatedBaselineBlocks = [];
+    let outputQuickStates = []; // null = neutro, 'yes' = verde, 'no' = vermelho
     let correctionsToLearn = [];
     let handledCorrectionKeys = new Set();
     let pendingLearningAfterSummary = false;
@@ -5399,6 +5400,7 @@ body.tour-active {
     }
     function capturarIndefinidosGerados_(texto) {
       generatedBaselineBlocks = extrairBlocosNotecard_(texto);
+      if (!texto) outputQuickStates = [];
       generatedUnknownItems = generatedBaselineBlocks
         .filter(bloco => bloco.botao === '?' && bloco.produto)
         .map(bloco => ({
@@ -6044,14 +6046,19 @@ body.tour-active {
       panel.innerHTML = '';
       const texto = textarea.value;
       const highlight = document.getElementById('outputTextHighlight');
+      const separadorTexto = '------------------------------------------------------------';
+      const segmentos = texto.split(separadorTexto);
+      const blocosComProduto = segmentos.filter(bloco => /PRODUCT NAME:/i.test(bloco));
+
       if (highlight) {
         const escapeHtml = (value) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        const separadorTexto = '------------------------------------------------------------';
-        highlight.innerHTML = texto.split(separadorTexto).map((bloco) => {
+        let indiceBlocoCor = -1;
+        highlight.innerHTML = segmentos.map((bloco) => {
           if (!/PRODUCT NAME:/i.test(bloco)) return escapeHtml(bloco);
-          const match = bloco.match(/BUTTON NAME:[ \t]*([^\r\n]*)/i);
-          const status = match && match[1].trim().toUpperCase() === 'NO' ? 'status-no' : 'status-yes';
-          return `<span class="${status}">${escapeHtml(bloco)}</span>`;
+          indiceBlocoCor++;
+          const estado = outputQuickStates[indiceBlocoCor];
+          const classe = estado === 'no' ? 'status-no' : (estado === 'yes' ? 'status-yes' : '');
+          return classe ? `<span class="${classe}">${escapeHtml(bloco)}</span>` : escapeHtml(bloco);
         }).join(escapeHtml(separadorTexto));
         highlight.scrollTop = textarea.scrollTop;
         highlight.scrollLeft = textarea.scrollLeft;
@@ -6070,6 +6077,34 @@ body.tour-active {
       let visualRow = 0;
       let blocoIndice = -1;
 
+      // Simula a quebra automática de linhas para manter os controles na linha correta.
+      const linhasVisuais = (linha) => {
+        if (!linha.length) return 1;
+        let count = 1;
+        let atual = '';
+        const palavras = linha.split(/(\s+)/);
+        for (const palavra of palavras) {
+          if (!palavra) continue;
+          if (ctx.measureText(atual + palavra).width <= contentWidth) {
+            atual += palavra;
+            continue;
+          }
+          if (ctx.measureText(palavra).width <= contentWidth) {
+            count++;
+            atual = palavra.trimStart();
+            continue;
+          }
+          for (const caractere of palavra) {
+            if (ctx.measureText(atual + caractere).width > contentWidth && atual) {
+              count++;
+              atual = '';
+            }
+            atual += caractere;
+          }
+        }
+        return count;
+      };
+
       linhas.forEach((linha) => {
         if (/PRODUCT NAME:/i.test(linha)) blocoIndice++;
         if (/^\s*BUTTON NAME:/i.test(linha) && blocoIndice >= 0) {
@@ -6082,14 +6117,14 @@ body.tour-active {
           item.style.top = (padTop + visualRow * lineHeight - textarea.scrollTop + 1) + 'px';
           const yes = document.createElement('button');
           yes.type = 'button';
-          yes.className = 'output-quick-btn is-yes' + (valor.trim().toUpperCase() !== 'NO' ? ' is-active' : '');
+          yes.className = 'output-quick-btn is-yes' + (outputQuickStates[itemIndice] === 'yes' ? ' is-active' : '');
           yes.textContent = '✓';
-          yes.title = 'YES — manter item e restaurar a categoria original';
+          yes.title = 'YES — manter item';
           yes.setAttribute('aria-label', 'YES — manter item');
           yes.onclick = () => aplicarControleNoYes_(itemIndice, true);
           const no = document.createElement('button');
           no.type = 'button';
-          no.className = 'output-quick-btn is-no' + (valor.trim().toUpperCase() === 'NO' ? ' is-active' : '');
+          no.className = 'output-quick-btn is-no' + (outputQuickStates[itemIndice] === 'no' ? ' is-active' : '');
           no.textContent = '×';
           no.title = 'NO — marcar item para remoção ao clicar em Atualizar Ordem';
           no.setAttribute('aria-label', 'NO — remover item');
@@ -6097,8 +6132,7 @@ body.tour-active {
           item.append(yes, no);
           panel.appendChild(item);
         }
-        const largura = ctx.measureText(linha).width;
-        visualRow += Math.max(1, Math.ceil(largura / contentWidth));
+        visualRow += linhasVisuais(linha);
       });
     }
 
@@ -6113,16 +6147,20 @@ body.tour-active {
       });
       const parteIndex = indices[indice];
       if (parteIndex === undefined) return;
-      let valorBotao = 'NO';
-      if (manter) {
+
+      // O estado visual é independente do texto exportado: YES não escreve YES no notecard.
+      outputQuickStates[indice] = manter ? 'yes' : 'no';
+      if (!manter) {
+        partes[parteIndex] = partes[parteIndex].replace(/(^\s*BUTTON NAME:[ \t]*)[^\r\n]*/mi, '$1NO');
+      } else {
         const atual = extrairBlocosNotecard_(textarea.value)[indice];
         const original = generatedBaselineBlocks.find(bloco =>
           normalizarChaveProduto_(bloco.produto) === normalizarChaveProduto_(atual && atual.produto) &&
           normalizarChaveProduto_(bloco.loja) === normalizarChaveProduto_(atual && atual.loja)
         );
-        valorBotao = original && original.botao && original.botao !== 'NO' ? original.botao : (atual && atual.botao !== 'NO' ? atual.botao : '?');
+        const valorOriginal = original && original.botao && original.botao !== 'NO' ? original.botao : '?';
+        partes[parteIndex] = partes[parteIndex].replace(/(^\s*BUTTON NAME:[ \t]*)[^\r\n]*/mi, '$1' + valorOriginal);
       }
-      partes[parteIndex] = partes[parteIndex].replace(/(^\s*BUTTON NAME:[ \t]*)[^\r\n]*/mi, '$1' + valorBotao);
       textarea.value = partes.join(separador);
       renderizarControlesNoYes_();
     }
@@ -6143,6 +6181,7 @@ body.tour-active {
           ? res.texto
           : "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR A RESPOSTA.";
         document.getElementById('outputList').value = textoGerado;
+        outputQuickStates = Array(extrairBlocosNotecard_(textoGerado).length).fill(null);
         capturarIndefinidosGerados_(res && res.texto ? res.texto : '');
         renderizarControlesNoYes_();
         mostrarResumoProcessamento_(res && res.relatorio ? res.relatorio : {
