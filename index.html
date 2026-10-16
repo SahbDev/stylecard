@@ -697,6 +697,72 @@ textarea:focus-visible {
   color: #4d4944;
 }
 
+.output-editor-body {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  overflow: hidden;
+}
+.output-editor-body textarea {
+  min-width: 0;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+}
+.output-quick-controls {
+  min-height: 0;
+  overflow: auto;
+  padding: 12px 9px;
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255,255,255,.018);
+}
+.output-quick-title {
+  position: sticky;
+  top: -12px;
+  z-index: 1;
+  margin: -12px -9px 3px;
+  padding: 12px 9px 9px;
+  background: #0e0e0d;
+  color: #8d867d;
+  font: 600 9px/1.3 'IBM Plex Mono', monospace;
+  letter-spacing: .08em;
+}
+.output-quick-item {
+  padding: 8px 7px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: rgba(255,255,255,.025);
+}
+.output-quick-name {
+  margin-bottom: 7px;
+  color: #cfc7bd;
+  font: 10px/1.35 'IBM Plex Mono', monospace;
+  overflow-wrap: anywhere;
+}
+.output-quick-actions { display: flex; gap: 5px; }
+.output-quick-btn {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 0;
+  border: 1px solid #514b43;
+  border-radius: 3px;
+  color: #aaa197;
+  background: transparent;
+  font: 600 9px/1 'IBM Plex Mono', monospace;
+  cursor: pointer;
+}
+.output-quick-btn.is-no { color: #d98c83; border-color: rgba(217,140,131,.45); }
+.output-quick-btn.is-yes { color: #9bb99d; border-color: rgba(155,185,157,.45); }
+.output-quick-btn.is-active { background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px currentColor; }
+.output-quick-empty { color: #777068; font-size: 10px; line-height: 1.5; }
+@media (max-width: 900px) {
+  .output-editor-body { grid-template-columns: minmax(0, 1fr) 118px; }
+  .output-quick-controls { padding: 8px 6px; }
+}
+
 .editor-sheet textarea:focus {
   box-shadow: inset 4px 0 0 var(--tomato);
 }
@@ -3945,7 +4011,13 @@ body.tour-active {
                 </button>
               </div>
             </header>
-            <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false"></textarea>
+            <div class="output-editor-body">
+              <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false" oninput="renderizarControlesNoYes_()"></textarea>
+              <aside class="output-quick-controls" id="outputQuickControls" aria-label="Controles visuais YES e NO">
+                <div class="output-quick-title">MANTER / REMOVER</div>
+                <div class="output-quick-empty">Gere um Stylecard para ver os controles.</div>
+              </aside>
+            </div>
             <footer class="sheet-footer"><span>RESULTADO EDITÁVEL</span><span>MEMÓRIA SHOK ATIVA</span></footer>
           </article>
         </section>
@@ -5962,6 +6034,70 @@ body.tour-active {
       abrirPaginaLojas();
     }
 
+    function renderizarControlesNoYes_() {
+      const panel = document.getElementById('outputQuickControls');
+      const textarea = document.getElementById('outputList');
+      if (!panel || !textarea) return;
+      const blocos = extrairBlocosNotecard_(textarea.value);
+      panel.innerHTML = '<div class="output-quick-title">MANTER / REMOVER</div>';
+      if (!blocos.length) {
+        const empty = document.createElement('div');
+        empty.className = 'output-quick-empty';
+        empty.textContent = 'Gere um Stylecard para ver os controles.';
+        panel.appendChild(empty);
+        return;
+      }
+      blocos.forEach((bloco, indice) => {
+        const item = document.createElement('div');
+        item.className = 'output-quick-item';
+        const name = document.createElement('div');
+        name.className = 'output-quick-name';
+        name.textContent = bloco.produto || ('Item ' + (indice + 1));
+        const actions = document.createElement('div');
+        actions.className = 'output-quick-actions';
+        const yes = document.createElement('button');
+        yes.type = 'button';
+        yes.className = 'output-quick-btn is-yes' + (bloco.botao !== 'NO' ? ' is-active' : '');
+        yes.textContent = 'YES';
+        yes.title = 'Manter item e restaurar a categoria original';
+        yes.onclick = () => aplicarControleNoYes_(indice, true);
+        const no = document.createElement('button');
+        no.type = 'button';
+        no.className = 'output-quick-btn is-no' + (bloco.botao === 'NO' ? ' is-active' : '');
+        no.textContent = 'NO';
+        no.title = 'Marcar item para remoção ao clicar em Atualizar Ordem';
+        no.onclick = () => aplicarControleNoYes_(indice, false);
+        actions.append(yes, no);
+        item.append(name, actions);
+        panel.appendChild(item);
+      });
+    }
+
+    function aplicarControleNoYes_(indice, manter) {
+      const textarea = document.getElementById('outputList');
+      if (!textarea) return;
+      const separador = '------------------------------------------------------------';
+      const partes = textarea.value.split(separador);
+      const indices = [];
+      partes.forEach((parte, idx) => {
+        if (/PRODUCT NAME:/i.test(parte)) indices.push(idx);
+      });
+      const parteIndex = indices[indice];
+      if (parteIndex === undefined) return;
+      let valorBotao = 'NO';
+      if (manter) {
+        const atual = extrairBlocosNotecard_(textarea.value)[indice];
+        const original = generatedBaselineBlocks.find(bloco =>
+          normalizarChaveProduto_(bloco.produto) === normalizarChaveProduto_(atual && atual.produto) &&
+          normalizarChaveProduto_(bloco.loja) === normalizarChaveProduto_(atual && atual.loja)
+        );
+        valorBotao = original && original.botao && original.botao !== 'NO' ? original.botao : (atual && atual.botao !== 'NO' ? atual.botao : '?');
+      }
+      partes[parteIndex] = partes[parteIndex].replace(/(^\s*BUTTON NAME:[ \t]*)[^\r\n]*/mi, '$1' + valorBotao);
+      textarea.value = partes.join(separador);
+      renderizarControlesNoYes_();
+    }
+
     async function gerarNotecard(){ 
       const entrada = document.getElementById('inputList').value;
       if(!entrada.trim()) return alerta(t('errEmptyInp'));
@@ -5979,6 +6115,7 @@ body.tour-active {
           : "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR A RESPOSTA.";
         document.getElementById('outputList').value = textoGerado;
         capturarIndefinidosGerados_(res && res.texto ? res.texto : '');
+        renderizarControlesNoYes_();
         mostrarResumoProcessamento_(res && res.relatorio ? res.relatorio : {
           itensRecebidos: entrada.split('\n').filter(Boolean).length,
           itensGerados: generatedBaselineBlocks.length,
@@ -6022,6 +6159,7 @@ body.tour-active {
       });
 
       document.getElementById('outputList').value = blocos.map(bloco => bloco.texto).join('');
+      renderizarControlesNoYes_();
       if (correctionsToLearn.length) {
         renderizarCorrecoesParaAprender_();
         abrirModal('modalLearnCorrections');
