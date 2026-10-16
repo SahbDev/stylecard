@@ -968,7 +968,7 @@ textarea:focus-visible {
 
 .atelier-actions {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: 1fr 190px 190px;
   border: 1px solid var(--line);
 }
 
@@ -989,18 +989,16 @@ textarea:focus-visible {
 }
 
 .atelier-actions button {
-  min-width: 148px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  padding: 0 16px;
+  gap: 18px;
+  padding: 0 18px;
   color: var(--ivory);
   background: #0d0d0c;
   border: 0;
   border-left: 1px solid var(--line);
   cursor: pointer;
-  transition: color .18s ease, background .18s ease;
 }
 
 .atelier-actions button:hover {
