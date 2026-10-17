@@ -716,42 +716,37 @@ textarea:focus-visible {
   color: #d8d1c8;
 }
 .shok-reference-mirror::-webkit-scrollbar { display: none; }
-.shok-reference-block { color: #ffdc68; }
 @media (max-width:640px) { .shok-reference-mirror { padding: 16px; font-size: 10px; } }
 
-/* Marca-texto opcional por bloco, somente visual. Nao interfere no texto exportado. */
-.shok-reference-mirror .shok-review-green { background: rgba(60, 213, 134, .23); color: #9af1bd; }
-.shok-reference-mirror .shok-review-yellow { background: rgba(250, 208, 72, .20); color: #ffe890; }
-.shok-reference-mirror .shok-review-blue { background: rgba(92, 165, 255, .24); color: #b5d5ff; }
-.shok-reference-mirror .shok-review-pink { background: rgba(247, 115, 168, .22); color: #ffbbd8; }
-.shok-reference-mirror .shok-review-purple { background: rgba(186, 137, 255, .22); color: #dcc2ff; }
+/* Marca-texto visual, aplicado SOMENTE quando o usuario escolhe uma cor. */
+.shok-reference-mirror .shok-review-green { background: rgba(60, 213, 134, .23); color: #aaf4c9; }
+.shok-reference-mirror .shok-review-red { background: rgba(245, 94, 107, .22); color: #ffb7bd; }
+.shok-reference-mirror .shok-review-purple { background: rgba(195, 157, 255, .22); color: #e5d3ff; }
+.shok-reference-mirror .shok-review-blue { background: rgba(125, 191, 255, .22); color: #c4e4ff; }
 .shok-review-palette {
-  position: absolute; z-index: 6; top: 10px; right: 12px;
+  position: absolute; z-index: 6; top: 10px; left: 12px;
   display: flex; align-items: center; gap: 7px;
   border: 1px solid rgba(215, 205, 225, .20);
   border-radius: 22px; padding: 7px 9px;
   background: rgba(20, 19, 22, .96); box-shadow: 0 7px 20px rgba(0,0,0,.3);
   backdrop-filter: blur(8px);
+  width: max-content; max-width: calc(100% - 10px);
 }
 .shok-review-palette[hidden] { display: none !important; }
 .shok-review-dot {
   appearance: none; display: inline-block; width: 15px; height: 15px;
-  border-radius: 50%; border: 1px solid rgba(255,255,255,.34);
+  border-radius: 50%; border: 1px solid rgba(255,255,255,.38);
   padding: 0; cursor: pointer; flex: none;
   transition: transform .13s, box-shadow .13s;
 }
 .shok-review-dot:hover, .shok-review-dot:focus-visible { transform: scale(1.22); outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,.15); }
 .shok-review-dot[aria-pressed="true"] { box-shadow: 0 0 0 2px #1a181c, 0 0 0 3px rgba(255,255,255,.95); }
 .shok-review-dot[data-color="green"] { background: #52d995; }
-.shok-review-dot[data-color="yellow"] { background: #f0d35e; }
-.shok-review-dot[data-color="blue"] { background: #65b0ff; }
-.shok-review-dot[data-color="pink"] { background: #f17cba; }
-.shok-review-dot[data-color="purple"] { background: #b994fa; }
-.shok-review-dot[data-color="clear"] {
-  background: transparent; color: #d8d1c8; width: 17px; height: 17px;
-  border-color: rgba(255,255,255,.28); font: 13px/15px sans-serif; text-align:center;
-}
-@media (max-width:640px) { .shok-review-palette { top: 7px; right: 7px; gap: 6px; padding: 6px; } }
+.shok-review-dot[data-color="red"] { background: #f06b78; }
+.shok-review-dot[data-color="purple"] { background: #c3a1f7; }
+.shok-review-dot[data-color="blue"] { background: #90caff; }
+.shok-review-dot[data-color="white"] { background: #f5f3f0; }
+@media (max-width:640px) { .shok-review-palette { gap: 6px; padding: 6px 8px; } }
 
 
 .editor-sheet textarea:focus {
@@ -3994,12 +3989,11 @@ body.tour-active {
               <div id="outputReferenceHighlight" class="shok-reference-mirror" aria-hidden="true"></div>
               <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false"></textarea>
               <div class="shok-review-palette" id="shokReviewPalette" role="toolbar" aria-label="Marca-texto do produto selecionado" hidden>
-                <button type="button" class="shok-review-dot" data-color="green" title="Verde — já revisei" aria-label="Marcar produto de verde" aria-pressed="false"></button>
-                <button type="button" class="shok-review-dot" data-color="yellow" title="Amarelo — conferir" aria-label="Marcar produto de amarelo" aria-pressed="false"></button>
-                <button type="button" class="shok-review-dot" data-color="blue" title="Azul — referência" aria-label="Marcar produto de azul" aria-pressed="false"></button>
-                <button type="button" class="shok-review-dot" data-color="pink" title="Rosa — atenção" aria-label="Marcar produto de rosa" aria-pressed="false"></button>
-                <button type="button" class="shok-review-dot" data-color="purple" title="Roxo — pendente" aria-label="Marcar produto de roxo" aria-pressed="false"></button>
-                <button type="button" class="shok-review-dot" data-color="clear" title="Remover marcação" aria-label="Remover marcação do produto" aria-pressed="false">×</button>
+                <button type="button" class="shok-review-dot" data-color="green" title="Verde — revisado" aria-label="Marcar produto de verde" aria-pressed="false"></button>
+                <button type="button" class="shok-review-dot" data-color="red" title="Vermelho — atenção" aria-label="Marcar produto de vermelho" aria-pressed="false"></button>
+                <button type="button" class="shok-review-dot" data-color="purple" title="Roxo claro — pendente" aria-label="Marcar produto de roxo claro" aria-pressed="false"></button>
+                <button type="button" class="shok-review-dot" data-color="blue" title="Azul claro — referência" aria-label="Marcar produto de azul claro" aria-pressed="false"></button>
+                <button type="button" class="shok-review-dot" data-color="white" title="Branco — voltar ao padrão" aria-label="Remover marcação e voltar ao branco" aria-pressed="false"></button>
               </div>
             </div>
             <footer class="sheet-footer"><span>RESULTADO EDITÁVEL</span><span>MEMÓRIA SHOK ATIVA</span></footer>
@@ -5046,6 +5040,7 @@ body.tour-active {
       const editorDeResultado = document.getElementById('outputList');
       editorDeResultado.addEventListener('input', atualizarDestaquesReferencia_);
       editorDeResultado.addEventListener('scroll', sincronizarRolagemDestaques_);
+      window.addEventListener('resize', atualizarPosicaoPaletaRevisao_);
       editorDeResultado.addEventListener('click', selecionarBlocoParaMarcaTexto_);
       editorDeResultado.addEventListener('keyup', selecionarBlocoParaMarcaTexto_);
       editorDeResultado.addEventListener('select', selecionarBlocoParaMarcaTexto_);
@@ -5375,10 +5370,11 @@ body.tour-active {
       }
     }
 
-    // As cores nao alteram o conteudo da notecard nem o aprendizado da API.
-    // A marca visual fica neste navegador, separada entre P1 e P2.
-    const SHOK_CORES_REVISAO = new Set(['green', 'yellow', 'blue', 'pink', 'purple']);
+    // Cores somente visuais: nao alteram o TXT nem o aprendizado da API.
+    // Marcacoes persistem neste navegador, separadas por perfil.
+    const SHOK_CORES_REVISAO = new Set(['green', 'red', 'purple', 'blue']);
     let shokBlocoSelecionado_ = '';
+    let shokIndiceBlocoSelecionado_ = -1;
     function shokChaveMarca_(produto) {
       return String(produto || '').replace(/\s+/g, ' ').trim().toUpperCase();
     }
@@ -5393,7 +5389,7 @@ body.tour-active {
     }
     function shokGravarMarcacoes_(marcacoes) {
       try { localStorage.setItem(shokArmazenamentoMarcacoes_(), JSON.stringify(marcacoes)); }
-      catch (_) { /* Marcacao visual continua funcionando somente enquanto aberta. */ }
+      catch (_) { /* Sem armazenamento, a marcacao apenas nao persiste. */ }
     }
     function shokBlocosComPosicoes_(texto) {
       const regex = /^------------------------------------------------------------[ \t]*$/gm;
@@ -5405,27 +5401,65 @@ body.tour-active {
         return { inicio, fim, conteudo, chave: shokChaveMarca_(extrairCampoBloco_(conteudo, 'PRODUCT NAME')) };
       }).filter(bloco => !!bloco.chave);
     }
+    function atualizarPosicaoPaletaRevisao_() {
+      const editor = document.getElementById('outputList');
+      const mirror = document.getElementById('outputReferenceHighlight');
+      const paleta = document.getElementById('shokReviewPalette');
+      if (!editor || !mirror || !paleta || !shokBlocoSelecionado_ || shokIndiceBlocoSelecionado_ < 0) return;
+      const blocoVisual = mirror.children[shokIndiceBlocoSelecionado_];
+      if (!blocoVisual || !blocoVisual.firstChild || typeof document.createRange !== 'function') return;
+      const linhaBotao = blocoVisual.textContent.match(/^BUTTON NAME:[ \t]*[^\r\n]*/m);
+      if (!linhaBotao) return;
+      const finalNome = linhaBotao.index + linhaBotao[0].length;
+      // Usa a posicao verdadeira do BUTTON NAME no espelho do textarea,
+      // respeitando quebras de linha, rolagem e largura da janela.
+      const range = document.createRange();
+      range.setStart(blocoVisual.firstChild, Math.max(0, finalNome - 1));
+      range.setEnd(blocoVisual.firstChild, finalNome);
+      const textoRect = range.getBoundingClientRect();
+      const caixaRect = editor.getBoundingClientRect();
+      const posY = textoRect.top - caixaRect.top;
+      if (posY < -4 || posY > editor.clientHeight - 8) {
+        paleta.hidden = true;
+        return;
+      }
+      paleta.hidden = false;
+      const largura = paleta.offsetWidth || 164;
+      const altura = paleta.offsetHeight || 32;
+      let esquerda = textoRect.right - caixaRect.left + 10;
+      let topo = posY + (textoRect.height - altura) / 2;
+      // Em telas estreitas, aparece logo abaixo do nome para nao cobrir texto.
+      if (esquerda + largura > editor.clientWidth - 5) {
+        esquerda = Math.max(5, textoRect.left - caixaRect.left);
+        topo = posY + textoRect.height + 4;
+      }
+      paleta.style.left = Math.max(5, Math.min(esquerda, editor.clientWidth - largura - 5)) + 'px';
+      paleta.style.top = Math.max(4, Math.min(topo, editor.clientHeight - altura - 4)) + 'px';
+    }
     function selecionarBlocoParaMarcaTexto_() {
       const editor = document.getElementById('outputList');
       const paleta = document.getElementById('shokReviewPalette');
       if (!editor || !paleta) return;
-      // Um clique ou selecao de texto dentro de um bloco revela somente as bolinhas.
       const pos = editor.selectionStart;
-      const bloco = shokBlocosComPosicoes_(editor.value.replace(/\r\n/g, '\n'))
-        .find(b => pos >= b.inicio && pos < b.fim);
+      const blocos = shokBlocosComPosicoes_(editor.value.replace(/\r\n/g, '\n'));
+      const indice = blocos.findIndex(bloco => pos >= bloco.inicio && pos < bloco.fim);
+      const bloco = indice >= 0 ? blocos[indice] : null;
       shokBlocoSelecionado_ = bloco ? bloco.chave : '';
+      shokIndiceBlocoSelecionado_ = indice;
       paleta.hidden = !bloco;
       if (!bloco) return;
-      const cor = shokLerMarcacoes_()[bloco.chave] || '';
+      const corSalva = shokLerMarcacoes_()[bloco.chave] || '';
+      const cor = SHOK_CORES_REVISAO.has(corSalva) ? corSalva : 'white';
       paleta.querySelectorAll('.shok-review-dot').forEach(botao => {
         botao.setAttribute('aria-pressed', String(botao.dataset.color === cor));
       });
+      atualizarPosicaoPaletaRevisao_();
     }
     function aplicarMarcaTextoNoBloco_(cor) {
       if (!shokBlocoSelecionado_) return;
-      if (cor !== 'clear' && !SHOK_CORES_REVISAO.has(cor)) return;
+      if (cor !== 'white' && !SHOK_CORES_REVISAO.has(cor)) return;
       const marcacoes = shokLerMarcacoes_();
-      if (cor === 'clear') delete marcacoes[shokBlocoSelecionado_];
+      if (cor === 'white') delete marcacoes[shokBlocoSelecionado_];
       else marcacoes[shokBlocoSelecionado_] = cor;
       shokGravarMarcacoes_(marcacoes);
       atualizarDestaquesReferencia_();
@@ -5433,11 +5467,10 @@ body.tour-active {
     }
     function limparSelecaoMarcaTexto_() {
       shokBlocoSelecionado_ = '';
+      shokIndiceBlocoSelecionado_ = -1;
       const paleta = document.getElementById('shokReviewPalette');
       if (paleta) paleta.hidden = true;
     }
-    // Gyazo/prnt.sc aparecem em amarelo por padrao; a cor escolhida ganha
-    // prioridade visual, sem perder nem modificar links de INFO e SLURL.
     function atualizarDestaquesReferencia_() {
       const editor = document.getElementById('outputList');
       const mirror = document.getElementById('outputReferenceHighlight');
@@ -5451,11 +5484,8 @@ body.tour-active {
         if (bloco.inicio > cursor) fragmento.appendChild(document.createTextNode(texto.slice(cursor, bloco.inicio)));
         const node = document.createElement('span');
         const cor = marcacoes[bloco.chave];
-        if (SHOK_CORES_REVISAO.has(cor)) {
-          node.className = 'shok-review-' + cor;
-        } else if (/^INFO:[^\r\n]*(?:https?:\/\/)?(?:www\.)?(?:prnt\.sc|(?:i\.)?gyazo\.com)\//mi.test(bloco.conteudo)) {
-          node.className = 'shok-reference-block';
-        }
+        // Sem marcacao manual, TODOS os blocos ficam brancos, mesmo com Gyazo/prnt.sc no INFO.
+        if (SHOK_CORES_REVISAO.has(cor)) node.className = 'shok-review-' + cor;
         node.textContent = bloco.conteudo;
         fragmento.appendChild(node);
         cursor = bloco.fim;
@@ -5470,6 +5500,7 @@ body.tour-active {
       if (!editor || !mirror) return;
       mirror.scrollTop = editor.scrollTop;
       mirror.scrollLeft = editor.scrollLeft;
+      atualizarPosicaoPaletaRevisao_();
     }
     function normalizarChaveProduto_(produto) {
       return String(produto || '').replace(/\s+/g, ' ').trim().toUpperCase();
