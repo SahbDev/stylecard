@@ -5534,8 +5534,8 @@ body.tour-active {
         paleta.hidden = true;
         return;
       }
-      // A paleta fica na extremidade DIREITA do editor, longe do BUTTON NAME.
-      // So a exibimos para uma selecao real de texto no mesmo bloco.
+      // Posicao intermediaria: metade do espaco entre o fim do BUTTON NAME
+      // e a antiga posicao a direita. So aparece com texto selecionado.
       if (editor.selectionStart === editor.selectionEnd || document.activeElement !== editor) {
         paleta.hidden = true;
         return;
@@ -5544,7 +5544,10 @@ body.tour-active {
       const largura = paleta.offsetWidth || 164;
       const altura = paleta.offsetHeight || 32;
       const margemDireita = 18;
-      let esquerda = Math.max(5, editor.clientWidth - largura - margemDireita);
+      const posicaoDireitaAnterior = Math.max(5, editor.clientWidth - largura - margemDireita);
+      const posicaoProximaAoNome = textoRect.right - caixaRect.left + 12;
+      let esquerda = Math.max(5, Math.min(posicaoDireitaAnterior,
+        Math.round((posicaoProximaAoNome + posicaoDireitaAnterior) / 2)));
       let topo = posY + (textoRect.height - altura) / 2;
       // Se o BUTTON NAME chegar ate a paleta (por exemplo, em celular),
       // movemos somente a paleta para baixo, sem cobrir a escrita.
