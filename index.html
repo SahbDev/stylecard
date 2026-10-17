@@ -5664,10 +5664,11 @@ body.tour-active {
       const raw = extrairBlocosNotecard_(texto);
       generatedBaselineBlocks = raw.map((b, i) => ({ ...b,
         linhaOriginal: metadata[i] && metadata[i].linhaOriginal ? metadata[i].linhaOriginal : '',
+        linhasOriginais: metadata[i] && Array.isArray(metadata[i].linhasOriginais) ? metadata[i].linhasOriginais.slice() : [],
         produtoBase: metadata[i] && metadata[i].produtoBase ? metadata[i].produtoBase : b.produto
       }));
       ultimaAssociacaoOrdenada = generatedBaselineBlocks.map(x => ({
-        linhaOriginal: x.linhaOriginal, produtoBase: x.produtoBase
+        linhaOriginal: x.linhaOriginal, linhasOriginais: x.linhasOriginais, produtoBase: x.produtoBase
       }));
       generatedUnknownItems = generatedBaselineBlocks.filter(b => b.botao === '?').map(b => ({
         produto: b.produto, chaveProduto: normalizarChaveProduto_(b.produto)
@@ -5732,6 +5733,7 @@ body.tour-active {
         if (!alteracoes.length) return;
         const correcao = {
           linhaOriginal: base.linhaOriginal || '',
+          linhasOriginais: Array.isArray(base.linhasOriginais) ? base.linhasOriginais.slice() : [],
           produtoOriginal: base.produtoBase || base.produto,
           produto: bloco.produto, loja: bloco.loja, lojaOriginal: base.loja,
           lojaConfirmada: base.loja !== bloco.loja,
@@ -5833,6 +5835,8 @@ body.tour-active {
         const novasBases = extrairBlocosNotecard_(document.getElementById('outputList').value);
         generatedBaselineBlocks = novasBases.map((b,i) => ({ ...b,
           linhaOriginal: ultimaAssociacaoOrdenada[i] ? ultimaAssociacaoOrdenada[i].linhaOriginal : '',
+          linhasOriginais: ultimaAssociacaoOrdenada[i] && Array.isArray(ultimaAssociacaoOrdenada[i].linhasOriginais)
+            ? ultimaAssociacaoOrdenada[i].linhasOriginais.slice() : [],
           produtoBase: ultimaAssociacaoOrdenada[i] ? ultimaAssociacaoOrdenada[i].produtoBase : b.produto
         }));
         handledCorrectionKeys = new Set();
@@ -6404,6 +6408,7 @@ body.tour-active {
       blocos.sort((a,b) => indiceCategoria_(a.botao) - indiceCategoria_(b.botao));
       ultimaAssociacaoOrdenada = blocos.map(b => ({
         linhaOriginal: b.base && b.base.linhaOriginal || '',
+        linhasOriginais: b.base && Array.isArray(b.base.linhasOriginais) ? b.base.linhasOriginais.slice() : [],
         produtoBase: b.base && b.base.produtoBase || b.produto
       }));
       document.getElementById('outputList').value = blocos.map(b => b.texto).join('');
