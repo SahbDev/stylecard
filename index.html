@@ -4986,10 +4986,27 @@ body.tour-active {
       }
     }
 
+    // Compatibilidade durante a atualização: a API antiga devolve "SUCCESS";
+    // a API atual devolve { token, perfil }. A ausência de token NÃO significa
+    // necessariamente que a sessão expirou. Não aceitar respostas arbitrárias.
     async function iniciarSessaoPerfil(password) {
-      const resposta = await callApi('loginProfile', { id: activeProfileID, password: password || '' });
-      if (!resposta || !resposta.token || resposta.perfil !== activeProfileID) throw new Error('PROFILE_SESSION_REQUIRED');
-      sessionToken = resposta.token;
+      const perfilSolicitado = activeProfileID;
+      const resposta = await callApi('loginProfile', {
+        id: perfilSolicitado,
+        password: password || ''
+      });
+      if (resposta && typeof resposta === 'object' &&
+          typeof resposta.token === 'string' && resposta.token &&
+          resposta.perfil === perfilSolicitado) {
+        sessionToken = resposta.token;
+      } else if (resposta === 'SUCCESS') {
+        // A API anterior não cria tokens; mantém login antigo funcionando.
+        // Depois de implantar o Code.gs atualizado, o login passa a usar token.
+        sessionToken = '';
+        console.warn('SHOK: a API publicada ainda responde no formato antigo. Atualize a implantação do Code.gs para ativar a memória por perfil.');
+      } else {
+        throw new Error('PROFILE_LOGIN_RESPONSE_INVALID');
+      }
       executarAnimacaoNetflix();
     }
 
@@ -5667,7 +5684,8 @@ body.tour-active {
       const code = error && error.message ? error.message : "";
       if (["INVALID_CREDENTIALS", "ADMIN_REQUIRED"].includes(code)) return t('errPass');
       if (code === 'ADMIN_PASSWORD_NOT_CONFIGURED') return 'Configure ADMIN_PASSWORD nas Propriedades do Apps Script.';
-      if (code === 'PROFILE_SESSION_REQUIRED') return 'Sua sessão expirou. Recarregue o site e selecione o perfil novamente.';
+      if (code === 'PROFILE_SESSION_REQUIRED') return 'Sessão não reconhecida pela API. Recarregue o site e selecione o perfil novamente. Se continuar, confira se Code.gs e Index.html foram publicados na mesma implantação.';
+      if (code === 'PROFILE_LOGIN_RESPONSE_INVALID') return 'A API respondeu em um formato de login inesperado. Publique novamente a versão completa de Code.gs e Index.html na mesma implantação.';
       if (code === 'PRODUCT_LINK_NOT_LANDMARK') return 'Links do Marketplace são aceitos como endereço da loja.';
       if (code === 'INVALID_SLURL' || code === 'INVALID_LANDMARK') return 'Informe uma landmark Second Life válida (maps.secondlife.com, slurl.com, secondlife://).';
       if (code === 'INVALID_STORE_NAME') return 'Nome de loja inválido ou longo demais. Revise a correção.';
