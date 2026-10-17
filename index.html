@@ -5534,26 +5534,37 @@ body.tour-active {
         paleta.hidden = true;
         return;
       }
+      // A paleta fica na extremidade DIREITA do editor, longe do BUTTON NAME.
+      // So a exibimos para uma selecao real de texto no mesmo bloco.
+      if (editor.selectionStart === editor.selectionEnd || document.activeElement !== editor) {
+        paleta.hidden = true;
+        return;
+      }
       paleta.hidden = false;
       const largura = paleta.offsetWidth || 164;
       const altura = paleta.offsetHeight || 32;
-      let esquerda = textoRect.right - caixaRect.left + 10;
+      const margemDireita = 18;
+      let esquerda = Math.max(5, editor.clientWidth - largura - margemDireita);
       let topo = posY + (textoRect.height - altura) / 2;
-      // Em telas estreitas, aparece logo abaixo do nome para nao cobrir texto.
-      if (esquerda + largura > editor.clientWidth - 5) {
-        esquerda = Math.max(5, textoRect.left - caixaRect.left);
-        topo = posY + textoRect.height + 4;
+      // Se o BUTTON NAME chegar ate a paleta (por exemplo, em celular),
+      // movemos somente a paleta para baixo, sem cobrir a escrita.
+      if (textoRect.right - caixaRect.left + 12 > esquerda) {
+        topo = posY + textoRect.height + 6;
       }
-      paleta.style.left = Math.max(5, Math.min(esquerda, editor.clientWidth - largura - 5)) + 'px';
+      paleta.style.left = esquerda + 'px';
       paleta.style.top = Math.max(4, Math.min(topo, editor.clientHeight - altura - 4)) + 'px';
     }
     function selecionarBlocoParaMarcaTexto_() {
       const editor = document.getElementById('outputList');
       const paleta = document.getElementById('shokReviewPalette');
       if (!editor || !paleta) return;
-      const pos = editor.selectionStart;
-      const blocos = shokBlocosComPosicoes_(editor.value.replace(/\r\n/g, '\n'));
-      const indice = blocos.findIndex(bloco => pos >= bloco.inicio && pos < bloco.fim);
+      const inicio = Math.min(editor.selectionStart, editor.selectionEnd);
+      const fim = Math.max(editor.selectionStart, editor.selectionEnd);
+      // Um clique para editar (cursor sem texto selecionado) NAO abre as cores.
+      // Uma selecao que atravessa produtos diferentes tambem nao recebe paleta.
+      const haSelecao = document.activeElement === editor && fim > inicio;
+      const blocos = haSelecao ? shokBlocosComPosicoes_(editor.value.replace(/\r\n/g, '\n')) : [];
+      const indice = blocos.findIndex(bloco => inicio >= bloco.inicio && inicio < bloco.fim && fim <= bloco.fim);
       const bloco = indice >= 0 ? blocos[indice] : null;
       shokBlocoSelecionado_ = bloco ? bloco.chave : '';
       shokIndiceBlocoSelecionado_ = indice;
