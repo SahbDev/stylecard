@@ -705,7 +705,21 @@ textarea:focus-visible {
   height: 100%; width: 100%; color: transparent;
   -webkit-text-fill-color: transparent; caret-color: var(--tomato);
 }
-.shok-reference-editor textarea::selection { background: rgba(255,215,92,.42); }
+/* A selecao nativa do textarea fica invisivel: selecao real e renderizada
+   em lilas no espelho, evitando amarelo/dourado do navegador e extensoes. */
+#outputList::selection,
+.shok-reference-editor #outputList::selection {
+  background: transparent !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+#outputList::-moz-selection { background: transparent !important; color: transparent !important; }
+.shok-reference-mirror, .shok-reference-mirror * { user-select: none; -webkit-user-select: none; }
+.shok-reference-mirror .shok-text-selection {
+  background: #cdb8ff !important;
+  color: #211e1a !important;
+  -webkit-text-fill-color: #211e1a !important;
+}
 .shok-reference-editor textarea::placeholder { -webkit-text-fill-color: #4d4944; }
 .shok-reference-mirror {
   position: absolute; inset: 0; z-index: 1;
@@ -3869,7 +3883,7 @@ body.tour-active {
         <div class="profile" id="prof-P2" onclick="selectProfile('P2', this)">
           <span class="profile-order">02</span>
           <div class="profile-img-wrap">
-            <img id="img-P2" src="https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0" alt="Perfil 2">
+            <img id="img-P2" src="https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6" alt="Perfil 2">
           </div>
           <div class="profile-card-foot">
             <span class="profile-name-text"><span id="name-P2">Gabriel</span> <svg class="lock-icon" id="lock-P2" style="display:none;" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/></svg></span>
@@ -4216,13 +4230,30 @@ body.tour-active {
       "798", "799", "880"
     ]);
 
-    const GABRIEL_PROFILE_AVATAR = "https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0";
+    const GABRIEL_PROFILE_AVATAR = "https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6";
 
     let profileConfigs = {
       "P1": { name: "Saori", avatar: "https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1", hasPassword: false },
       "P2": { name: "Gabriel", avatar: GABRIEL_PROFILE_AVATAR, hasPassword: false }
     };
-    localStorage.removeItem('mmc_profiles');
+    try { localStorage.removeItem('mmc_profiles'); } catch (_) { /* armazenamento indisponivel */ }
+
+    // Compatibilidade com configuracoes antigas: o antigo avatar de Convidado
+    // pode estar salvo em Config_V2 para P2. Nunca substituir Gabriel por ele.
+    function corrigirAvatarLegadoGabriel_(config) {
+      if (!config || typeof config !== 'object') return config;
+      const gabriel = config.P2;
+      if (gabriel && typeof gabriel === 'object') {
+        const imagem = String(gabriel.avatar || '');
+        if (!imagem || /(?:[?&])seed=GuestUser(?:&|$)/i.test(imagem)) {
+          gabriel.avatar = GABRIEL_PROFILE_AVATAR;
+        }
+        if (/^(Convidado|Guest)$/i.test(String(gabriel.name || '').trim())) {
+          gabriel.name = 'Gabriel';
+        }
+      }
+      return config;
+    }
 
     function renderProfiles() {
       ['P1', 'P2'].forEach(id => {
@@ -4239,13 +4270,14 @@ body.tour-active {
 
     renderProfiles();
 
-    const availableAvatars = ["https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1", "https://api.dicebear.com/7.x/lorelei/svg?seed=GuestUser&backgroundColor=e2e8f0", "https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6", "https://api.dicebear.com/7.x/lorelei/svg?seed=Mimi&backgroundColor=b6e3f4", "https://api.dicebear.com/7.x/adventurer/svg?seed=Felix&backgroundColor=ffd5dc", "https://api.dicebear.com/7.x/bottts/svg?seed=Robot&backgroundColor=c0aede", "https://api.dicebear.com/7.x/avataaars/svg?seed=Suki&backgroundColor=ffdfbf", "https://api.dicebear.com/7.x/micah/svg?seed=Gamer&backgroundColor=d1d4f9"];
+    const availableAvatars = ["https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&backgroundColor=ffb6c1", "https://api.dicebear.com/7.x/adventurer/svg?seed=Gabriel&backgroundColor=add8e6", "https://api.dicebear.com/7.x/lorelei/svg?seed=Mimi&backgroundColor=b6e3f4", "https://api.dicebear.com/7.x/adventurer/svg?seed=Felix&backgroundColor=ffd5dc", "https://api.dicebear.com/7.x/bottts/svg?seed=Robot&backgroundColor=c0aede", "https://api.dicebear.com/7.x/avataaars/svg?seed=Suki&backgroundColor=ffdfbf", "https://api.dicebear.com/7.x/micah/svg?seed=Gamer&backgroundColor=d1d4f9"];
     let currentSelectedAvatarUrl = "";
     let activeProfileID = null;
     let sessionToken = "";
     let ultimaAssociacaoOrdenada = [];
     let activeProfileElement = null;
     let profileOpening = false;
+    let profileLoginPending = false;
     let adminPasswordMemory = "";
     let editando = "";
     let lojasRegistradas = [];
@@ -5013,6 +5045,24 @@ body.tour-active {
       }
     }
 
+    // O site publicado pelo Apps Script usa a comunicacao nativa da propria
+    // implantacao (sem CORS, sem redirecionamentos e sem URL desatualizada).
+    // O fetch HTTP permanece como alternativa para hospedagem externa.
+    function shokChamadaNativa_(payload) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+          .withSuccessHandler(resposta => {
+            try {
+              const result = typeof resposta === 'string' ? JSON.parse(resposta) : resposta;
+              if (!result || result.status !== 'success') throw new Error((result && result.error) || 'API_ERROR');
+              resolve(result.data);
+            } catch (erro) { reject(erro); }
+          })
+          .withFailureHandler(erro => reject(new Error((erro && erro.message) || 'GOOGLE_SCRIPT_REQUEST_FAILED')))
+          .shokGateway(payload);
+      });
+    }
+
     async function callApi(action, data = {}) {
       try {
         const payload = { action: action, ...data };
@@ -5021,17 +5071,20 @@ body.tour-active {
         }
         if (sessionToken) payload.sessionToken = sessionToken;
 
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+          return await shokChamadaNativa_(payload);
+        }
         const response = await fetch(API_URL, {
           method: 'POST',
           body: JSON.stringify(payload),
           headers: { 'Content-Type': 'text/plain;charset=utf-8' }
         });
-        if (!response.ok) throw new Error("HTTP_" + response.status);
+        if (!response.ok) throw new Error('HTTP_' + response.status);
         const result = await response.json();
-        if (result.status !== 'success') throw new Error(result.error || "API_ERROR");
+        if (!result || result.status !== 'success') throw new Error((result && result.error) || 'API_ERROR');
         return result.data;
       } catch (error) {
-        console.error("ERRO DE FETCH:", error);
+        console.error('SHOK API:', action, error);
         throw error;
       }
     }
@@ -5044,10 +5097,14 @@ body.tour-active {
       editorDeResultado.addEventListener('click', selecionarBlocoParaMarcaTexto_);
       editorDeResultado.addEventListener('keyup', selecionarBlocoParaMarcaTexto_);
       editorDeResultado.addEventListener('select', selecionarBlocoParaMarcaTexto_);
+      editorDeResultado.addEventListener('select', atualizarDestaquesReferencia_);
+      editorDeResultado.addEventListener('keyup', atualizarDestaquesReferencia_);
+      editorDeResultado.addEventListener('pointerup', atualizarDestaquesReferencia_);
       editorDeResultado.addEventListener('input', selecionarBlocoParaMarcaTexto_);
       editorDeResultado.addEventListener('blur', () => {
         const paleta = document.getElementById('shokReviewPalette');
         if (paleta) paleta.hidden = true;
+        atualizarDestaquesReferencia_();
       });
       document.querySelectorAll('#shokReviewPalette .shok-review-dot').forEach(botao => {
         // Impede perda de foco/selecao ao clicar na bolinha.
@@ -5058,10 +5115,13 @@ body.tour-active {
       aplicarInterfacePortuguesa_();
       try {
         const dbConfigs = await callApi('getProfilesConfig', {}, null);
-        profileConfigs = dbConfigs;
+        profileConfigs = corrigirAvatarLegadoGabriel_(dbConfigs);
         renderProfiles();
       } catch (error) {
-        alerta("Não foi possível carregar os perfis. Confirme se a implantação do Google Apps Script está ativa para qualquer pessoa.");
+        // Os dois perfis ja estao na tela, com os seus avatares corretos.
+        // Falha transitoria da configuracao nao deve impedir o clique no perfil;
+        // a tentativa de login exibira o erro real, se necessario.
+        console.warn('SHOK: configuracoes remotas indisponiveis; exibindo perfis locais.', error);
       }
     }
 
@@ -5090,18 +5150,34 @@ body.tour-active {
     }
 
     async function selectProfile(id, element) {
-      if (profileOpening || !profileConfigs[id] || !['P1','P2'].includes(id)) return;
+      if (profileOpening || profileLoginPending || !profileConfigs[id] || !['P1','P2'].includes(id)) return;
+      profileLoginPending = true; // Primeiro clique ativa o login; impede requisicoes duplicadas.
       activeProfileID = id;
       activeProfileElement = element;
       sessionToken = '';
+      element.classList.add('loading');
       atualizarVisibilidadeDiscord_();
-      if (profileConfigs[id].hasPassword) {
-        document.getElementById('profilePassInput').value = '';
-        abrirModal('modalProfileAuth');
-        return;
+      try {
+        if (profileConfigs[id].hasPassword) {
+          document.getElementById('profilePassInput').value = '';
+          abrirModal('modalProfileAuth');
+          return;
+        }
+        await iniciarSessaoPerfil('');
+      } catch (error) {
+        if (String(error && error.message || error) === 'INVALID_CREDENTIALS') {
+          // Configuracao inicial pode falhar, mas o perfil ainda pode ter senha.
+          profileConfigs[id].hasPassword = true;
+          renderProfiles();
+          document.getElementById('profilePassInput').value = '';
+          abrirModal('modalProfileAuth');
+        } else {
+          alerta(traduzirErroApi(error));
+        }
+      } finally {
+        profileLoginPending = false;
+        if (!profileOpening) element.classList.remove('loading');
       }
-      try { await iniciarSessaoPerfil(''); }
-      catch (error) { alerta(traduzirErroApi(error)); }
     }
 
     function atualizarVisibilidadeDiscord_() {
@@ -5110,13 +5186,18 @@ body.tour-active {
     }
 
     async function verificarSenhaPerfil() {
+      if (profileOpening || profileLoginPending) return;
+      profileLoginPending = true;
       const input = document.getElementById('profilePassInput');
       try {
         await iniciarSessaoPerfil(input.value);
         fecharModal('modalProfileAuth');
-        input.value = "";
+        input.value = '';
       } catch (error) {
         alerta(traduzirErroApi(error));
+      } finally {
+        profileLoginPending = false;
+        if (!profileOpening && activeProfileElement) activeProfileElement.classList.remove('loading');
       }
     }
 
@@ -5401,6 +5482,33 @@ body.tour-active {
         return { inicio, fim, conteudo, chave: shokChaveMarca_(extrairCampoBloco_(conteudo, 'PRODUCT NAME')) };
       }).filter(bloco => !!bloco.chave);
     }
+    // Localiza offsets mesmo com pedacos do texto envoltos pela selecao lilas.
+    function shokPontoTexto_(elemento, offset) {
+      const walker = document.createTreeWalker(elemento, NodeFilter.SHOW_TEXT);
+      let ultimo = null, restante = offset;
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        ultimo = node;
+        if (restante <= node.length) return {node, offset: restante};
+        restante -= node.length;
+      }
+      return ultimo ? {node: ultimo, offset: ultimo.length} : null;
+    }
+    function shokAcrescentarTexto_(destino, texto, inicio, fim, selecaoInicio, selecaoFim) {
+      if (inicio >= fim) return;
+      const a = Math.max(inicio, selecaoInicio);
+      const b = Math.min(fim, selecaoFim);
+      if (a >= b) {
+        destino.appendChild(document.createTextNode(texto.slice(inicio, fim)));
+        return;
+      }
+      if (a > inicio) destino.appendChild(document.createTextNode(texto.slice(inicio, a)));
+      const destaque = document.createElement('span');
+      destaque.className = 'shok-text-selection';
+      destaque.textContent = texto.slice(a, b);
+      destino.appendChild(destaque);
+      if (b < fim) destino.appendChild(document.createTextNode(texto.slice(b, fim)));
+    }
     function atualizarPosicaoPaletaRevisao_() {
       const editor = document.getElementById('outputList');
       const mirror = document.getElementById('outputReferenceHighlight');
@@ -5414,8 +5522,11 @@ body.tour-active {
       // Usa a posicao verdadeira do BUTTON NAME no espelho do textarea,
       // respeitando quebras de linha, rolagem e largura da janela.
       const range = document.createRange();
-      range.setStart(blocoVisual.firstChild, Math.max(0, finalNome - 1));
-      range.setEnd(blocoVisual.firstChild, finalNome);
+      const start = shokPontoTexto_(blocoVisual, Math.max(0, finalNome - 1));
+      const end = shokPontoTexto_(blocoVisual, finalNome);
+      if (!start || !end) return;
+      range.setStart(start.node, start.offset);
+      range.setEnd(end.node, end.offset);
       const textoRect = range.getBoundingClientRect();
       const caixaRect = editor.getBoundingClientRect();
       const posY = textoRect.top - caixaRect.top;
@@ -5479,18 +5590,25 @@ body.tour-active {
       const blocos = shokBlocosComPosicoes_(texto);
       const marcacoes = shokLerMarcacoes_();
       const fragmento = document.createDocumentFragment();
+      const selecionado = document.activeElement === editor;
+      const inicioSel = selecionado ? Math.min(editor.selectionStart, editor.selectionEnd) : -1;
+      const fimSel = selecionado ? Math.max(editor.selectionStart, editor.selectionEnd) : -1;
       let cursor = 0;
       blocos.forEach(bloco => {
-        if (bloco.inicio > cursor) fragmento.appendChild(document.createTextNode(texto.slice(cursor, bloco.inicio)));
+        if (bloco.inicio > cursor) {
+          shokAcrescentarTexto_(fragmento, texto, cursor, bloco.inicio, inicioSel, fimSel);
+        }
         const node = document.createElement('span');
         const cor = marcacoes[bloco.chave];
-        // Sem marcacao manual, TODOS os blocos ficam brancos, mesmo com Gyazo/prnt.sc no INFO.
+        // Somente marcacoes manuais. A selecao lilas independe das cores de revisao.
         if (SHOK_CORES_REVISAO.has(cor)) node.className = 'shok-review-' + cor;
-        node.textContent = bloco.conteudo;
+        shokAcrescentarTexto_(node, texto, bloco.inicio, bloco.fim, inicioSel, fimSel);
         fragmento.appendChild(node);
         cursor = bloco.fim;
       });
-      if (cursor < texto.length) fragmento.appendChild(document.createTextNode(texto.slice(cursor)));
+      if (cursor < texto.length) {
+        shokAcrescentarTexto_(fragmento, texto, cursor, texto.length, inicioSel, fimSel);
+      }
       mirror.replaceChildren(fragmento);
       sincronizarRolagemDestaques_();
     }
@@ -5901,8 +6019,9 @@ body.tour-active {
       if (code === 'ADMIN_PASSWORD_NOT_CONFIGURED') return 'Configure ADMIN_PASSWORD nas Propriedades do Apps Script.';
       if (code === 'PROFILE_SESSION_REQUIRED') return 'Sessão não reconhecida pela API. Recarregue o site e selecione o perfil novamente. Se continuar, confira se Code.gs e Index.html foram publicados na mesma implantação.';
       if (code === 'PROFILE_LOGIN_RESPONSE_INVALID') return 'A API respondeu em um formato de login inesperado. Publique novamente a versão completa de Code.gs e Index.html na mesma implantação.';
+      if (/shokGateway/i.test(code) || code === 'GOOGLE_SCRIPT_REQUEST_FAILED') return 'A implantação ainda não está usando o Code.gs novo. Salve os dois arquivos, vá em Gerenciar implantações e publique uma Nova versão.';
       if (code === 'PRODUCT_LINK_NOT_LANDMARK') return 'Links do Marketplace são aceitos como endereço da loja.';
-      if (code === 'INVALID_SLURL' || code === 'INVALID_LANDMARK') return 'Informe uma landmark Second Life válida (maps.secondlife.com, slurl.com, secondlife://).';
+      if (code === 'INVALID_SLURL' || code === 'INVALID_LANDMARK') return 'Informe um link válido para a loja (Second Life, Marketplace ou URL personalizada).';
       if (code === 'INVALID_STORE_NAME') return 'Nome de loja inválido ou longo demais. Revise a correção.';
       if (code === 'INVALID_CATEGORY') return 'Categoria inválida. Use letras, números, espaços, /, + ou & (até 42 caracteres).';
       if (code === "DISCORD_WEBHOOK_NOT_CONFIGURED") return "A webhook do Discord ainda não foi configurada nas Propriedades do Google Apps Script.";
