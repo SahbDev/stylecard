@@ -698,6 +698,62 @@ textarea:focus-visible {
   color: #4d4944;
 }
 
+/* Marcacao visual somente na tela: o arquivo TXT nunca recebe HTML ou cores. */
+.shok-reference-editor { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
+.shok-reference-editor textarea {
+  position: absolute; inset: 0; z-index: 2;
+  height: 100%; width: 100%; color: transparent;
+  -webkit-text-fill-color: transparent; caret-color: var(--tomato);
+}
+.shok-reference-editor textarea::selection { background: rgba(255,215,92,.42); }
+.shok-reference-editor textarea::placeholder { -webkit-text-fill-color: #4d4944; }
+.shok-reference-mirror {
+  position: absolute; inset: 0; z-index: 1;
+  overflow: auto; scrollbar-width: none; pointer-events: none;
+  padding: 20px; margin: 0;
+  white-space: pre-wrap; overflow-wrap: break-word; word-break: normal;
+  font: 400 11px/1.72 'IBM Plex Mono', monospace;
+  color: #d8d1c8;
+}
+.shok-reference-mirror::-webkit-scrollbar { display: none; }
+.shok-reference-block { color: #ffdc68; }
+@media (max-width:640px) { .shok-reference-mirror { padding: 16px; font-size: 10px; } }
+
+/* Marca-texto opcional por bloco, somente visual. Nao interfere no texto exportado. */
+.shok-reference-mirror .shok-review-green { background: rgba(60, 213, 134, .23); color: #9af1bd; }
+.shok-reference-mirror .shok-review-yellow { background: rgba(250, 208, 72, .20); color: #ffe890; }
+.shok-reference-mirror .shok-review-blue { background: rgba(92, 165, 255, .24); color: #b5d5ff; }
+.shok-reference-mirror .shok-review-pink { background: rgba(247, 115, 168, .22); color: #ffbbd8; }
+.shok-reference-mirror .shok-review-purple { background: rgba(186, 137, 255, .22); color: #dcc2ff; }
+.shok-review-palette {
+  position: absolute; z-index: 6; top: 10px; right: 12px;
+  display: flex; align-items: center; gap: 7px;
+  border: 1px solid rgba(215, 205, 225, .20);
+  border-radius: 22px; padding: 7px 9px;
+  background: rgba(20, 19, 22, .96); box-shadow: 0 7px 20px rgba(0,0,0,.3);
+  backdrop-filter: blur(8px);
+}
+.shok-review-palette[hidden] { display: none !important; }
+.shok-review-dot {
+  appearance: none; display: inline-block; width: 15px; height: 15px;
+  border-radius: 50%; border: 1px solid rgba(255,255,255,.34);
+  padding: 0; cursor: pointer; flex: none;
+  transition: transform .13s, box-shadow .13s;
+}
+.shok-review-dot:hover, .shok-review-dot:focus-visible { transform: scale(1.22); outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,.15); }
+.shok-review-dot[aria-pressed="true"] { box-shadow: 0 0 0 2px #1a181c, 0 0 0 3px rgba(255,255,255,.95); }
+.shok-review-dot[data-color="green"] { background: #52d995; }
+.shok-review-dot[data-color="yellow"] { background: #f0d35e; }
+.shok-review-dot[data-color="blue"] { background: #65b0ff; }
+.shok-review-dot[data-color="pink"] { background: #f17cba; }
+.shok-review-dot[data-color="purple"] { background: #b994fa; }
+.shok-review-dot[data-color="clear"] {
+  background: transparent; color: #d8d1c8; width: 17px; height: 17px;
+  border-color: rgba(255,255,255,.28); font: 13px/15px sans-serif; text-align:center;
+}
+@media (max-width:640px) { .shok-review-palette { top: 7px; right: 7px; gap: 6px; padding: 6px; } }
+
+
 .editor-sheet textarea:focus {
   box-shadow: inset 4px 0 0 var(--tomato);
 }
@@ -3934,7 +3990,18 @@ body.tour-active {
                 </button>
               </div>
             </header>
-            <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false"></textarea>
+            <div class="shok-reference-editor">
+              <div id="outputReferenceHighlight" class="shok-reference-mirror" aria-hidden="true"></div>
+              <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false"></textarea>
+              <div class="shok-review-palette" id="shokReviewPalette" role="toolbar" aria-label="Marca-texto do produto selecionado" hidden>
+                <button type="button" class="shok-review-dot" data-color="green" title="Verde — já revisei" aria-label="Marcar produto de verde" aria-pressed="false"></button>
+                <button type="button" class="shok-review-dot" data-color="yellow" title="Amarelo — conferir" aria-label="Marcar produto de amarelo" aria-pressed="false"></button>
+                <button type="button" class="shok-review-dot" data-color="blue" title="Azul — referência" aria-label="Marcar produto de azul" aria-pressed="false"></button>
+                <button type="button" class="shok-review-dot" data-color="pink" title="Rosa — atenção" aria-label="Marcar produto de rosa" aria-pressed="false"></button>
+                <button type="button" class="shok-review-dot" data-color="purple" title="Roxo — pendente" aria-label="Marcar produto de roxo" aria-pressed="false"></button>
+                <button type="button" class="shok-review-dot" data-color="clear" title="Remover marcação" aria-label="Remover marcação do produto" aria-pressed="false">×</button>
+              </div>
+            </div>
             <footer class="sheet-footer"><span>RESULTADO EDITÁVEL</span><span>MEMÓRIA SHOK ATIVA</span></footer>
           </article>
         </section>
@@ -4107,7 +4174,7 @@ body.tour-active {
   </div>
 
   <div class="modal-overlay" id="modalHelp"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalHelp')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="helpTitle">Como obter sua lista</h3><div class="modal-info-card"><ol class="help-list" data-i18n="helpInst"><li>Vá em <b>Avatar</b> -> <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li></ol></div><div class="modal-actions" style="margin-top: 20px;"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalHelp')" data-i18n="helpOk">Entendi</button></div></div></div>
-  <div class="modal-overlay" id="modalTips"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalTips')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="tipsTitle">Dicas Úteis</h3><div class="modal-info-card"><ul class="help-list" data-i18n="tipsInst" style="list-style-type: none; padding-left: 0;"><li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em "Atualizar Ordem", essa linha será removida automaticamente.</li></ul></div><div class="modal-actions" style="margin-top: 20px;"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalTips')" data-i18n="tipsOk">Entendi</button></div></div></div>
+  <div class="modal-overlay" id="modalTips"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalTips')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="tipsTitle">Dicas Úteis</h3><div class="modal-info-card"><ul class="help-list" data-i18n="tipsInst" style="list-style-type: none; padding-left: 0;"><li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o botão para <b>NO</b> para removê-lo ou <b>IGNORE</b> para ignorá-lo em ambos os perfis nas próximas gerações. Depois clique em "Atualizar Ordem".</li></ul></div><div class="modal-actions" style="margin-top: 20px;"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalTips')" data-i18n="tipsOk">Entendi</button></div></div></div>
   <div class="modal-overlay" id="modalAdminAuth"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAdminAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" data-i18n="titleAdmin">Área Admin</h3><p data-i18n="descAdmin">Acesso restrito</p><input type="password" autocomplete="current-password" id="adminPassInput" data-i18n="phPassAdmin" placeholder="Senha Mestre" onkeydown="if(event.key === 'Enter') verificarSenhaAdmin()"><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width:100%" onclick="verificarSenhaAdmin()" data-i18n="btnAuthAdmin">Autenticar</button></div></div></div>
   <div class="modal-overlay" id="modalAdminSettings"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAdminSettings')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="titleAdminSettings">Configurar Perfis</h3><select id="configProfileSelect" onchange="carregarConfigPerfil()"><option value="P1" data-i18n="optP1">Slot 1</option><option value="P2" data-i18n="optP2">Slot 2</option></select><div class="preview-avatar"><img id="configAvatarPreview" src="https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&amp;backgroundColor=ffb6c1" alt="Avatar selecionado"></div><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblSelAvatar">Avatar:</label><div class="avatar-grid" id="avatarGridList"></div><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblNamePerfil">Nome:</label><input type="text" id="configProfileName" data-i18n="phNamePerfil" placeholder="Ex: Saori Suki"><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblTrava">Senha:</label><input type="password" id="configProfilePass" autocomplete="new-password" data-i18n="phPass" placeholder="Vazio = desativado"><div class="modal-actions"><button type="button" class="btn btn-secondary" id="btnSaveConfig" style="width:100%" onclick="salvarConfigPerfil()" data-i18n="btnSaveConfig">Salvar Configuração</button></div></div></div>
   <div class="modal-overlay" id="modalProfileAuth"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalProfileAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" id="authTitle" data-i18n="titleAuthPerfil">Acesso Restrito</h3><p data-i18n="descAuthPerfil">Digite a senha.</p><input type="password" autocomplete="current-password" id="profilePassInput" data-i18n="phPassPerfil" placeholder="Senha do Perfil"><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width:100%" onclick="verificarSenhaPerfil()" data-i18n="btnEnterAuth">Entrar</button></div></div></div>
@@ -4118,7 +4185,7 @@ body.tour-active {
   <div class="modal-overlay" id="modalSuccess"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--mmc-green);" id="titleSuccess" data-i18n="titleSuccess">Sucesso</h3><p id="successMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalSuccess')" data-i18n="btnOkSuccess">OK</button></div></div></div>
   <div class="modal-overlay" id="modalDiscordShare"><div class="modal" style="width:500px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalDiscordShare')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3>Enviar para Discord</h3><p>Informe o nome do shape e o link da imagem para enviar o Stylecard ao canal.</p><label class="discord-name-label" for="discordShapeName">Nome do shape</label><input type="text" id="discordShapeName" maxlength="100" placeholder="Shok - NAME Shape [Lel NAME]" onkeydown="if(event.key === 'Enter') document.getElementById('discordGyazoLink').focus()"><label class="discord-name-label is-second" for="discordGyazoLink">Gyazo Link</label><input type="url" id="discordGyazoLink" maxlength="500" placeholder="Cole aqui o link do Gyazo" inputmode="url" onkeydown="if(event.key === 'Enter') enviarNotecardDiscord()"><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-success" id="discordSubmitBtn" style="width:100%;" onclick="enviarNotecardDiscord()">Enviar arquivo</button></div></div></div>
   <div class="modal-overlay" id="modalIgnored"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalIgnored')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="ignoredTitle">Itens ignorados</h3><p data-i18n="ignoredDesc">Confira os itens removidos automaticamente e o motivo.</p><div class="ignored-list" id="ignoredList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" style="width:100%;" onclick="fecharModal('modalIgnored')" data-i18n="btnOk">OK</button></div></div></div>
-  <div class="modal-overlay" id="modalLearnCorrections"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="cancelarAprendizadoCorrecoes()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="learnCorrectionTitle">Memorizar correções?</h3><p data-i18n="learnCorrectionDesc">As correções serão lembradas apenas neste perfil. Deseja salvar para usos futuros?</p><div class="ignored-list" id="learnCorrectionsList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" onclick="cancelarAprendizadoCorrecoes()" data-i18n="learnCorrectionNo">Não</button><button type="button" class="btn btn-success" id="saveCorrectionsBtn" onclick="confirmarAprendizadoCorrecoes()" data-i18n="learnCorrectionYes">Sim, memorizar</button></div></div></div>
+  <div class="modal-overlay" id="modalLearnCorrections"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="cancelarAprendizadoCorrecoes()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="learnCorrectionTitle">Memorizar correções?</h3><p data-i18n="learnCorrectionDesc">As correções comuns pertencem ao perfil atual; IGNORE vale para ambos os perfis. Deseja salvar?</p><div class="ignored-list" id="learnCorrectionsList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" onclick="cancelarAprendizadoCorrecoes()" data-i18n="learnCorrectionNo">Não</button><button type="button" class="btn btn-success" id="saveCorrectionsBtn" onclick="confirmarAprendizadoCorrecoes()" data-i18n="learnCorrectionYes">Sim, memorizar</button></div></div></div>
   <div class="modal-overlay" id="modalProcessingSummary"><div class="modal processing-summary-modal"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharResumoProcessamento_()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="processingSummaryTitle">Pronto para usar.</h3><p id="processingSummaryIntro">O painel começa curto. Abra apenas a informação que deseja conferir.</p><div class="processing-summary-overview" id="processingSummaryOverview"><strong>Stylecard pronto</strong><div class="processing-summary-stats" id="processingSummaryStats"></div></div><div class="processing-summary-sections" id="processingSummarySections"></div><div class="modal-actions processing-summary-actions"><button type="button" class="btn btn-secondary processing-summary-continue" onclick="fecharResumoProcessamento_()">Continuar</button></div></div></div>
 
   <div class="guided-tour" id="guidedTour" hidden aria-hidden="true">
@@ -4975,7 +5042,24 @@ body.tour-active {
       }
     }
 
-    window.onload = async () => { 
+    window.onload = async () => {
+      const editorDeResultado = document.getElementById('outputList');
+      editorDeResultado.addEventListener('input', atualizarDestaquesReferencia_);
+      editorDeResultado.addEventListener('scroll', sincronizarRolagemDestaques_);
+      editorDeResultado.addEventListener('click', selecionarBlocoParaMarcaTexto_);
+      editorDeResultado.addEventListener('keyup', selecionarBlocoParaMarcaTexto_);
+      editorDeResultado.addEventListener('select', selecionarBlocoParaMarcaTexto_);
+      editorDeResultado.addEventListener('input', selecionarBlocoParaMarcaTexto_);
+      editorDeResultado.addEventListener('blur', () => {
+        const paleta = document.getElementById('shokReviewPalette');
+        if (paleta) paleta.hidden = true;
+      });
+      document.querySelectorAll('#shokReviewPalette .shok-review-dot').forEach(botao => {
+        // Impede perda de foco/selecao ao clicar na bolinha.
+        botao.addEventListener('pointerdown', evento => evento.preventDefault());
+        botao.addEventListener('click', () => aplicarMarcaTextoNoBloco_(botao.dataset.color));
+      });
+      atualizarDestaquesReferencia_();
       aplicarInterfacePortuguesa_();
       try {
         const dbConfigs = await callApi('getProfilesConfig', {}, null);
@@ -5104,8 +5188,8 @@ body.tour-active {
     }
 
     const i18n = {
-      pt: { brandTitle: "SHOK | Stylecard System", guest: "Convidado", langBtn: "Language", teachBtn: "🧠 Ensinar Padrão", teachTitle: "Ensinar Padrão (IA Local)", teachDesc: "O sistema errou? Cole o pedaço do texto que identifica o item e associe ao nome correto da loja e botão.", teachLblGatilho: "Gatilho (Ex: T1S - NEW FACE)", teachLblLoja: "Nome Correto da Loja", teachLblCat: "Categoria Correta (Botão)", btnSaveTeach: "Salvar Padrão", helpBtn: "Ajuda", helpTitle: "Como obter sua lista", helpInst: "<li>Vá em <b>Avatar</b> -> <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li>", helpOk: "Entendi", tipsBtn: "Tips", tipsTitle: "Dicas Úteis", tipsInst: "<li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o nome do botão para <b>NO</b>. Ao clicar em \"Atualizar Ordem\", essa linha será removida automaticamente.</li>", tipsOk: "Entendi", modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", lblInput: "Entrada (Inventário)", phInput: "Cole a lista de itens aqui...", lblOutput: "Resultado (Notecard)", phOutput: "O resultado sairá aqui...", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT", titleDb: "Lojas Registradas", phSearchStore: "Buscar loja...", btnDelAll: "Apagar Tudo", btnBackup: "Backup", titleAdd: "Registrar Lojas", formatAdd: "Formato Múltiplo: <b>LOJA = SLURL = TAG</b>", tagMixed: "Nenhuma Tag (Deixar Mista)", btnSave: "Salvar", titleEdit: "Editar Loja", phLink: "Link SLURL", phTag: "Tag", titleWarn: "Atenção", descWarn: "Detectei <b style='color:#cdb8ff; font-size:15px;'>{n}</b> item(s) marcados como indefinidos (?). Sugiro que edite e atualize a lista antes de baixar.<br><br><b>DICA:</b> Substitua o \"<b>?</b>\" por <b>NO</b> e clique em <b>Atualizar Ordem</b> para deletá-los.<br><br>Deseja baixar mesmo assim?", btnCancel: "Cancelar", btnForceDown: "Sim, Baixar", alertTitle: "Aviso", btnOk: "OK", titlePassWipe: "Zerar Banco de Dados", descPassWipe: "Isso apagará todas as lojas. Digite a senha para confirmar.", phPassAdmin: "Senha de Segurança", btnConfirmDel: "Confirm Exclusão", titleSuccess: "Sucesso", btnOkSuccess: "OK", titleAdmin: "Área Admin", descAdmin: "Acesso restrito", btnAuthAdmin: "Autenticar", titleAdminSettings: "Configurar Perfis", optP1: "Slot 1 (Esquerda)", optP2: "Slot 2 (Meio)", lblSelAvatar: "Selecione um Avatar:", lblNamePerfil: "Nome do Perfil:", phNamePerfil: "Ex: Saori Suki", lblTrava: "Trava de Segurança:", phPass: "Digite uma senha (vazio = desativado)", btnSaveConfig: "Salvar Configuração", titleAuthPerfil: "Acesso Restrito", descAuthPerfil: "Digite a senha para acessar este perfil.", phPassPerfil: "Senha do Perfil", btnEnterAuth: "Entrar", msgSaved: "{n} loja(s) processada(s) com sucesso!", msgUpdated: "Loja atualizada com sucesso!", msgDeleted: "Loja removida com sucesso!", msgWiped: "Banco de dados zerado com sucesso!", errEmptyInp: "Cole a lista do seu inventário primeiro.", errFormat: "Cole pelo menos uma loja válida para salvar.", errEmptyDb: "O banco de dados já está vazio.", errPass: "Senha incorreta!", errNoGen: "Gere o Stylecard primeiro.", errNoDown: "Não há nada para baixar.", errAskPass: "Digite a senha para prosseguir.", statusGen: "PROCESSANDO...", askDel: "Apagar a loja {n}?", mixed: "Mista", btnUpdateEdit: "Atualizar", msgLearned: "Padrão aprendido com sucesso! O sistema o reconhecerá a partir de agora." },
-      en: { brandTitle: "SHOK | Stylecard System", guest: "Guest", langBtn: "Idioma", teachBtn: "🧠 Teach Pattern", teachTitle: "Teach Pattern (Local AI)", teachDesc: "Did the system make a mistake? Paste the snippet that identifies the item and associate it with the correct store name and button.", teachLblGatilho: "Trigger (Ex: T1S - NEW FACE)", teachLblLoja: "Correct Store Name", teachLblCat: "Correct Category (Button)", btnSaveTeach: "Save Pattern", helpBtn: "Help", helpTitle: "How to get your list", helpInst: "<li>Go to <b>Avatar</b> -> <b>Outfit</b></li><li>Click on the <b>Wearing</b> tab</li><li>Click on <b>Show additional information</b> (gear icon at the bottom of the list)</li><li>Select <b>Copy to clipboard</b></li>", helpOk: "Got it", tipsBtn: "Tips", tipsTitle: "Useful Tips", tipsInst: "<li>When generating the Stylecard, if there is an item you do not want to include in the final result, simply change the button name to <b>NO</b>. When you click \"Update Order\", that line will be removed automatically.</li>", tipsOk: "Got it", modalLangTitle: "Change Language", btnDb: "Registered Stores", btnAdd: "+ Add Store", lblInput: "Input (Inventory)", phInput: "Paste your item list here...", lblOutput: "Result (Notecard)", phOutput: "The result will appear here...", btnGen: "Generate Stylecard", btnUpdate: "Update Order", btnDown: "Download TXT", titleDb: "Registered Stores", phSearchStore: "Search store...", btnDelAll: "Delete All", btnBackup: "Backup", titleAdd: "Register Stores", formatAdd: "Multiple Format: <b>STORE = SLURL = TAG</b>", tagMixed: "No Tag (Leave Mixed)", btnSave: "Save", titleEdit: "Edit Store", phLink: "SLURL Link", phTag: "Tag", titleWarn: "Warning", descWarn: "Detected <b style='color:#cdb8ff; font-size:15px;'>{n}</b> item(s) marked as undefined (?). It is highly recommended to edit and update the list before downloading.<br><br><b>TIP:</b> Replace \"<b>?</b>\" with <b>NO</b> and click <b>Update Order</b> to delete them.<br><br>Download anyway?", btnCancel: "Cancel", btnForceDown: "Yes, Download", alertTitle: "Notice", btnOk: "OK", titlePassWipe: "Wipe Database", descPassWipe: "This will delete all stores. Enter the password to confirm.", phPassAdmin: "Security Password", btnConfirmDel: "Confirm Deletion", titleSuccess: "Success", btnOkSuccess: "OK", titleAdmin: "Admin Area", descAdmin: "Restricted Access", btnAuthAdmin: "Authenticate", titleAdminSettings: "Configure Profiles", optP1: "Slot 1 (Left)", optP2: "Slot 2 (Middle)", lblSelAvatar: "Select an Avatar:", lblNamePerfil: "Profile Name:", phNamePerfil: "e.g., Saori Suki", lblTrava: "Security Lock:", phPass: "Enter a password (empty = disabled)", btnSaveConfig: "Save Configuration", titleAuthPerfil: "Restricted Access", descAuthPerfil: "Enter the password to access this profile.", phPassPerfil: "Profile Password", btnEnterAuth: "Enter", msgSaved: "{n} store(s) processed successfully!", msgUpdated: "Store updated successfully!", msgDeleted: "Store removed successfully!", msgWiped: "Database wiped successfully!", errEmptyInp: "Paste your inventory list first.", errFormat: "Paste at least one valid store to save.", errEmptyDb: "The database is already empty.", errPass: "Incorrect password!", errNoGen: "Generate the Stylecard first.", errNoDown: "There is nothing to download.", errAskPass: "Enter the password to proceed.", statusGen: "PROCESSING...", askDel: "Delete store {n}?", mixed: "Mixed", btnUpdateEdit: "Update", msgLearned: "Pattern successfully learned! The system will recognize it from now on." }
+      pt: { brandTitle: "SHOK | Stylecard System", guest: "Convidado", langBtn: "Language", teachBtn: "🧠 Ensinar Padrão", teachTitle: "Ensinar Padrão (IA Local)", teachDesc: "O sistema errou? Cole o pedaço do texto que identifica o item e associe ao nome correto da loja e botão.", teachLblGatilho: "Gatilho (Ex: T1S - NEW FACE)", teachLblLoja: "Nome Correto da Loja", teachLblCat: "Categoria Correta (Botão)", btnSaveTeach: "Salvar Padrão", helpBtn: "Ajuda", helpTitle: "Como obter sua lista", helpInst: "<li>Vá em <b>Avatar</b> -> <b>Outfit</b></li><li>Clique na aba <b>Wearing</b></li><li>Clique em <b>Show additional information</b> (ícone de engrenagem no final da lista)</li><li>Selecione <b>Copy to clipboard</b></li>", helpOk: "Entendi", tipsBtn: "Tips", tipsTitle: "Dicas Úteis", tipsInst: "<li>Ao gerar o Stylecard, se houver algum item que você não deseja incluir no resultado final, basta alterar o botão para <b>NO</b> para removê-lo, ou <b>IGNORE</b> para ignorá-lo nos dois perfis em futuras listas. Depois clique em \"Atualizar Ordem\".</li>", tipsOk: "Entendi", modalLangTitle: "Alterar Idioma", btnDb: "Lojas Registradas", btnAdd: "+ Adicionar Loja", lblInput: "Entrada (Inventário)", phInput: "Cole a lista de itens aqui...", lblOutput: "Resultado (Notecard)", phOutput: "O resultado sairá aqui...", btnGen: "Gerar Stylecard", btnUpdate: "Atualizar Ordem", btnDown: "Baixar TXT", titleDb: "Lojas Registradas", phSearchStore: "Buscar loja...", btnDelAll: "Apagar Tudo", btnBackup: "Backup", titleAdd: "Registrar Lojas", formatAdd: "Formato Múltiplo: <b>LOJA = SLURL = TAG</b>", tagMixed: "Nenhuma Tag (Deixar Mista)", btnSave: "Salvar", titleEdit: "Editar Loja", phLink: "Link SLURL", phTag: "Tag", titleWarn: "Atenção", descWarn: "Detectei <b style='color:#cdb8ff; font-size:15px;'>{n}</b> item(s) marcados como indefinidos (?). Sugiro que edite e atualize a lista antes de baixar.<br><br><b>DICA:</b> Substitua o \"<b>?</b>\" por <b>NO</b> e clique em <b>Atualizar Ordem</b> para deletá-los.<br><br>Deseja baixar mesmo assim?", btnCancel: "Cancelar", btnForceDown: "Sim, Baixar", alertTitle: "Aviso", btnOk: "OK", titlePassWipe: "Zerar Banco de Dados", descPassWipe: "Isso apagará todas as lojas. Digite a senha para confirmar.", phPassAdmin: "Senha de Segurança", btnConfirmDel: "Confirm Exclusão", titleSuccess: "Sucesso", btnOkSuccess: "OK", titleAdmin: "Área Admin", descAdmin: "Acesso restrito", btnAuthAdmin: "Autenticar", titleAdminSettings: "Configurar Perfis", optP1: "Slot 1 (Esquerda)", optP2: "Slot 2 (Meio)", lblSelAvatar: "Selecione um Avatar:", lblNamePerfil: "Nome do Perfil:", phNamePerfil: "Ex: Saori Suki", lblTrava: "Trava de Segurança:", phPass: "Digite uma senha (vazio = desativado)", btnSaveConfig: "Salvar Configuração", titleAuthPerfil: "Acesso Restrito", descAuthPerfil: "Digite a senha para acessar este perfil.", phPassPerfil: "Senha do Perfil", btnEnterAuth: "Entrar", msgSaved: "{n} loja(s) processada(s) com sucesso!", msgUpdated: "Loja atualizada com sucesso!", msgDeleted: "Loja removida com sucesso!", msgWiped: "Banco de dados zerado com sucesso!", errEmptyInp: "Cole a lista do seu inventário primeiro.", errFormat: "Cole pelo menos uma loja válida para salvar.", errEmptyDb: "O banco de dados já está vazio.", errPass: "Senha incorreta!", errNoGen: "Gere o Stylecard primeiro.", errNoDown: "Não há nada para baixar.", errAskPass: "Digite a senha para prosseguir.", statusGen: "PROCESSANDO...", askDel: "Apagar a loja {n}?", mixed: "Mista", btnUpdateEdit: "Atualizar", msgLearned: "Padrão aprendido com sucesso! O sistema o reconhecerá a partir de agora." },
+      en: { brandTitle: "SHOK | Stylecard System", guest: "Guest", langBtn: "Idioma", teachBtn: "🧠 Teach Pattern", teachTitle: "Teach Pattern (Local AI)", teachDesc: "Did the system make a mistake? Paste the snippet that identifies the item and associate it with the correct store name and button.", teachLblGatilho: "Trigger (Ex: T1S - NEW FACE)", teachLblLoja: "Correct Store Name", teachLblCat: "Correct Category (Button)", btnSaveTeach: "Save Pattern", helpBtn: "Help", helpTitle: "How to get your list", helpInst: "<li>Go to <b>Avatar</b> -> <b>Outfit</b></li><li>Click on the <b>Wearing</b> tab</li><li>Click on <b>Show additional information</b> (gear icon at the bottom of the list)</li><li>Select <b>Copy to clipboard</b></li>", helpOk: "Got it", tipsBtn: "Tips", tipsTitle: "Useful Tips", tipsInst: "<li>When generating the Stylecard, if there is an item you do not want to include in the final result, change the button to <b>NO</b> to remove it, or <b>IGNORE</b> to ignore it in both profiles in future lists. Then click \"Update Order\".</li>", tipsOk: "Got it", modalLangTitle: "Change Language", btnDb: "Registered Stores", btnAdd: "+ Add Store", lblInput: "Input (Inventory)", phInput: "Paste your item list here...", lblOutput: "Result (Notecard)", phOutput: "The result will appear here...", btnGen: "Generate Stylecard", btnUpdate: "Update Order", btnDown: "Download TXT", titleDb: "Registered Stores", phSearchStore: "Search store...", btnDelAll: "Delete All", btnBackup: "Backup", titleAdd: "Register Stores", formatAdd: "Multiple Format: <b>STORE = SLURL = TAG</b>", tagMixed: "No Tag (Leave Mixed)", btnSave: "Save", titleEdit: "Edit Store", phLink: "SLURL Link", phTag: "Tag", titleWarn: "Warning", descWarn: "Detected <b style='color:#cdb8ff; font-size:15px;'>{n}</b> item(s) marked as undefined (?). It is highly recommended to edit and update the list before downloading.<br><br><b>TIP:</b> Replace \"<b>?</b>\" with <b>NO</b> and click <b>Update Order</b> to delete them.<br><br>Download anyway?", btnCancel: "Cancel", btnForceDown: "Yes, Download", alertTitle: "Notice", btnOk: "OK", titlePassWipe: "Wipe Database", descPassWipe: "This will delete all stores. Enter the password to confirm.", phPassAdmin: "Security Password", btnConfirmDel: "Confirm Deletion", titleSuccess: "Success", btnOkSuccess: "OK", titleAdmin: "Admin Area", descAdmin: "Restricted Access", btnAuthAdmin: "Authenticate", titleAdminSettings: "Configure Profiles", optP1: "Slot 1 (Left)", optP2: "Slot 2 (Middle)", lblSelAvatar: "Select an Avatar:", lblNamePerfil: "Profile Name:", phNamePerfil: "e.g., Saori Suki", lblTrava: "Security Lock:", phPass: "Enter a password (empty = disabled)", btnSaveConfig: "Save Configuration", titleAuthPerfil: "Restricted Access", descAuthPerfil: "Enter the password to access this profile.", phPassPerfil: "Profile Password", btnEnterAuth: "Enter", msgSaved: "{n} store(s) processed successfully!", msgUpdated: "Store updated successfully!", msgDeleted: "Store removed successfully!", msgWiped: "Database wiped successfully!", errEmptyInp: "Paste your inventory list first.", errFormat: "Paste at least one valid store to save.", errEmptyDb: "The database is already empty.", errPass: "Incorrect password!", errNoGen: "Generate the Stylecard first.", errNoDown: "There is nothing to download.", errAskPass: "Enter the password to proceed.", statusGen: "PROCESSING...", askDel: "Delete store {n}?", mixed: "Mixed", btnUpdateEdit: "Update", msgLearned: "Pattern successfully learned! The system will recognize it from now on." }
     };
     Object.assign(i18n.pt, {
       langBtn: "Idioma",
@@ -5133,8 +5217,9 @@ body.tour-active {
       ignoredReasonTechnical: "Item técnico do viewer",
       ignoredReasonHud: "HUD técnico",
       ignoredReasonNo: "Regra marcada como NO",
+      ignoredReasonGlobal: "IGNORE: ignorado para Saori e Gabriel",
       learnCorrectionTitle: "Memorizar correções?",
-      learnCorrectionDesc: "As correções serão lembradas apenas neste perfil. Deseja salvar para usos futuros?",
+      learnCorrectionDesc: "As correções comuns pertencem ao perfil atual; IGNORE vale para ambos os perfis. Deseja salvar?",
       learnCorrectionNo: "Não",
       learnCorrectionYes: "Sim, memorizar",
       learnCorrectionSaving: "SALVANDO...",
@@ -5169,6 +5254,7 @@ body.tour-active {
       ignoredReasonTechnical: "Technical viewer item",
       ignoredReasonHud: "Technical HUD",
       ignoredReasonNo: "Rule marked as NO",
+      ignoredReasonGlobal: "IGNORE: shared between both profiles",
       learnCorrectionTitle: "Remember corrections?",
       learnCorrectionDesc: "Save these corrections to Google Sheets for future Stylecards?",
       learnCorrectionNo: "No",
@@ -5195,7 +5281,8 @@ body.tour-active {
         ITEM_TECNICO: 'ignoredReasonTechnical',
         HUD_TECNICO: 'ignoredReasonHud',
         REGRA_NO: 'ignoredReasonNo',
-        PREFERENCIA_NO: 'ignoredReasonNo'
+        PREFERENCIA_NO: 'ignoredReasonNo',
+        IGNORE_GLOBAL: 'ignoredReasonGlobal'
       };
       return chaves[motivo] ? t(chaves[motivo]) : (motivo || t('ignoredReasonTechnical'));
     }
@@ -5288,6 +5375,102 @@ body.tour-active {
       }
     }
 
+    // As cores nao alteram o conteudo da notecard nem o aprendizado da API.
+    // A marca visual fica neste navegador, separada entre P1 e P2.
+    const SHOK_CORES_REVISAO = new Set(['green', 'yellow', 'blue', 'pink', 'purple']);
+    let shokBlocoSelecionado_ = '';
+    function shokChaveMarca_(produto) {
+      return String(produto || '').replace(/\s+/g, ' ').trim().toUpperCase();
+    }
+    function shokArmazenamentoMarcacoes_() {
+      return 'shok-stylecard-review-v1-' + (activeProfileID === 'P2' ? 'P2' : 'P1');
+    }
+    function shokLerMarcacoes_() {
+      try {
+        const json = JSON.parse(localStorage.getItem(shokArmazenamentoMarcacoes_()) || '{}');
+        return json && typeof json === 'object' && !Array.isArray(json) ? json : {};
+      } catch (_) { return {}; }
+    }
+    function shokGravarMarcacoes_(marcacoes) {
+      try { localStorage.setItem(shokArmazenamentoMarcacoes_(), JSON.stringify(marcacoes)); }
+      catch (_) { /* Marcacao visual continua funcionando somente enquanto aberta. */ }
+    }
+    function shokBlocosComPosicoes_(texto) {
+      const regex = /^------------------------------------------------------------[ \t]*$/gm;
+      const separadores = [...String(texto || '').matchAll(regex)];
+      return separadores.map((achado, indice) => {
+        const inicio = achado.index;
+        const fim = indice + 1 < separadores.length ? separadores[indice + 1].index : texto.length;
+        const conteudo = texto.slice(inicio, fim);
+        return { inicio, fim, conteudo, chave: shokChaveMarca_(extrairCampoBloco_(conteudo, 'PRODUCT NAME')) };
+      }).filter(bloco => !!bloco.chave);
+    }
+    function selecionarBlocoParaMarcaTexto_() {
+      const editor = document.getElementById('outputList');
+      const paleta = document.getElementById('shokReviewPalette');
+      if (!editor || !paleta) return;
+      // Um clique ou selecao de texto dentro de um bloco revela somente as bolinhas.
+      const pos = editor.selectionStart;
+      const bloco = shokBlocosComPosicoes_(editor.value.replace(/\r\n/g, '\n'))
+        .find(b => pos >= b.inicio && pos < b.fim);
+      shokBlocoSelecionado_ = bloco ? bloco.chave : '';
+      paleta.hidden = !bloco;
+      if (!bloco) return;
+      const cor = shokLerMarcacoes_()[bloco.chave] || '';
+      paleta.querySelectorAll('.shok-review-dot').forEach(botao => {
+        botao.setAttribute('aria-pressed', String(botao.dataset.color === cor));
+      });
+    }
+    function aplicarMarcaTextoNoBloco_(cor) {
+      if (!shokBlocoSelecionado_) return;
+      if (cor !== 'clear' && !SHOK_CORES_REVISAO.has(cor)) return;
+      const marcacoes = shokLerMarcacoes_();
+      if (cor === 'clear') delete marcacoes[shokBlocoSelecionado_];
+      else marcacoes[shokBlocoSelecionado_] = cor;
+      shokGravarMarcacoes_(marcacoes);
+      atualizarDestaquesReferencia_();
+      selecionarBlocoParaMarcaTexto_();
+    }
+    function limparSelecaoMarcaTexto_() {
+      shokBlocoSelecionado_ = '';
+      const paleta = document.getElementById('shokReviewPalette');
+      if (paleta) paleta.hidden = true;
+    }
+    // Gyazo/prnt.sc aparecem em amarelo por padrao; a cor escolhida ganha
+    // prioridade visual, sem perder nem modificar links de INFO e SLURL.
+    function atualizarDestaquesReferencia_() {
+      const editor = document.getElementById('outputList');
+      const mirror = document.getElementById('outputReferenceHighlight');
+      if (!editor || !mirror) return;
+      const texto = editor.value.replace(/\r\n/g, '\n');
+      const blocos = shokBlocosComPosicoes_(texto);
+      const marcacoes = shokLerMarcacoes_();
+      const fragmento = document.createDocumentFragment();
+      let cursor = 0;
+      blocos.forEach(bloco => {
+        if (bloco.inicio > cursor) fragmento.appendChild(document.createTextNode(texto.slice(cursor, bloco.inicio)));
+        const node = document.createElement('span');
+        const cor = marcacoes[bloco.chave];
+        if (SHOK_CORES_REVISAO.has(cor)) {
+          node.className = 'shok-review-' + cor;
+        } else if (/^INFO:[^\r\n]*(?:https?:\/\/)?(?:www\.)?(?:prnt\.sc|(?:i\.)?gyazo\.com)\//mi.test(bloco.conteudo)) {
+          node.className = 'shok-reference-block';
+        }
+        node.textContent = bloco.conteudo;
+        fragmento.appendChild(node);
+        cursor = bloco.fim;
+      });
+      if (cursor < texto.length) fragmento.appendChild(document.createTextNode(texto.slice(cursor)));
+      mirror.replaceChildren(fragmento);
+      sincronizarRolagemDestaques_();
+    }
+    function sincronizarRolagemDestaques_() {
+      const editor = document.getElementById('outputList');
+      const mirror = document.getElementById('outputReferenceHighlight');
+      if (!editor || !mirror) return;
+      mirror.scrollTop = editor.scrollTop;
+      mirror.scrollLeft = editor.scrollLeft;
+    }
     function normalizarChaveProduto_(produto) {
       return String(produto || '').replace(/\s+/g, ' ').trim().toUpperCase();
     }
@@ -5456,6 +5639,7 @@ body.tour-active {
         }
       });
       output.value = blocos.map(b => b.texto).join('');
+      atualizarDestaquesReferencia_();
     }
     async function confirmarAprendizadoCorrecoes() {
       if (savingCorrectionsNow) return;
@@ -6009,6 +6193,8 @@ body.tour-active {
           ? res.texto
           : "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR A RESPOSTA.";
         document.getElementById('outputList').value = textoGerado;
+        limparSelecaoMarcaTexto_();
+        atualizarDestaquesReferencia_();
         capturarIndefinidosGerados_(res && res.texto ? res.texto : '', Array.isArray(res && res.itensMeta) ? res.itensMeta : []);
         mostrarResumoProcessamento_(res && res.relatorio ? res.relatorio : {
           itensRecebidos: entrada.split('\n').filter(Boolean).length,
@@ -6040,23 +6226,25 @@ body.tour-active {
       const pendentes = [...pendingUnwrittenCorrections, ...novasCorrecoes];
       correctionsToLearn = Array.from(new Map(pendentes.map(c => [chaveCorrecao_(c), c])).values());
       pendingUnwrittenCorrections = correctionsToLearn.slice();
-      const blocosRemovidos = blocosAntesDaOrdem.filter(bloco => bloco.botao === 'NO');
+      const blocosRemovidos = blocosAntesDaOrdem.filter(bloco => bloco.botao === 'NO' || bloco.botao === 'IGNORE');
       blocosRemovidos.forEach(bloco => {
         const existe = ignoredItems.some(item =>
-          item.item === bloco.produto && item.motivo === 'REGRA_NO'
+          item.item === bloco.produto && item.motivo === (bloco.botao === 'IGNORE' ? 'IGNORE_GLOBAL' : 'REGRA_NO')
         );
-        if (!existe) ignoredItems.push({ item: bloco.produto, motivo: 'REGRA_NO' });
+        if (!existe) ignoredItems.push({ item: bloco.produto, motivo: bloco.botao === 'IGNORE' ? 'IGNORE_GLOBAL' : 'REGRA_NO' });
       });
       atualizarContadorIgnorados_();
 
       const blocos = blocosAntesDaOrdem.map((bloco,i) => ({ ...bloco, base: assoc[i] }))
-        .filter(b => b.botao !== 'NO');
+        .filter(b => b.botao !== 'NO' && b.botao !== 'IGNORE');
       blocos.sort((a,b) => indiceCategoria_(a.botao) - indiceCategoria_(b.botao));
       ultimaAssociacaoOrdenada = blocos.map(b => ({
         linhaOriginal: b.base && b.base.linhaOriginal || '',
         produtoBase: b.base && b.base.produtoBase || b.produto
       }));
       document.getElementById('outputList').value = blocos.map(b => b.texto).join('');
+      limparSelecaoMarcaTexto_();
+      atualizarDestaquesReferencia_();
       // Sem clique extra: Atualizar Ordem grava automaticamente as edicoes na memoria.
       if (correctionsToLearn.length) confirmarAprendizadoCorrecoes();
     }
