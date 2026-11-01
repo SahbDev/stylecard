@@ -924,6 +924,133 @@ textarea:focus-visible {
   margin-top: 16px;
 }
 
+.modal.finalize-modal {
+  width: 680px;
+  padding: 48px 40px 32px;
+}
+
+.finalize-fields {
+  min-width: 0;
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.finalize-name-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.finalize-modal .finalize-fields input {
+  min-height: 46px;
+  margin-bottom: 0;
+}
+
+.finalize-upload {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 18px;
+  color: var(--ivory);
+  background: rgba(205, 184, 255, .04);
+  border: 1px dashed #51485e;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.finalize-upload:hover,
+.finalize-upload:focus-visible {
+  border-color: var(--tomato);
+}
+
+.finalize-upload > span:last-child {
+  min-width: 0;
+  display: grid;
+  gap: 7px;
+}
+
+.finalize-upload b {
+  font: 500 13px/1.3 'DM Sans', sans-serif;
+}
+
+.finalize-upload small {
+  color: var(--ash);
+  font: 400 10px/1.5 'IBM Plex Mono', monospace;
+  overflow-wrap: anywhere;
+}
+
+.finalize-filename {
+  margin-top: 20px;
+  padding: 16px;
+  background: #121110;
+  border: 1px solid #302d30;
+}
+
+.finalize-filename small,
+.finalize-filename output {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.finalize-filename small {
+  margin-bottom: 9px;
+  color: var(--ash);
+  font-size: 8px;
+  letter-spacing: .1em;
+}
+
+.finalize-filename output {
+  color: var(--tomato);
+  font-size: 11px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.modal .finalize-kit {
+  margin: 14px 0 0;
+  color: var(--tomato);
+  font: 400 10px/1.6 'IBM Plex Mono', monospace;
+}
+
+.modal .finalize-status {
+  min-height: 20px;
+  margin: 12px 0 0;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.finalize-status.is-error { color: var(--danger); }
+.finalize-status.is-ready { color: var(--tomato); }
+.modal-actions.finalize-actions { flex-wrap: nowrap; }
+.finalize-actions .btn:last-child { flex: 1; }
+
+.finalize-redownload {
+  display: block;
+  margin: 15px auto 0;
+  padding: 5px;
+  color: var(--ash);
+  background: transparent;
+  border: 0;
+  font: 400 10px/1.4 'IBM Plex Mono', monospace;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.finalize-redownload[hidden] { display: none; }
+
+@media (max-width: 640px) {
+  .modal.finalize-modal { padding: 48px 20px 26px; }
+  .finalize-name-fields { grid-template-columns: 1fr; gap: 16px; }
+  .modal-actions.finalize-actions { flex-wrap: wrap; }
+  .finalize-actions .btn { width: 100%; }
+}
+
 .ignored-items-btn {
   display: inline-flex;
   align-items: center;
@@ -4004,9 +4131,9 @@ body.tour-active {
                 <span class="transform-step-number">02</span>
                 <span class="transform-step-copy"><b>Atualizar</b><small>Ordem →</small></span>
               </button>
-              <button type="button" class="transform-step" onclick="verificarDownload()">
+              <button type="button" class="transform-step" onclick="verificarDownload('finalizar')">
                 <span class="transform-step-number">03</span>
-                <span class="transform-step-copy"><b>Baixar</b><small>Arquivo TXT →</small></span>
+                <span class="transform-step-copy"><b>Finalizar</b><small>Kit completo →</small></span>
               </button>
             </div>
           </div>
@@ -4231,7 +4358,7 @@ body.tour-active {
   <div class="modal-overlay" id="modalAdminSettings"><div class="modal" style="width:450px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAdminSettings')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="titleAdminSettings">Configurar Perfis</h3><select id="configProfileSelect" onchange="carregarConfigPerfil()"><option value="P1" data-i18n="optP1">Slot 1</option><option value="P2" data-i18n="optP2">Slot 2</option></select><div class="preview-avatar"><img id="configAvatarPreview" src="https://api.dicebear.com/7.x/lorelei/svg?seed=Saori&amp;backgroundColor=ffb6c1" alt="Avatar selecionado"></div><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblSelAvatar">Avatar:</label><div class="avatar-grid" id="avatarGridList"></div><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblNamePerfil">Nome:</label><input type="text" id="configProfileName" data-i18n="phNamePerfil" placeholder="Ex: Saori Suki"><label style="align-self: flex-start; margin-bottom: 5px;" data-i18n="lblTrava">Senha:</label><input type="password" id="configProfilePass" autocomplete="new-password" data-i18n="phPass" placeholder="Vazio = desativado"><div class="modal-actions"><button type="button" class="btn btn-secondary" id="btnSaveConfig" style="width:100%" onclick="salvarConfigPerfil()" data-i18n="btnSaveConfig">Salvar Configuração</button></div></div></div>
   <div class="modal-overlay" id="modalProfileAuth"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalProfileAuth')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" id="authTitle" data-i18n="titleAuthPerfil">Acesso Restrito</h3><p data-i18n="descAuthPerfil">Digite a senha.</p><input type="password" autocomplete="current-password" id="profilePassInput" data-i18n="phPassPerfil" placeholder="Senha do Perfil"><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width:100%" onclick="verificarSenhaPerfil()" data-i18n="btnEnterAuth">Entrar</button></div></div></div>
   <div class="modal-overlay" id="modalEdit"><div class="modal" style="width:400px; min-height:auto;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalEdit')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="titleEdit" data-i18n="titleEdit">Editar Loja</h3><p id="editName" style="color:var(--text-main); font-weight: bold; font-size: 14px; margin-bottom: 15px;"></p><input type="text" id="editSlurl" data-i18n="phLink" placeholder="Link SLURL"><input type="text" id="editTag" data-i18n="phTag" placeholder="Tag"><div class="modal-actions"><button type="button" class="btn btn-secondary" id="saveEditBtn" onclick="salvarEdicao()" data-i18n="btnUpdateEdit">Atualizar</button></div></div></div>
-  <div class="modal-overlay" id="modalConfirm"><div class="modal"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalConfirm')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--tomato);" id="titleWarn" data-i18n="titleWarn">Atenção</h3><p id="descWarn"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="fecharModal('modalConfirm')" data-i18n="btnCancel">Cancelar</button><button type="button" class="btn btn-secondary" onclick="execDownload()" id="btnForceDown" data-i18n="btnForceDown">Sim, Baixar</button></div></div></div>
+  <div class="modal-overlay" id="modalConfirm"><div class="modal"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalConfirm')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--tomato);" id="titleWarn" data-i18n="titleWarn">Atenção</h3><p id="descWarn"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" onclick="fecharModal('modalConfirm')" data-i18n="btnCancel">Cancelar</button><button type="button" class="btn btn-secondary" onclick="continuarDownloadNotecard_()" id="btnForceDown" data-i18n="btnForceDown">Sim, Baixar</button></div></div></div>
   <div class="modal-overlay" id="modalAlert"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalAlert')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--tomato);" id="alertTitle" data-i18n="alertTitle">Aviso</h3><p id="alertMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalAlert')" data-i18n="btnOk">OK</button></div></div></div>
   <div class="modal-overlay" id="modalPass"><div class="modal" style="width:400px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="cancelarSenhaAcaoLoja_()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--text-main);" id="titlePass">Ação protegida</h3><p id="descPass">Digite a senha para continuar.</p><input type="password" autocomplete="current-password" id="passInp" placeholder="Senha da ação" onkeydown="if(event.key === 'Enter') confirmarSenhaAcaoLoja_()"><div class="modal-actions"><button type="button" class="btn btn-danger" id="confirmPassBtn" onclick="confirmarSenhaAcaoLoja_()">Confirmar</button></div></div></div>
   <div class="modal-overlay" id="modalSuccess"><div class="modal" style="width:350px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalSuccess')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 style="color: var(--mmc-green);" id="titleSuccess" data-i18n="titleSuccess">Sucesso</h3><p id="successMsg" style="margin-bottom: 25px;"></p><div class="modal-actions"><button type="button" class="btn btn-secondary" style="width: 100%;" onclick="fecharModal('modalSuccess')" data-i18n="btnOkSuccess">OK</button></div></div></div>
@@ -4239,6 +4366,45 @@ body.tour-active {
   <div class="modal-overlay" id="modalIgnored"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharModal('modalIgnored')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="ignoredTitle">Itens ignorados</h3><p data-i18n="ignoredDesc">Confira os itens removidos automaticamente e o motivo.</p><div class="ignored-list" id="ignoredList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" style="width:100%;" onclick="fecharModal('modalIgnored')" data-i18n="btnOk">OK</button></div></div></div>
   <div class="modal-overlay" id="modalLearnCorrections"><div class="modal" style="width:700px;"><button type="button" class="close-btn" aria-label="Fechar" onclick="cancelarAprendizadoCorrecoes()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 data-i18n="learnCorrectionTitle">Memorizar correções?</h3><p data-i18n="learnCorrectionDesc">As correções comuns pertencem ao perfil atual; IGNORE vale para ambos os perfis. Deseja salvar?</p><div class="ignored-list" id="learnCorrectionsList"></div><div class="modal-actions" style="margin-top:20px;"><button type="button" class="btn btn-secondary" onclick="cancelarAprendizadoCorrecoes()" data-i18n="learnCorrectionNo">Não</button><button type="button" class="btn btn-success" id="saveCorrectionsBtn" onclick="confirmarAprendizadoCorrecoes()" data-i18n="learnCorrectionYes">Sim, memorizar</button></div></div></div>
   <div class="modal-overlay" id="modalProcessingSummary"><div class="modal processing-summary-modal"><button type="button" class="close-btn" aria-label="Fechar" onclick="fecharResumoProcessamento_()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><h3 id="processingSummaryTitle">Pronto para usar.</h3><p id="processingSummaryIntro">O painel começa curto. Abra apenas a informação que deseja conferir.</p><div class="processing-summary-overview" id="processingSummaryOverview"><strong>Stylecard pronto</strong><div class="processing-summary-stats" id="processingSummaryStats"></div></div><div class="processing-summary-sections" id="processingSummarySections"></div><div class="modal-actions processing-summary-actions"><button type="button" class="btn btn-secondary processing-summary-continue" onclick="fecharResumoProcessamento_()">Continuar</button></div></div></div>
+
+  <div class="modal-overlay" id="modalFinalizeStylecard">
+    <section class="modal finalize-modal" role="dialog" aria-modal="true" aria-labelledby="finalizeTitle">
+      <button type="button" class="close-btn" id="finalizeCloseBtn" aria-label="Fechar" onclick="fecharFinalizacaoStylecard_()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+      <h3 id="finalizeTitle">Finalizar criação</h3>
+      <p>Seu Stylecard, os shapes e o link do Gyazo em um ZIP. O Stylecard e o Gyazo também serão enviados ao Discord.</p>
+      <form id="finalizeForm" onsubmit="event.preventDefault(); finalizarStylecard_()">
+        <fieldset class="finalize-fields" id="finalizeFields">
+          <div>
+            <label for="finalizeGyazoLink">Link do Gyazo</label>
+            <input type="url" id="finalizeGyazoLink" maxlength="500" placeholder="https://gyazo.com/..." inputmode="url" required oninput="alterarDadosFinalizacao_()">
+          </div>
+          <div class="finalize-name-fields">
+            <div>
+              <label for="finalizeShapeName">Nome do shape</label>
+              <input type="text" id="finalizeShapeName" maxlength="60" placeholder="NAME" spellcheck="false" required oninput="alterarDadosFinalizacao_()">
+            </div>
+            <div>
+              <label for="finalizeHeadName">Nome da cabeça LeLutka</label>
+              <input type="text" id="finalizeHeadName" maxlength="60" placeholder="NAME" spellcheck="false" required oninput="alterarDadosFinalizacao_()">
+            </div>
+          </div>
+          <label class="finalize-upload" for="finalizeHeadFile" tabindex="0" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); document.getElementById('finalizeHeadFile').click(); }">
+            <input type="file" id="finalizeHeadFile" accept=".xml,text/xml,application/xml" hidden onchange="selecionarRostoFinalizacao_(this)">
+            <span class="shape-upload-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 14v5h14v-5"/></svg></span>
+            <span><b>Enviar shape do rosto</b><small id="finalizeHeadFileName">Escolha o arquivo XML completo do rosto.</small></span>
+          </label>
+        </fieldset>
+        <div class="finalize-filename"><small>NOME DO ZIP — EDITE APENAS OS DOIS NOMES ACIMA</small><output id="finalizeZipName" for="finalizeShapeName finalizeHeadName">SHOK - NAME Shape [Lel NAME].zip</output></div>
+        <p class="finalize-kit" id="finalizeKitSummary"></p>
+        <p class="finalize-status" id="finalizeStatus" role="status" aria-live="polite"></p>
+        <div class="modal-actions finalize-actions">
+          <button type="button" class="btn btn-secondary" id="finalizeCancelBtn" onclick="fecharFinalizacaoStylecard_()">Cancelar</button>
+          <button type="submit" class="btn btn-success" id="finalizeSubmitBtn">Finalizar e baixar ZIP</button>
+        </div>
+        <button type="button" class="finalize-redownload" id="finalizeDownloadAgain" hidden onclick="baixarPacoteFinalizacao_()">Baixar ZIP novamente</button>
+      </form>
+    </section>
+  </div>
 
   <div class="guided-tour" id="guidedTour" hidden aria-hidden="true">
     <div class="tour-click-shield" aria-hidden="true"></div>
@@ -4350,6 +4516,8 @@ body.tour-active {
       ])));
     })();
     const SHAPE_BODY_LIMIT = 20;
+    let destinoDownloadNotecard_ = 'download';
+    let finalizacaoStylecard_ = { profileId: '', headFile: null, busy: false, pacote: null };
     const GUIDED_TOUR_STEPS = [
       {
         view: 'login',
@@ -4383,7 +4551,7 @@ body.tour-active {
         view: 'stylecard',
         selector: '.transform-typographic',
         title: 'Três etapas rápidas',
-        copy: '<strong>Gerar</strong> cria o Stylecard. <strong>Atualizar</strong> reorganiza o conteúdo depois das suas edições. <strong>Baixar</strong> salva o resultado como arquivo TXT.',
+        copy: '<strong>Gerar</strong> cria o Stylecard. <strong>Atualizar</strong> reorganiza o conteúdo depois das suas edições. <strong>Finalizar</strong> reúne Stylecard, shapes e Gyazo em um ZIP e envia o Stylecard e o link ao Discord.',
         padding: 14
       },
       {
@@ -5061,6 +5229,65 @@ body.tour-active {
       return new Blob([...locais, ...centrais, fim], { type: 'application/zip' });
     }
 
+    async function prepararArquivosShapes_(headFile, bodies, onProgress = null) {
+      const headText = await headFile.text();
+      const headDoc = lerShapeXml_(headText, "O shape da cabeça");
+      const headParams = new Map();
+
+      headDoc.querySelectorAll('param').forEach(param => {
+        if (!ehParametroCabecaShape_(param)) return;
+        const id = param.getAttribute('id');
+        if (id) headParams.set(id, param);
+      });
+
+      if (headParams.size < 20) {
+        throw new Error("O arquivo da cabeça não contém parâmetros faciais suficientes.");
+      }
+
+      const resultados = [];
+      const nomesUsados = new Map();
+
+      for (let index = 0; index < bodies.length; index++) {
+        const bodyFile = bodies[index];
+        if (onProgress) onProgress(
+          "Misturando " + (index + 1) + "/" + bodies.length + " — " + bodyFile.name
+        );
+
+        const bodyText = await bodyFile.text();
+        const bodyDoc = lerShapeXml_(bodyText, "O corpo " + bodyFile.name);
+        let substituidos = 0;
+
+        bodyDoc.querySelectorAll('param').forEach(param => {
+          if (!ehParametroCabecaShape_(param)) return;
+          const id = param.getAttribute('id');
+          const origem = id ? headParams.get(id) : null;
+          if (!origem) return;
+          param.replaceWith(bodyDoc.importNode(origem, true));
+          substituidos++;
+        });
+
+        if (substituidos < 20) {
+          throw new Error(bodyFile.name + " não contém parâmetros suficientes de um shape completo.");
+        }
+
+        const declaracaoOriginal = (bodyText.match(/^\s*(<\?xml[^?]*\?>)/i) || [])[1];
+        const xmlFinal = (declaracaoOriginal || '<?xml version="1.0" encoding="UTF-8"?>') + '\n' +
+          new XMLSerializer().serializeToString(bodyDoc.documentElement);
+
+        const baseOriginal = nomeBaseShape_(bodyFile.name);
+        const repeticao = (nomesUsados.get(baseOriginal.toLowerCase()) || 0) + 1;
+        nomesUsados.set(baseOriginal.toLowerCase(), repeticao);
+        const baseUnica = repeticao > 1 ? baseOriginal + " (" + repeticao + ")" : baseOriginal;
+
+        resultados.push({
+          nome: baseUnica + " [#MIXED].xml",
+          conteudo: xmlFinal
+        });
+      }
+
+      return resultados;
+    }
+
     async function mesclarShapes() {
       if (shapeMergeBusy_) return;
       const headFile = shapeMergeFiles.head;
@@ -5078,61 +5305,9 @@ body.tour-active {
       setShapeMergeStatus_("Lendo o shape da cabeça...", "");
 
       try {
-        const headText = await headFile.text();
-        const headDoc = lerShapeXml_(headText, "O shape da cabeça");
-        const headParams = new Map();
-
-        headDoc.querySelectorAll('param').forEach(param => {
-          if (!ehParametroCabecaShape_(param)) return;
-          const id = param.getAttribute('id');
-          if (id) headParams.set(id, param);
+        const resultados = await prepararArquivosShapes_(headFile, bodies, texto => {
+          setShapeMergeStatus_(texto, "");
         });
-
-        if (headParams.size < 20) {
-          throw new Error("O arquivo da cabeça não contém parâmetros faciais suficientes.");
-        }
-
-        const resultados = [];
-        const nomesUsados = new Map();
-
-        for (let index = 0; index < bodies.length; index++) {
-          const bodyFile = bodies[index];
-          setShapeMergeStatus_(
-            "Misturando " + (index + 1) + "/" + bodies.length + " — " + bodyFile.name,
-            ""
-          );
-
-          const bodyText = await bodyFile.text();
-          const bodyDoc = lerShapeXml_(bodyText, "O corpo " + bodyFile.name);
-          let substituidos = 0;
-
-          bodyDoc.querySelectorAll('param').forEach(param => {
-            if (!ehParametroCabecaShape_(param)) return;
-            const id = param.getAttribute('id');
-            const origem = id ? headParams.get(id) : null;
-            if (!origem) return;
-            param.replaceWith(bodyDoc.importNode(origem, true));
-            substituidos++;
-          });
-
-          if (substituidos < 20) {
-            throw new Error(bodyFile.name + " não contém parâmetros suficientes de um shape completo.");
-          }
-
-          const declaracaoOriginal = (bodyText.match(/^\s*(<\?xml[^?]*\?>)/i) || [])[1];
-          const xmlFinal = (declaracaoOriginal || '<?xml version="1.0" encoding="UTF-8"?>') + '\n' +
-            new XMLSerializer().serializeToString(bodyDoc.documentElement);
-
-          const baseOriginal = nomeBaseShape_(bodyFile.name);
-          const repeticao = (nomesUsados.get(baseOriginal.toLowerCase()) || 0) + 1;
-          nomesUsados.set(baseOriginal.toLowerCase(), repeticao);
-          const baseUnica = repeticao > 1 ? baseOriginal + " (" + repeticao + ")" : baseOriginal;
-
-          resultados.push({
-            nome: baseUnica + " [#MIXED].xml",
-            conteudo: xmlFinal
-          });
-        }
 
         if (resultados.length === 1) {
           baixarBlobShape_(
@@ -5543,6 +5718,177 @@ body.tour-active {
       } finally {
         btn.disabled = false;
         btn.textContent = "Enviar arquivo";
+      }
+    }
+
+    function kitFinalizacaoStylecard_(profileId) {
+      if (!['P1', 'P2'].includes(profileId)) throw new Error('Selecione um perfil antes de finalizar.');
+      const masculino = profileId === 'P2';
+      return {
+        nome: masculino ? 'masculino' : 'feminino',
+        corpos: SHAPE_PRESET_KITS[masculino ? 'male' : 'female']
+      };
+    }
+
+    function parteNomeFinalizacao_(valor) {
+      return String(valor || '').replace(/[\\/:*?"<>|\[\]\u0000-\u001f]/g, ' ')
+        .replace(/\s+/g, ' ').trim();
+    }
+
+    function nomePacoteFinalizacao_() {
+      const shape = parteNomeFinalizacao_(document.getElementById('finalizeShapeName').value);
+      const head = parteNomeFinalizacao_(document.getElementById('finalizeHeadName').value);
+      return 'SHOK - ' + (shape || 'NAME') + ' Shape [Lel ' + (head || 'NAME') + ']';
+    }
+
+    function setStatusFinalizacao_(texto, estado = '') {
+      const status = document.getElementById('finalizeStatus');
+      status.textContent = texto;
+      status.classList.toggle('is-error', estado === 'error');
+      status.classList.toggle('is-ready', estado === 'ready');
+    }
+
+    function atualizarInterfaceFinalizacao_() {
+      const estado = finalizacaoStylecard_;
+      const kit = kitFinalizacaoStylecard_(estado.profileId);
+      const perfil = profileConfigs[estado.profileId];
+      const concluido = Boolean(estado.pacote && estado.pacote.enviado);
+      document.getElementById('finalizeZipName').textContent = nomePacoteFinalizacao_() + '.zip';
+      document.getElementById('finalizeKitSummary').textContent =
+        (perfil && perfil.name ? perfil.name : estado.profileId === 'P2' ? 'Gabriel' : 'Saori') +
+        ' · Kit ' + kit.nome + ' · ' + kit.corpos.length + ' shapes + Stylecard + Gyazo Link';
+      document.getElementById('finalizeFields').disabled = estado.busy || concluido;
+      document.getElementById('finalizeCloseBtn').disabled = estado.busy;
+      document.getElementById('finalizeCancelBtn').disabled = estado.busy;
+      document.getElementById('finalizeCancelBtn').textContent = concluido ? 'Fechar' : 'Cancelar';
+      const submit = document.getElementById('finalizeSubmitBtn');
+      submit.disabled = estado.busy || concluido;
+      submit.textContent = estado.busy ? 'Finalizando...'
+        : concluido ? 'Concluído'
+        : estado.pacote && estado.pacote.baixado ? 'Tentar envio ao Discord'
+        : 'Finalizar e baixar ZIP';
+      const novamente = document.getElementById('finalizeDownloadAgain');
+      novamente.hidden = !estado.pacote;
+      novamente.disabled = estado.busy;
+    }
+
+    function abrirFinalizacaoStylecard_() {
+      if (finalizacaoStylecard_.busy) return;
+      const conteudo = document.getElementById('outputList').value;
+      if (!conteudo.trim()) return alerta(t('errNoDown'));
+      try { kitFinalizacaoStylecard_(activeProfileID); }
+      catch (error) { return alerta(error.message); }
+
+      const anterior = finalizacaoStylecard_;
+      if (anterior.profileId !== activeProfileID || anterior.contextoConteudo !== conteudo ||
+          (anterior.pacote && anterior.pacote.enviado)) {
+        finalizacaoStylecard_ = {
+          profileId: activeProfileID, headFile: null, busy: false, pacote: null,
+          contextoConteudo: conteudo
+        };
+        ['finalizeGyazoLink', 'finalizeShapeName', 'finalizeHeadName', 'finalizeHeadFile']
+          .forEach(id => { document.getElementById(id).value = ''; });
+        document.getElementById('finalizeHeadFileName').textContent = 'Escolha o arquivo XML completo do rosto.';
+        setStatusFinalizacao_('');
+      }
+      atualizarInterfaceFinalizacao_();
+      abrirModal('modalFinalizeStylecard');
+      setTimeout(() => document.getElementById('finalizeGyazoLink').focus(), 50);
+    }
+
+    function fecharFinalizacaoStylecard_() {
+      if (finalizacaoStylecard_.busy) return;
+      fecharModal('modalFinalizeStylecard');
+    }
+
+    function alterarDadosFinalizacao_() {
+      if (finalizacaoStylecard_.busy) return;
+      finalizacaoStylecard_.pacote = null;
+      setStatusFinalizacao_('');
+      atualizarInterfaceFinalizacao_();
+    }
+
+    function selecionarRostoFinalizacao_(input) {
+      if (finalizacaoStylecard_.busy) return;
+      const file = (input.files || [])[0];
+      input.value = '';
+      if (!file) return;
+      const erro = arquivoShapeValido_(file);
+      if (erro) return setStatusFinalizacao_(erro, 'error');
+      finalizacaoStylecard_.headFile = file;
+      document.getElementById('finalizeHeadFileName').textContent = file.name;
+      alterarDadosFinalizacao_();
+    }
+
+    function baixarPacoteFinalizacao_(automatico = false) {
+      const estado = finalizacaoStylecard_;
+      if (!estado.pacote || (estado.busy && !automatico)) return;
+      baixarBlobShape_(estado.pacote.blob, estado.pacote.nomeArquivo);
+      estado.pacote.baixado = true;
+    }
+
+    async function finalizarStylecard_() {
+      const estado = finalizacaoStylecard_;
+      if (estado.busy || (estado.pacote && estado.pacote.enviado)) return;
+      if (estado.profileId !== activeProfileID) {
+        return setStatusFinalizacao_('O perfil mudou. Feche e abra a finalização novamente.', 'error');
+      }
+      if (savingCorrectionsNow) {
+        return setStatusFinalizacao_('Aguarde a gravação das correções antes de finalizar.', 'error');
+      }
+      const gyazoLink = document.getElementById('finalizeGyazoLink').value.trim();
+      const shape = parteNomeFinalizacao_(document.getElementById('finalizeShapeName').value);
+      const head = parteNomeFinalizacao_(document.getElementById('finalizeHeadName').value);
+      const conteudo = document.getElementById('outputList').value;
+      if (!/^https:\/\/(?:www\.|i\.)?gyazo\.com\/\S+$/i.test(gyazoLink)) {
+        return setStatusFinalizacao_('Informe um link válido do Gyazo.', 'error');
+      }
+      if (!shape || !head) return setStatusFinalizacao_('Preencha os dois nomes do arquivo ZIP.', 'error');
+      if (!estado.headFile) return setStatusFinalizacao_('Envie o shape XML do rosto.', 'error');
+      if (!conteudo.trim()) return setStatusFinalizacao_('Não há um Stylecard para finalizar.', 'error');
+
+      const nome = nomePacoteFinalizacao_();
+      const kit = kitFinalizacaoStylecard_(estado.profileId);
+      estado.busy = true;
+      atualizarInterfaceFinalizacao_();
+      try {
+        const salvo = estado.pacote;
+        if (!salvo || salvo.headFile !== estado.headFile || salvo.nome !== nome ||
+            salvo.gyazoLink !== gyazoLink || salvo.conteudo !== conteudo) {
+          estado.pacote = null;
+          setStatusFinalizacao_('Preparando o kit ' + kit.nome + '...');
+          const arquivos = await prepararArquivosShapes_(estado.headFile, kit.corpos, texto => {
+            setStatusFinalizacao_(texto);
+          });
+          arquivos.push({ nome: 'STYLECARD_HUD.txt', conteudo: conteudo });
+          arquivos.push({ nome: 'GYAZO LINK.txt', conteudo: gyazoLink });
+          estado.pacote = {
+            headFile: estado.headFile, nome: nome, nomeArquivo: nome + '.zip',
+            gyazoLink: gyazoLink, conteudo: conteudo,
+            blob: criarZipShapes_(arquivos), baixado: false, enviado: false
+          };
+        }
+        const pacote = estado.pacote;
+        if (!pacote.baixado) baixarPacoteFinalizacao_(true);
+        setStatusFinalizacao_('Download do ZIP iniciado. Enviando Stylecard e Gyazo ao Discord...');
+        const result = await callApi('enviarNotecardDiscord', {
+          profileId: estado.profileId,
+          nomeShape: pacote.nome,
+          gyazoLink: pacote.gyazoLink,
+          conteudo: pacote.conteudo
+        });
+        if (!result || result.sent !== true) throw new Error('DISCORD_SEND_FAILED');
+        pacote.enviado = true;
+        setStatusFinalizacao_('ZIP pronto e download iniciado. Stylecard e Gyazo enviados ao Discord.', 'ready');
+      } catch (error) {
+        const baixado = estado.pacote && estado.pacote.baixado;
+        setStatusFinalizacao_(baixado
+          ? 'O ZIP está pronto e o download já foi iniciado. O envio ao Discord falhou: ' +
+            traduzirErroApi(error) + ' Use o botão para tentar o envio novamente.'
+          : error.message || 'Não foi possível preparar o pacote.', 'error');
+      } finally {
+        estado.busy = false;
+        atualizarInterfaceFinalizacao_();
       }
     }
 
@@ -6324,7 +6670,31 @@ body.tour-active {
       // Sem clique extra: Atualizar Ordem grava automaticamente as edicoes na memoria.
       if (correctionsToLearn.length) confirmarAprendizadoCorrecoes();
     }
-    function verificarDownload(){ let txt = document.getElementById('outputList').value; if(!txt) return alerta(t('errNoDown')); let indefinidos = (txt.match(/BUTTON NAME:\s*\?\r?\n/g) || []).length; if (indefinidos > 0) { document.getElementById('descWarn').innerHTML = t('descWarn').replace('{n}', indefinidos); abrirModal('modalConfirm'); } else { execDownload(); } }
+    function verificarDownload(destino = 'download') {
+      const txt = document.getElementById('outputList').value;
+      if (!txt) return alerta(t('errNoDown'));
+      destinoDownloadNotecard_ = destino === 'finalizar' ? 'finalizar' : 'download';
+      const indefinidos = (txt.match(/BUTTON NAME:\s*\?\r?\n/g) || []).length;
+      if (indefinidos > 0) {
+        document.getElementById('descWarn').innerHTML = t('descWarn').replace('{n}', indefinidos);
+        document.getElementById('btnForceDown').textContent =
+          destinoDownloadNotecard_ === 'finalizar' ? 'Sim, continuar' : t('btnForceDown');
+        abrirModal('modalConfirm');
+      } else {
+        continuarDownloadNotecard_();
+      }
+    }
+
+    function continuarDownloadNotecard_() {
+      const destino = destinoDownloadNotecard_;
+      destinoDownloadNotecard_ = 'download';
+      if (destino === 'finalizar') {
+        fecharModal('modalConfirm');
+        abrirFinalizacaoStylecard_();
+      } else {
+        execDownload();
+      }
+    }
 
     function baixarTexto_(conteudo, nomeArquivo) {
       const blob = new Blob([conteudo], {type:'text/plain;charset=utf-8'});
