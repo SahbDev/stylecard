@@ -698,71 +698,6 @@ textarea:focus-visible {
   color: #4d4944;
 }
 
-/* Marcacao visual somente na tela: o arquivo TXT nunca recebe HTML ou cores. */
-.shok-reference-editor { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
-.shok-reference-editor textarea {
-  position: absolute; inset: 0; z-index: 2;
-  height: 100%; width: 100%; color: transparent;
-  -webkit-text-fill-color: transparent; caret-color: var(--tomato);
-}
-/* A selecao nativa do textarea fica invisivel: selecao real e renderizada
-   em lilas no espelho, evitando amarelo/dourado do navegador e extensoes. */
-#outputList::selection,
-.shok-reference-editor #outputList::selection {
-  background: transparent !important;
-  color: transparent !important;
-  -webkit-text-fill-color: transparent !important;
-}
-#outputList::-moz-selection { background: transparent !important; color: transparent !important; }
-.shok-reference-mirror, .shok-reference-mirror * { user-select: none; -webkit-user-select: none; }
-.shok-reference-mirror .shok-text-selection {
-  background: #cdb8ff !important;
-  color: #211e1a !important;
-  -webkit-text-fill-color: #211e1a !important;
-}
-.shok-reference-editor textarea::placeholder { -webkit-text-fill-color: #4d4944; }
-.shok-reference-mirror {
-  position: absolute; inset: 0; z-index: 1;
-  overflow: auto; scrollbar-width: none; pointer-events: none;
-  padding: 20px; margin: 0;
-  white-space: pre-wrap; overflow-wrap: break-word; word-break: normal;
-  font: 400 11px/1.72 'IBM Plex Mono', monospace;
-  color: #d8d1c8;
-}
-.shok-reference-mirror::-webkit-scrollbar { display: none; }
-@media (max-width:640px) { .shok-reference-mirror { padding: 16px; font-size: 10px; } }
-
-/* Marca-texto visual, aplicado SOMENTE quando o usuario escolhe uma cor. */
-.shok-reference-mirror .shok-review-green { background: rgba(60, 213, 134, .23); color: #aaf4c9; }
-.shok-reference-mirror .shok-review-red { background: rgba(245, 94, 107, .22); color: #ffb7bd; }
-.shok-reference-mirror .shok-review-purple { background: rgba(195, 157, 255, .22); color: #e5d3ff; }
-.shok-reference-mirror .shok-review-blue { background: rgba(125, 191, 255, .22); color: #c4e4ff; }
-.shok-review-palette {
-  position: absolute; z-index: 6; top: 10px; left: 12px;
-  display: flex; align-items: center; gap: 7px;
-  border: 1px solid rgba(215, 205, 225, .20);
-  border-radius: 22px; padding: 7px 9px;
-  background: rgba(20, 19, 22, .96); box-shadow: 0 7px 20px rgba(0,0,0,.3);
-  backdrop-filter: blur(8px);
-  width: max-content; max-width: calc(100% - 10px);
-}
-.shok-review-palette[hidden] { display: none !important; }
-.shok-review-dot {
-  appearance: none; display: inline-block; width: 15px; height: 15px;
-  border-radius: 50%; border: 1px solid rgba(255,255,255,.38);
-  padding: 0; cursor: pointer; flex: none;
-  transition: transform .13s, box-shadow .13s;
-}
-.shok-review-dot:hover, .shok-review-dot:focus-visible { transform: scale(1.22); outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,.15); }
-.shok-review-dot[aria-pressed="true"] { box-shadow: 0 0 0 2px #1a181c, 0 0 0 3px rgba(255,255,255,.95); }
-.shok-review-dot[data-color="green"] { background: #52d995; }
-.shok-review-dot[data-color="red"] { background: #f06b78; }
-.shok-review-dot[data-color="purple"] { background: #c3a1f7; }
-.shok-review-dot[data-color="blue"] { background: #90caff; }
-.shok-review-dot[data-color="white"] { background: #f5f3f0; }
-@media (max-width:640px) { .shok-review-palette { gap: 6px; padding: 6px 8px; } }
-
-
 .editor-sheet textarea:focus {
   box-shadow: inset 4px 0 0 var(--tomato);
 }
@@ -3999,17 +3934,7 @@ body.tour-active {
                 </button>
               </div>
             </header>
-            <div class="shok-reference-editor">
-              <div id="outputReferenceHighlight" class="shok-reference-mirror" aria-hidden="true"></div>
-              <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false"></textarea>
-              <div class="shok-review-palette" id="shokReviewPalette" role="toolbar" aria-label="Marca-texto do produto selecionado" hidden>
-                <button type="button" class="shok-review-dot" data-color="green" title="Verde — revisado" aria-label="Marcar produto de verde" aria-pressed="false"></button>
-                <button type="button" class="shok-review-dot" data-color="red" title="Vermelho — atenção" aria-label="Marcar produto de vermelho" aria-pressed="false"></button>
-                <button type="button" class="shok-review-dot" data-color="purple" title="Roxo claro — pendente" aria-label="Marcar produto de roxo claro" aria-pressed="false"></button>
-                <button type="button" class="shok-review-dot" data-color="blue" title="Azul claro — referência" aria-label="Marcar produto de azul claro" aria-pressed="false"></button>
-                <button type="button" class="shok-review-dot" data-color="white" title="Branco — voltar ao padrão" aria-label="Remover marcação e voltar ao branco" aria-pressed="false"></button>
-              </div>
-            </div>
+            <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false"></textarea>
             <footer class="sheet-footer"><span>RESULTADO EDITÁVEL</span><span>MEMÓRIA SHOK ATIVA</span></footer>
           </article>
         </section>
@@ -5090,28 +5015,6 @@ body.tour-active {
     }
 
     window.onload = async () => {
-      const editorDeResultado = document.getElementById('outputList');
-      editorDeResultado.addEventListener('input', atualizarDestaquesReferencia_);
-      editorDeResultado.addEventListener('scroll', sincronizarRolagemDestaques_);
-      window.addEventListener('resize', atualizarPosicaoPaletaRevisao_);
-      editorDeResultado.addEventListener('click', selecionarBlocoParaMarcaTexto_);
-      editorDeResultado.addEventListener('keyup', selecionarBlocoParaMarcaTexto_);
-      editorDeResultado.addEventListener('select', selecionarBlocoParaMarcaTexto_);
-      editorDeResultado.addEventListener('select', atualizarDestaquesReferencia_);
-      editorDeResultado.addEventListener('keyup', atualizarDestaquesReferencia_);
-      editorDeResultado.addEventListener('pointerup', atualizarDestaquesReferencia_);
-      editorDeResultado.addEventListener('input', selecionarBlocoParaMarcaTexto_);
-      editorDeResultado.addEventListener('blur', () => {
-        const paleta = document.getElementById('shokReviewPalette');
-        if (paleta) paleta.hidden = true;
-        atualizarDestaquesReferencia_();
-      });
-      document.querySelectorAll('#shokReviewPalette .shok-review-dot').forEach(botao => {
-        // Impede perda de foco/selecao ao clicar na bolinha.
-        botao.addEventListener('pointerdown', evento => evento.preventDefault());
-        botao.addEventListener('click', () => aplicarMarcaTextoNoBloco_(botao.dataset.color));
-      });
-      atualizarDestaquesReferencia_();
       aplicarInterfacePortuguesa_();
       try {
         const dbConfigs = await callApi('getProfilesConfig', {}, null);
@@ -5451,189 +5354,6 @@ body.tour-active {
       }
     }
 
-    // Cores somente visuais: nao alteram o TXT nem o aprendizado da API.
-    // Marcacoes persistem neste navegador, separadas por perfil.
-    const SHOK_CORES_REVISAO = new Set(['green', 'red', 'purple', 'blue']);
-    let shokBlocoSelecionado_ = '';
-    let shokIndiceBlocoSelecionado_ = -1;
-    function shokChaveMarca_(produto) {
-      return String(produto || '').replace(/\s+/g, ' ').trim().toUpperCase();
-    }
-    function shokArmazenamentoMarcacoes_() {
-      return 'shok-stylecard-review-v1-' + (activeProfileID === 'P2' ? 'P2' : 'P1');
-    }
-    function shokLerMarcacoes_() {
-      try {
-        const json = JSON.parse(localStorage.getItem(shokArmazenamentoMarcacoes_()) || '{}');
-        return json && typeof json === 'object' && !Array.isArray(json) ? json : {};
-      } catch (_) { return {}; }
-    }
-    function shokGravarMarcacoes_(marcacoes) {
-      try { localStorage.setItem(shokArmazenamentoMarcacoes_(), JSON.stringify(marcacoes)); }
-      catch (_) { /* Sem armazenamento, a marcacao apenas nao persiste. */ }
-    }
-    function shokBlocosComPosicoes_(texto) {
-      const regex = /^------------------------------------------------------------[ \t]*$/gm;
-      const separadores = [...String(texto || '').matchAll(regex)];
-      return separadores.map((achado, indice) => {
-        const inicio = achado.index;
-        const fim = indice + 1 < separadores.length ? separadores[indice + 1].index : texto.length;
-        const conteudo = texto.slice(inicio, fim);
-        return { inicio, fim, conteudo, chave: shokChaveMarca_(extrairCampoBloco_(conteudo, 'PRODUCT NAME')) };
-      }).filter(bloco => !!bloco.chave);
-    }
-    // Localiza offsets mesmo com pedacos do texto envoltos pela selecao lilas.
-    function shokPontoTexto_(elemento, offset) {
-      const walker = document.createTreeWalker(elemento, NodeFilter.SHOW_TEXT);
-      let ultimo = null, restante = offset;
-      while (walker.nextNode()) {
-        const node = walker.currentNode;
-        ultimo = node;
-        if (restante <= node.length) return {node, offset: restante};
-        restante -= node.length;
-      }
-      return ultimo ? {node: ultimo, offset: ultimo.length} : null;
-    }
-    function shokAcrescentarTexto_(destino, texto, inicio, fim, selecaoInicio, selecaoFim) {
-      if (inicio >= fim) return;
-      const a = Math.max(inicio, selecaoInicio);
-      const b = Math.min(fim, selecaoFim);
-      if (a >= b) {
-        destino.appendChild(document.createTextNode(texto.slice(inicio, fim)));
-        return;
-      }
-      if (a > inicio) destino.appendChild(document.createTextNode(texto.slice(inicio, a)));
-      const destaque = document.createElement('span');
-      destaque.className = 'shok-text-selection';
-      destaque.textContent = texto.slice(a, b);
-      destino.appendChild(destaque);
-      if (b < fim) destino.appendChild(document.createTextNode(texto.slice(b, fim)));
-    }
-    function atualizarPosicaoPaletaRevisao_() {
-      const editor = document.getElementById('outputList');
-      const mirror = document.getElementById('outputReferenceHighlight');
-      const paleta = document.getElementById('shokReviewPalette');
-      if (!editor || !mirror || !paleta || !shokBlocoSelecionado_ || shokIndiceBlocoSelecionado_ < 0) return;
-      const blocoVisual = mirror.children[shokIndiceBlocoSelecionado_];
-      if (!blocoVisual || !blocoVisual.firstChild || typeof document.createRange !== 'function') return;
-      const linhaBotao = blocoVisual.textContent.match(/^BUTTON NAME:[ \t]*[^\r\n]*/m);
-      if (!linhaBotao) return;
-      const finalNome = linhaBotao.index + linhaBotao[0].length;
-      // Usa a posicao verdadeira do BUTTON NAME no espelho do textarea,
-      // respeitando quebras de linha, rolagem e largura da janela.
-      const range = document.createRange();
-      const start = shokPontoTexto_(blocoVisual, Math.max(0, finalNome - 1));
-      const end = shokPontoTexto_(blocoVisual, finalNome);
-      if (!start || !end) return;
-      range.setStart(start.node, start.offset);
-      range.setEnd(end.node, end.offset);
-      const textoRect = range.getBoundingClientRect();
-      const caixaRect = editor.getBoundingClientRect();
-      const posY = textoRect.top - caixaRect.top;
-      if (posY < -4 || posY > editor.clientHeight - 8) {
-        paleta.hidden = true;
-        return;
-      }
-      // Posicao intermediaria: metade do espaco entre o fim do BUTTON NAME
-      // e a antiga posicao a direita. So aparece com texto selecionado.
-      if (editor.selectionStart === editor.selectionEnd || document.activeElement !== editor) {
-        paleta.hidden = true;
-        return;
-      }
-      paleta.hidden = false;
-      const largura = paleta.offsetWidth || 164;
-      const altura = paleta.offsetHeight || 32;
-      const margemDireita = 18;
-      const posicaoDireitaAnterior = Math.max(5, editor.clientWidth - largura - margemDireita);
-      const posicaoProximaAoNome = textoRect.right - caixaRect.left + 12;
-      let esquerda = Math.max(5, Math.min(posicaoDireitaAnterior,
-        Math.round((posicaoProximaAoNome + posicaoDireitaAnterior) / 2)));
-      let topo = posY + (textoRect.height - altura) / 2;
-      // Se o BUTTON NAME chegar ate a paleta (por exemplo, em celular),
-      // movemos somente a paleta para baixo, sem cobrir a escrita.
-      if (textoRect.right - caixaRect.left + 12 > esquerda) {
-        topo = posY + textoRect.height + 6;
-      }
-      paleta.style.left = esquerda + 'px';
-      paleta.style.top = Math.max(4, Math.min(topo, editor.clientHeight - altura - 4)) + 'px';
-    }
-    function selecionarBlocoParaMarcaTexto_() {
-      const editor = document.getElementById('outputList');
-      const paleta = document.getElementById('shokReviewPalette');
-      if (!editor || !paleta) return;
-      const inicio = Math.min(editor.selectionStart, editor.selectionEnd);
-      const fim = Math.max(editor.selectionStart, editor.selectionEnd);
-      // Um clique para editar (cursor sem texto selecionado) NAO abre as cores.
-      // Uma selecao que atravessa produtos diferentes tambem nao recebe paleta.
-      const haSelecao = document.activeElement === editor && fim > inicio;
-      const blocos = haSelecao ? shokBlocosComPosicoes_(editor.value.replace(/\r\n/g, '\n')) : [];
-      const indice = blocos.findIndex(bloco => inicio >= bloco.inicio && inicio < bloco.fim && fim <= bloco.fim);
-      const bloco = indice >= 0 ? blocos[indice] : null;
-      shokBlocoSelecionado_ = bloco ? bloco.chave : '';
-      shokIndiceBlocoSelecionado_ = indice;
-      paleta.hidden = !bloco;
-      if (!bloco) return;
-      const corSalva = shokLerMarcacoes_()[bloco.chave] || '';
-      const cor = SHOK_CORES_REVISAO.has(corSalva) ? corSalva : 'white';
-      paleta.querySelectorAll('.shok-review-dot').forEach(botao => {
-        botao.setAttribute('aria-pressed', String(botao.dataset.color === cor));
-      });
-      atualizarPosicaoPaletaRevisao_();
-    }
-    function aplicarMarcaTextoNoBloco_(cor) {
-      if (!shokBlocoSelecionado_) return;
-      if (cor !== 'white' && !SHOK_CORES_REVISAO.has(cor)) return;
-      const marcacoes = shokLerMarcacoes_();
-      if (cor === 'white') delete marcacoes[shokBlocoSelecionado_];
-      else marcacoes[shokBlocoSelecionado_] = cor;
-      shokGravarMarcacoes_(marcacoes);
-      atualizarDestaquesReferencia_();
-      selecionarBlocoParaMarcaTexto_();
-    }
-    function limparSelecaoMarcaTexto_() {
-      shokBlocoSelecionado_ = '';
-      shokIndiceBlocoSelecionado_ = -1;
-      const paleta = document.getElementById('shokReviewPalette');
-      if (paleta) paleta.hidden = true;
-    }
-    function atualizarDestaquesReferencia_() {
-      const editor = document.getElementById('outputList');
-      const mirror = document.getElementById('outputReferenceHighlight');
-      if (!editor || !mirror) return;
-      const texto = editor.value.replace(/\r\n/g, '\n');
-      const blocos = shokBlocosComPosicoes_(texto);
-      const marcacoes = shokLerMarcacoes_();
-      const fragmento = document.createDocumentFragment();
-      const selecionado = document.activeElement === editor;
-      const inicioSel = selecionado ? Math.min(editor.selectionStart, editor.selectionEnd) : -1;
-      const fimSel = selecionado ? Math.max(editor.selectionStart, editor.selectionEnd) : -1;
-      let cursor = 0;
-      blocos.forEach(bloco => {
-        if (bloco.inicio > cursor) {
-          shokAcrescentarTexto_(fragmento, texto, cursor, bloco.inicio, inicioSel, fimSel);
-        }
-        const node = document.createElement('span');
-        const cor = marcacoes[bloco.chave];
-        // Somente marcacoes manuais. A selecao lilas independe das cores de revisao.
-        if (SHOK_CORES_REVISAO.has(cor)) node.className = 'shok-review-' + cor;
-        shokAcrescentarTexto_(node, texto, bloco.inicio, bloco.fim, inicioSel, fimSel);
-        fragmento.appendChild(node);
-        cursor = bloco.fim;
-      });
-      if (cursor < texto.length) {
-        shokAcrescentarTexto_(fragmento, texto, cursor, texto.length, inicioSel, fimSel);
-      }
-      mirror.replaceChildren(fragmento);
-      sincronizarRolagemDestaques_();
-    }
-    function sincronizarRolagemDestaques_() {
-      const editor = document.getElementById('outputList');
-      const mirror = document.getElementById('outputReferenceHighlight');
-      if (!editor || !mirror) return;
-      mirror.scrollTop = editor.scrollTop;
-      mirror.scrollLeft = editor.scrollLeft;
-      atualizarPosicaoPaletaRevisao_();
-    }
     function normalizarChaveProduto_(produto) {
       return String(produto || '').replace(/\s+/g, ' ').trim().toUpperCase();
     }
@@ -5804,7 +5524,6 @@ body.tour-active {
         }
       });
       output.value = blocos.map(b => b.texto).join('');
-      atualizarDestaquesReferencia_();
     }
     async function confirmarAprendizadoCorrecoes() {
       if (savingCorrectionsNow) return;
@@ -6361,8 +6080,6 @@ body.tour-active {
           ? res.texto
           : "ERRO: O SISTEMA NÃO CONSEGUIU PROCESSAR A RESPOSTA.";
         document.getElementById('outputList').value = textoGerado;
-        limparSelecaoMarcaTexto_();
-        atualizarDestaquesReferencia_();
         capturarIndefinidosGerados_(res && res.texto ? res.texto : '', Array.isArray(res && res.itensMeta) ? res.itensMeta : []);
         mostrarResumoProcessamento_(res && res.relatorio ? res.relatorio : {
           itensRecebidos: entrada.split('\n').filter(Boolean).length,
@@ -6412,8 +6129,6 @@ body.tour-active {
         produtoBase: b.base && b.base.produtoBase || b.produto
       }));
       document.getElementById('outputList').value = blocos.map(b => b.texto).join('');
-      limparSelecaoMarcaTexto_();
-      atualizarDestaquesReferencia_();
       // Sem clique extra: Atualizar Ordem grava automaticamente as edicoes na memoria.
       if (correctionsToLearn.length) confirmarAprendizadoCorrecoes();
     }
