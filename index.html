@@ -1030,7 +1030,7 @@ textarea:focus-visible {
 .modal-actions.finalize-actions { flex-wrap: nowrap; }
 .finalize-actions .btn:last-child { flex: 1; }
 
-.finalize-redownload {
+.finalize-drive-link {
   display: block;
   margin: 15px auto 0;
   padding: 5px;
@@ -1042,7 +1042,7 @@ textarea:focus-visible {
   cursor: pointer;
 }
 
-.finalize-redownload[hidden] { display: none; }
+.finalize-drive-link[hidden] { display: none; }
 
 @media (max-width: 640px) {
   .modal.finalize-modal { padding: 48px 20px 26px; }
@@ -4156,8 +4156,8 @@ body.tour-active {
                 </button>
               </div>
             </header>
-            <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false"></textarea>
-            <footer class="sheet-footer"><span>RESULTADO EDITÁVEL</span><span>MEMÓRIA SHOK ATIVA</span></footer>
+            <textarea id="outputList" data-i18n="phOutput" placeholder="O resultado sairá aqui..." spellcheck="false" title="Ctrl+clique para abrir links. No Mac, use Command+clique."></textarea>
+            <footer class="sheet-footer"><span title="O texto continua totalmente editável. Ctrl+Enter também abre o link sob o cursor.">CTRL + CLIQUE: ABRIR LINKS</span><span>MEMÓRIA SHOK ATIVA</span></footer>
           </article>
         </section>
       </main>
@@ -4371,7 +4371,7 @@ body.tour-active {
     <section class="modal finalize-modal" role="dialog" aria-modal="true" aria-labelledby="finalizeTitle">
       <button type="button" class="close-btn" id="finalizeCloseBtn" aria-label="Fechar" onclick="fecharFinalizacaoStylecard_()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
       <h3 id="finalizeTitle">Finalizar criação</h3>
-      <p>Seu Stylecard, os shapes e o link do Gyazo em um ZIP. O Stylecard e o Gyazo também serão enviados ao Discord.</p>
+      <p>Seu Stylecard, os shapes e o link do Gyazo em uma pasta no Google Drive. O Stylecard e o Gyazo também serão enviados ao Discord.</p>
       <form id="finalizeForm" onsubmit="event.preventDefault(); finalizarStylecard_()">
         <fieldset class="finalize-fields" id="finalizeFields">
           <div>
@@ -4394,14 +4394,14 @@ body.tour-active {
             <span><b>Enviar shape do rosto</b><small id="finalizeHeadFileName">Escolha o arquivo XML completo do rosto.</small></span>
           </label>
         </fieldset>
-        <div class="finalize-filename"><small>NOME DO ZIP — EDITE APENAS OS DOIS NOMES ACIMA</small><output id="finalizeZipName" for="finalizeShapeName finalizeHeadName">SHOK - NAME Shape [Lel NAME].zip</output></div>
+        <div class="finalize-filename"><small>NOME DA PASTA — EDITE APENAS OS DOIS NOMES ACIMA</small><output id="finalizeZipName" for="finalizeShapeName finalizeHeadName">SHOK - NAME Shape [Lel NAME]</output></div>
         <p class="finalize-kit" id="finalizeKitSummary"></p>
         <p class="finalize-status" id="finalizeStatus" role="status" aria-live="polite"></p>
         <div class="modal-actions finalize-actions">
           <button type="button" class="btn btn-secondary" id="finalizeCancelBtn" onclick="fecharFinalizacaoStylecard_()">Cancelar</button>
-          <button type="submit" class="btn btn-success" id="finalizeSubmitBtn">Finalizar e baixar ZIP</button>
+          <button type="submit" class="btn btn-success" id="finalizeSubmitBtn">Finalizar e salvar no Drive</button>
         </div>
-        <button type="button" class="finalize-redownload" id="finalizeDownloadAgain" hidden onclick="baixarPacoteFinalizacao_()">Baixar ZIP novamente</button>
+        <a class="finalize-drive-link" id="finalizeDriveLink" target="_blank" rel="noopener noreferrer" hidden>Abrir pasta no Drive</a>
       </form>
     </section>
   </div>
@@ -4551,7 +4551,7 @@ body.tour-active {
         view: 'stylecard',
         selector: '.transform-typographic',
         title: 'Três etapas rápidas',
-        copy: '<strong>Gerar</strong> cria o Stylecard. <strong>Atualizar</strong> reorganiza o conteúdo depois das suas edições. <strong>Finalizar</strong> reúne Stylecard, shapes e Gyazo em um ZIP e envia o Stylecard e o link ao Discord.',
+        copy: '<strong>Gerar</strong> cria o Stylecard. <strong>Atualizar</strong> reorganiza o conteúdo depois das suas edições. <strong>Finalizar</strong> salva Stylecard, shapes e Gyazo em uma pasta no Google Drive e envia o Stylecard e o link ao Discord.',
         padding: 14
       },
       {
@@ -5380,6 +5380,7 @@ body.tour-active {
     }
 
     window.onload = async () => {
+      ativarLinksStylecard_();
       aplicarInterfacePortuguesa_();
       renderizarCorposShape_();
       atualizarShapeMergeControles_();
@@ -5721,6 +5722,60 @@ body.tour-active {
       }
     }
 
+    function urlNoCursorStylecard_(texto, offset) {
+      const regex = /\b(?:https?:\/\/|www\.|(?:i\.)?gyazo\.com\/|prnt\.sc\/)[^\s<>"']+/gi;
+      let match;
+      while ((match = regex.exec(String(texto || ''))) !== null) {
+        let endereco = match[0].replace(/[.,;!?:]+$/g, '');
+        [['(', ')'], ['[', ']'], ['{', '}']].forEach(([abre, fecha]) => {
+          const contar = sinal => endereco.split(sinal).length - 1;
+          while (endereco.endsWith(fecha) && contar(fecha) > contar(abre)) {
+            endereco = endereco.slice(0, -1);
+          }
+        });
+        endereco = endereco.replace(/[.,;!?:]+$/g, '');
+        if (offset < match.index || offset > match.index + endereco.length) continue;
+        try {
+          const url = new URL(/^https?:\/\//i.test(endereco) ? endereco : 'https://' + endereco);
+          if (url.protocol === 'http:' || url.protocol === 'https:') return url.href;
+        } catch (_) { /* Um endereco incompleto continua sendo apenas texto editavel. */ }
+      }
+      return '';
+    }
+
+    function abrirLinkStylecard_(evento) {
+      if (!(evento.ctrlKey || evento.metaKey) || evento.altKey) return;
+      if (evento.type === 'keydown' ? evento.key !== 'Enter' : evento.button !== 0) return;
+      const editor = evento.currentTarget;
+      const url = urlNoCursorStylecard_(editor.value, editor.selectionStart);
+      if (!url) return;
+      evento.preventDefault();
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    function ativarLinksStylecard_() {
+      const editor = document.getElementById('outputList');
+      editor.addEventListener('click', abrirLinkStylecard_);
+      editor.addEventListener('keydown', abrirLinkStylecard_);
+    }
+
+    function erroGravacaoDrive_(error) {
+      const codigo = String(error && error.message || error || '');
+      const mensagens = {
+        DRIVE_FOLDER_ACCESS: 'O Apps Script não conseguiu acessar a pasta. Execute autorizarDriveStylecard no editor e confira o acesso da conta usada na implantação.',
+        DRIVE_FOLDER_WRITE_PERMISSION: 'A conta que executa o Apps Script precisa de permissão de edição na pasta do Google Drive.',
+        DRIVE_FILE_WRITE_ERROR: 'A gravação no Drive foi interrompida. Tente novamente; os arquivos já gravados serão reaproveitados.',
+        DRIVE_FILE_CONFLICT: 'Um arquivo da pasta foi alterado no Drive. Confira esse arquivo antes de repetir a finalização.',
+        DRIVE_INVALID_PACKAGE: 'Confira os dados da finalização e selecione o shape do rosto novamente.',
+        DRIVE_SAVE_RESPONSE_INVALID: 'O Drive não confirmou a gravação. Tente salvar novamente.'
+      };
+      if (mensagens[codigo]) return mensagens[codigo];
+      if (/Ação não suportada.*salvarCriacaoDrive/i.test(codigo)) {
+        return 'Atualize o Apps Script e publique uma nova versão da implantação para ativar a gravação no Drive.';
+      }
+      return codigo || 'Não foi possível salvar a criação no Google Drive.';
+    }
+
     function kitFinalizacaoStylecard_(profileId) {
       if (!['P1', 'P2'].includes(profileId)) throw new Error('Selecione um perfil antes de finalizar.');
       const masculino = profileId === 'P2';
@@ -5752,8 +5807,8 @@ body.tour-active {
       const estado = finalizacaoStylecard_;
       const kit = kitFinalizacaoStylecard_(estado.profileId);
       const perfil = profileConfigs[estado.profileId];
-      const concluido = Boolean(estado.pacote && estado.pacote.enviado);
-      document.getElementById('finalizeZipName').textContent = nomePacoteFinalizacao_() + '.zip';
+      const concluido = Boolean(estado.pacote && estado.pacote.drive && estado.pacote.enviado);
+      document.getElementById('finalizeZipName').textContent = nomePacoteFinalizacao_();
       document.getElementById('finalizeKitSummary').textContent =
         (perfil && perfil.name ? perfil.name : estado.profileId === 'P2' ? 'Gabriel' : 'Saori') +
         ' · Kit ' + kit.nome + ' · ' + kit.corpos.length + ' shapes + Stylecard + Gyazo Link';
@@ -5765,11 +5820,13 @@ body.tour-active {
       submit.disabled = estado.busy || concluido;
       submit.textContent = estado.busy ? 'Finalizando...'
         : concluido ? 'Concluído'
-        : estado.pacote && estado.pacote.baixado ? 'Tentar envio ao Discord'
-        : 'Finalizar e baixar ZIP';
-      const novamente = document.getElementById('finalizeDownloadAgain');
-      novamente.hidden = !estado.pacote;
-      novamente.disabled = estado.busy;
+        : estado.pacote && estado.pacote.drive ? 'Tentar envio ao Discord'
+        : estado.pacote ? 'Tentar salvar no Drive'
+        : 'Finalizar e salvar no Drive';
+      const pasta = document.getElementById('finalizeDriveLink');
+      pasta.hidden = !(estado.pacote && estado.pacote.drive);
+      if (!pasta.hidden) pasta.href = estado.pacote.drive.folderUrl;
+      else pasta.removeAttribute('href');
     }
 
     function abrirFinalizacaoStylecard_() {
@@ -5823,7 +5880,8 @@ body.tour-active {
     function baixarPacoteFinalizacao_(automatico = false) {
       const estado = finalizacaoStylecard_;
       if (!estado.pacote || (estado.busy && !automatico)) return;
-      baixarBlobShape_(estado.pacote.blob, estado.pacote.nomeArquivo);
+      const pacote = estado.pacote;
+      baixarBlobShape_(pacote.blob || criarZipShapes_(pacote.arquivos), pacote.nomeArquivo || pacote.nome + '.zip');
       estado.pacote.baixado = true;
     }
 
@@ -5843,7 +5901,7 @@ body.tour-active {
       if (!/^https:\/\/(?:www\.|i\.)?gyazo\.com\/\S+$/i.test(gyazoLink)) {
         return setStatusFinalizacao_('Informe um link válido do Gyazo.', 'error');
       }
-      if (!shape || !head) return setStatusFinalizacao_('Preencha os dois nomes do arquivo ZIP.', 'error');
+      if (!shape || !head) return setStatusFinalizacao_('Preencha os dois nomes da pasta.', 'error');
       if (!estado.headFile) return setStatusFinalizacao_('Envie o shape XML do rosto.', 'error');
       if (!conteudo.trim()) return setStatusFinalizacao_('Não há um Stylecard para finalizar.', 'error');
 
@@ -5851,6 +5909,7 @@ body.tour-active {
       const kit = kitFinalizacaoStylecard_(estado.profileId);
       estado.busy = true;
       atualizarInterfaceFinalizacao_();
+      let etapa = 'preparacao';
       try {
         const salvo = estado.pacote;
         if (!salvo || salvo.headFile !== estado.headFile || salvo.nome !== nome ||
@@ -5863,14 +5922,29 @@ body.tour-active {
           arquivos.push({ nome: 'STYLECARD_HUD.txt', conteudo: conteudo });
           arquivos.push({ nome: 'GYAZO LINK.txt', conteudo: gyazoLink });
           estado.pacote = {
-            headFile: estado.headFile, nome: nome, nomeArquivo: nome + '.zip',
+            headFile: estado.headFile, nome: nome,
             gyazoLink: gyazoLink, conteudo: conteudo,
-            blob: criarZipShapes_(arquivos), baixado: false, enviado: false
+            arquivos: arquivos, drive: null, enviado: false
           };
         }
         const pacote = estado.pacote;
-        if (!pacote.baixado) baixarPacoteFinalizacao_(true);
-        setStatusFinalizacao_('Download do ZIP iniciado. Enviando Stylecard e Gyazo ao Discord...');
+        if (!pacote.drive) {
+          etapa = 'drive';
+          setStatusFinalizacao_('Salvando a pasta e os ' + pacote.arquivos.length + ' arquivos no Google Drive...');
+          const salvoNoDrive = await callApi('salvarCriacaoDrive', {
+            profileId: estado.profileId, nomePasta: pacote.nome,
+            gyazoLink: pacote.gyazoLink, conteudo: pacote.conteudo,
+            arquivos: pacote.arquivos
+          });
+          if (!salvoNoDrive || salvoNoDrive.saved !== true ||
+              !/^https:\/\/drive\.google\.com\/drive\/(?:u\/\d+\/)?folders\/[A-Za-z0-9_-]+(?:[?#].*)?$/.test(String(salvoNoDrive.folderUrl || ''))) {
+            throw new Error('DRIVE_SAVE_RESPONSE_INVALID');
+          }
+          pacote.drive = salvoNoDrive;
+          atualizarInterfaceFinalizacao_();
+        }
+        etapa = 'discord';
+        setStatusFinalizacao_('Pasta salva no Drive. Enviando Stylecard e Gyazo ao Discord...');
         const result = await callApi('enviarNotecardDiscord', {
           profileId: estado.profileId,
           nomeShape: pacote.nome,
@@ -5879,13 +5953,13 @@ body.tour-active {
         });
         if (!result || result.sent !== true) throw new Error('DISCORD_SEND_FAILED');
         pacote.enviado = true;
-        setStatusFinalizacao_('ZIP pronto e download iniciado. Stylecard e Gyazo enviados ao Discord.', 'ready');
+        setStatusFinalizacao_('Pasta salva no Google Drive. Stylecard e Gyazo enviados ao Discord.', 'ready');
       } catch (error) {
-        const baixado = estado.pacote && estado.pacote.baixado;
-        setStatusFinalizacao_(baixado
-          ? 'O ZIP está pronto e o download já foi iniciado. O envio ao Discord falhou: ' +
-            traduzirErroApi(error) + ' Use o botão para tentar o envio novamente.'
-          : error.message || 'Não foi possível preparar o pacote.', 'error');
+        setStatusFinalizacao_(etapa === 'discord'
+          ? 'A pasta já está salva no Drive. O envio ao Discord falhou: ' +
+            traduzirErroApi(error) + ' Use o botão para tentar somente o envio novamente.'
+          : etapa === 'drive' ? erroGravacaoDrive_(error)
+          : error.message || 'Não foi possível preparar os arquivos.', 'error');
       } finally {
         estado.busy = false;
         atualizarInterfaceFinalizacao_();
